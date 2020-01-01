@@ -1,8 +1,8 @@
 package com.github.pawelbialas.testgeneratorapp.utils;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
@@ -10,17 +10,25 @@ import java.util.UUID;
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
 
-    @GeneratedValue
     @Id
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "id",
+            updatable = false,
+            nullable = false)
+    private UUID id;
 
-    private String uuid = UUID.randomUUID().toString();
+
+    @Version
+    private Long version;
 
     public int hashCode () {
-        return Objects.hash(uuid);
+        return Objects.hash(this.id);
     }
 
     public boolean equals (Object that) {
-        return this == that || that instanceof BaseEntity && Objects.equals(uuid, ((BaseEntity) that).uuid);
+        return this == that || that instanceof BaseEntity && Objects.equals(this.id, ((BaseEntity) that).id);
     }
 }
