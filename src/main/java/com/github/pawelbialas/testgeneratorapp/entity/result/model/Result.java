@@ -3,19 +3,21 @@ package com.github.pawelbialas.testgeneratorapp.entity.result.model;
 import com.github.pawelbialas.testgeneratorapp.entity.candidate.model.Candidate;
 import com.github.pawelbialas.testgeneratorapp.entity.test.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.shared.BaseEntity;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
+@ToString
 public class Result extends BaseEntity {
 
     @Column(nullable = false)
     private Integer score;
     @OneToOne
-    @JoinColumn(referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "skill_test_id", nullable = false)
     private SkillTest skillTest;
     @ManyToOne
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "candidate_id", nullable = false)
     private Candidate candidate;
 
     public Result() {

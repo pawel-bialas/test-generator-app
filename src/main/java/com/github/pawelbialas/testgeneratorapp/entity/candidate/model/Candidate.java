@@ -4,6 +4,7 @@ package com.github.pawelbialas.testgeneratorapp.entity.candidate.model;
 import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 import com.github.pawelbialas.testgeneratorapp.entity.test.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.shared.BaseEntity;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import java.util.Set;
 
 
 @Entity
+@ToString
 public class Candidate extends BaseEntity {
 
     @Column(updatable = false, nullable = false)
@@ -20,7 +22,7 @@ public class Candidate extends BaseEntity {
     @OneToMany(mappedBy = "candidate")
     private Set<SkillTest> skillTests = new HashSet<>();
     @OneToMany(mappedBy = "candidate")
-    private Set<Result> results = new HashSet<>();
+    private Set<Result> results;
 
     public Candidate() {
     }

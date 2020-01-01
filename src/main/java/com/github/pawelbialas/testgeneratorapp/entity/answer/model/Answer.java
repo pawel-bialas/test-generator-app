@@ -2,6 +2,7 @@ package com.github.pawelbialas.testgeneratorapp.entity.answer.model;
 
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.shared.BaseEntity;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
+@ToString
 public class Answer extends BaseEntity {
 
     @Column(nullable = false)
@@ -16,7 +18,7 @@ public class Answer extends BaseEntity {
     @Column(nullable = false)
     Boolean correct;
     @ManyToOne
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "question_id")
     Question question;
 
     public Answer () {
@@ -26,7 +28,7 @@ public class Answer extends BaseEntity {
     public Answer (String answer, Boolean correct, Question question) {
         this.answer = answer;
         this.correct = correct;
-        this.question = question;
+//        this.question = question;
     }
 
     public String getAnswer() {

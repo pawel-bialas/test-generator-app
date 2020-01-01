@@ -31,4 +31,21 @@ public abstract class BaseEntity implements Serializable {
     public boolean equals (Object that) {
         return this == that || that instanceof BaseEntity && Objects.equals(this.id, ((BaseEntity) that).id);
     }
+
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
 }

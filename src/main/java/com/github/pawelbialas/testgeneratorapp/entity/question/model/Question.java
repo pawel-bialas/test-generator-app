@@ -4,6 +4,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
 import com.github.pawelbialas.testgeneratorapp.shared.MainTech;
 import com.github.pawelbialas.testgeneratorapp.shared.BaseEntity;
 import com.github.pawelbialas.testgeneratorapp.shared.SkillLevel;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -11,19 +12,15 @@ import java.util.Set;
 
 
 @Entity
-@Table(name = "Questions")
+@ToString
 public class Question extends BaseEntity {
 
-    @Column(nullable = false)
     private String contents;
-    @Column(nullable = false)
     private MainTech mainTech;
-    @Column(nullable = false)
     private String specificTech;
-    @Column(nullable = false)
     private SkillLevel skillLevel;
-    @OneToMany(mappedBy = "question")
-    private Set<Answer> answers = new HashSet<>();
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Answer> answers;
 
     public Question(String contents, MainTech mainTech, String specificTech, HashSet<Answer> answers, SkillLevel skillLevel) {
         this.contents = contents;

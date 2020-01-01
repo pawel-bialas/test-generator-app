@@ -4,22 +4,24 @@ import com.github.pawelbialas.testgeneratorapp.entity.candidate.model.Candidate;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 import com.github.pawelbialas.testgeneratorapp.shared.BaseEntity;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@ToString
 public class SkillTest extends BaseEntity {
 
 
     @OneToMany
-    private Set<Question> questions = new HashSet<>();
+    private Set<Question> questions;
     @ManyToOne
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "candidate_id")
     private Candidate candidate;
     @OneToOne
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "result_id")
     private Result result;
 
     public SkillTest () {
