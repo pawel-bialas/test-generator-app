@@ -19,7 +19,7 @@ public class Question extends BaseEntity {
     private MainTech mainTech;
     private String specificTech;
     private SkillLevel skillLevel;
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Answer> answers;
 
     public Question(String contents, MainTech mainTech, String specificTech, HashSet<Answer> answers, SkillLevel skillLevel) {

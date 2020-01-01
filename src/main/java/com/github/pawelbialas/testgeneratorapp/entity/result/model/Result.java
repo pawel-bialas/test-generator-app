@@ -17,7 +17,7 @@ public class Result extends BaseEntity {
     @JoinColumn(name = "skill_test_id", nullable = false)
     private SkillTest skillTest;
     @ManyToOne
-    @JoinColumn(name = "candidate_id", nullable = false)
+    @JoinColumn(name = "candidate_id", updatable = false, insertable = false)
     private Candidate candidate;
 
     public Result() {

@@ -18,7 +18,7 @@ public class SkillTest extends BaseEntity {
     @OneToMany
     private Set<Question> questions;
     @ManyToOne
-    @JoinColumn(name = "candidate_id")
+    @JoinColumn(name = "candidate_id", updatable = false, insertable = false)
     private Candidate candidate;
     @OneToOne
     @JoinColumn(name = "result_id")

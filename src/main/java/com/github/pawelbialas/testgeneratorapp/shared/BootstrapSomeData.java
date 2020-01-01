@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Component
@@ -64,17 +65,17 @@ public class BootstrapSomeData implements ApplicationListener<ContextRefreshedEv
         question2.setMainTech(MainTech.JAVA);
         question3.setMainTech(MainTech.JAVA);
 
-        questionRepository.save(question1);
-        questionRepository.save(question2);
-        questionRepository.save(question3);
+        questionRepository.saveAndFlush(question1);
+        questionRepository.saveAndFlush(question2);
+        questionRepository.saveAndFlush(question3);
 
         answer1.setQuestion(question1);
         answer2.setQuestion(question2);
         answer3.setQuestion(question3);
 
-        answerRepository.save(answer1);
-        answerRepository.save(answer2);
-        answerRepository.save(answer3);
+        answerRepository.saveAndFlush(answer1);
+        answerRepository.saveAndFlush(answer2);
+        answerRepository.saveAndFlush(answer3);
 
         List<Question> allQuestions = questionRepository.findAll();
         for (Question question: allQuestions) {
@@ -83,6 +84,23 @@ public class BootstrapSomeData implements ApplicationListener<ContextRefreshedEv
 
         Question bbb = questionRepository.findByContentsEquals("bbb");
         System.out.println(bbb);
+
+        Set<Question> allByMainTech = questionRepository.findAllByMainTech(MainTech.JAVA);
+        System.out.println(allByMainTech);
+
+        Set<Question> allByMainTechAndSkillLevel = questionRepository.findAllByMainTechAndSkillLevel(MainTech.JAVA, SkillLevel.SENIOR);
+        System.out.println(allByMainTechAndSkillLevel);
+
+        List<Answer> all = answerRepository.findAll();
+        System.out.println(all);
+        Question aaa1 = questionRepository.findByContentsEquals("aaa");
+        Answer aaa = answerRepository.findByAnswer("aaa");
+        answers.add(aaa);
+        aaa1.setAnswers(answers);
+        System.out.println(aaa1);
+        questionRepository.save(aaa1);
+
+
 
     }
 

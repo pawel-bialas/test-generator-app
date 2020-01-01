@@ -18,8 +18,10 @@ public class Answer extends BaseEntity {
     @Column(nullable = false)
     Boolean correct;
     @ManyToOne
-    @JoinColumn(name = "question_id")
+    @JoinColumn(name = "question_id", updatable = false, insertable = false)
     Question question;
+
+// Ten układ w przypadku Question działa, Question jest nadrzędne
 
     public Answer () {
 

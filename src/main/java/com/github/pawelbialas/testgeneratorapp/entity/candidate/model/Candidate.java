@@ -6,9 +6,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.test.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.shared.BaseEntity;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,9 +17,9 @@ public class Candidate extends BaseEntity {
 
     @Column(updatable = false, nullable = false)
     private Long candidateNumber;
-    @OneToMany(mappedBy = "candidate")
+    @OneToMany(mappedBy = "candidate", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<SkillTest> skillTests = new HashSet<>();
-    @OneToMany(mappedBy = "candidate")
+    @OneToMany(mappedBy = "candidate", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Result> results;
 
     public Candidate() {
