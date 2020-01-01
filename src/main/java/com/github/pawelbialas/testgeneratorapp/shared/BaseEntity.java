@@ -1,4 +1,4 @@
-package com.github.pawelbialas.testgeneratorapp.utils;
+package com.github.pawelbialas.testgeneratorapp.shared;
 
 import org.hibernate.annotations.GenericGenerator;
 

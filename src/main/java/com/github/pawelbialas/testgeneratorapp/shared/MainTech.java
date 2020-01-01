@@ -1,4 +1,4 @@
-package com.github.pawelbialas.testgeneratorapp.entity.technologies;
+package com.github.pawelbialas.testgeneratorapp.shared;
 
 public enum MainTech {
 

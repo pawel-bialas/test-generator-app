@@ -1,8 +1,9 @@
 package com.github.pawelbialas.testgeneratorapp.entity.question.model;
 
 import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
-import com.github.pawelbialas.testgeneratorapp.entity.technologies.MainTech;
-import com.github.pawelbialas.testgeneratorapp.utils.BaseEntity;
+import com.github.pawelbialas.testgeneratorapp.shared.MainTech;
+import com.github.pawelbialas.testgeneratorapp.shared.BaseEntity;
+import com.github.pawelbialas.testgeneratorapp.shared.SkillLevel;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -19,14 +20,17 @@ public class Question extends BaseEntity {
     private MainTech mainTech;
     @Column(nullable = false)
     private String specificTech;
+    @Column(nullable = false)
+    private SkillLevel skillLevel;
     @OneToMany(mappedBy = "question")
     private Set<Answer> answers = new HashSet<>();
 
-    public Question(String contents, MainTech mainTech, String specificTech, HashSet<Answer> answers) {
+    public Question(String contents, MainTech mainTech, String specificTech, HashSet<Answer> answers, SkillLevel skillLevel) {
         this.contents = contents;
         this.mainTech = mainTech;
         this.specificTech = specificTech;
         this.answers = answers;
+        this.skillLevel = skillLevel;
     }
 
     public Question () {
@@ -63,5 +67,13 @@ public class Question extends BaseEntity {
 
     public void setAnswers(Set<Answer> answers) {
         this.answers = answers;
+    }
+
+    public SkillLevel getSkillLevel() {
+        return skillLevel;
+    }
+
+    public void setSkillLevel(SkillLevel skillLevel) {
+        this.skillLevel = skillLevel;
     }
 }

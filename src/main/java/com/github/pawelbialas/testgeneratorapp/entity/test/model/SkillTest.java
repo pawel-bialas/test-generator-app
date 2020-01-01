@@ -1,9 +1,9 @@
-package com.github.pawelbialas.testgeneratorapp.entity.test;
+package com.github.pawelbialas.testgeneratorapp.entity.test.model;
 
 import com.github.pawelbialas.testgeneratorapp.entity.candidate.model.Candidate;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
-import com.github.pawelbialas.testgeneratorapp.utils.BaseEntity;
+import com.github.pawelbialas.testgeneratorapp.shared.BaseEntity;
 
 import javax.persistence.*;
 import java.util.HashSet;

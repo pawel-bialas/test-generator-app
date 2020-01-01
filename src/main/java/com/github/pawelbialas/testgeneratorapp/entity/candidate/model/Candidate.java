@@ -2,8 +2,8 @@ package com.github.pawelbialas.testgeneratorapp.entity.candidate.model;
 
 
 import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
-import com.github.pawelbialas.testgeneratorapp.entity.test.SkillTest;
-import com.github.pawelbialas.testgeneratorapp.utils.BaseEntity;
+import com.github.pawelbialas.testgeneratorapp.entity.test.model.SkillTest;
+import com.github.pawelbialas.testgeneratorapp.shared.BaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
