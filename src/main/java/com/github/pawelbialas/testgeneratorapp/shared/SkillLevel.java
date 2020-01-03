@@ -6,7 +6,8 @@ public enum SkillLevel {
     JUNIOR("JUNIOR"),
     MID("MID"),
     SENIOR("SENIOR"),
-    EXPERT("EXPERT")
+    EXPERT("EXPERT"),
+    ALL("ALL")
     ;
 
 

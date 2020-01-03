@@ -18,6 +18,6 @@ public class QuestionService {
     }
 
     public void newQuestion(Question question) {
-        questionRepository.save(question);
+
     }
 }

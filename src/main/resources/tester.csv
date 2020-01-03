@@ -1,0 +1,96 @@
+ID,Main,Technologia,Poziom,Treść,Odpowiedź 1,Odpoiwedź 2,Odpowiedź 3,Odpowiedź 4,Poprawne
+1,Java,Core,Entry,Co oznacza słowo 'final' przy klasie?,"JVM w pierwszej kolejności skompiluje tą klasę, dopiero później pozostałe",Klasa nie może być dziedziczona,Wszystkie metody w tej klasie są finalne,Garbage Collection nie dotyczy instancji tej klasy,"2,3"
+2,Java,Core,Entry,Co oznacza słowo 'final' przy metodzie,JVM w pierwszej kolejności wprowadzi tą metodę dopiero później pozostałe,Dana metoda nie jest już metodą wirtualną,Metoda nie może być nadpisana w innej klasie,"Metoda zawsze zwraca obiekt lub null, nawet kiedy jest typu 'void ()'",3
+3,Java,Core,Entry,Co oznacza słowo 'final' przy polu w klasie?,pole musi zostać zadeklarowane i zainicjowane jednocześnie,"JVM w pierwszej kolejności tworzy to pole, dopiero po tym kolejne","Można przypisać do niego nową wartość/obiekt tylko i wyłącznie wtedy, kiedy wcześniej przypiszemy do niego 'null'",To pole jest bezpieczne w programowaniu wielowątkowym tzw. 'thread-safe'.,1
+4,Java,Core,Entry,"Jaka jest różnica między typem prymitywnym a ""wraper'em""?",Zazwyczaj tyb opakowujący zajmuje więcej miejsca w pamięci,Typy proste nie są obiektami,Zazwyczaj tyb opakowujący zajmuje mniej miejsca w pamięci,Typ opakowujący pozwala na wywołanie metod,"2,4"
+5,Java,Core,Entry,Co to jest Autoboxing i Unboxing?,"Jest to domyślna metoda, która przerabia Listę na tablicę i odwrotnie",Są to metody natywne wykorzystywane przez JVM do przesyłania obiektów do innej JVM,"Przeniesienie wartości typu prymitywnego do odpowiadającego mu ""wraper'a"" i odwrotnie","Metody wbudowane w JDK wykorzystywane w trakcie operacji na plikach, np. InputStream, OutputStream",3
+6,Java,Core,Junior,Czym różni się 'override' od 'overload' w przypadku metod?,"Override' to wiele metod w różnych klasach, które mają tą samą nazwę i argumenty, ale różnią się ciałem. 'Overload' to wiele metod w tej samej klasie, które mają tą samą nazwę, ale różnią się argumentami i ciałem","Overload' to taka sama metoda w wielu klasach, którą implementuje się z interfejsu, podczas gdy 'Override' to taka sama metoda w wielu klasach, której pierwotna wersja ma anotację @Override","Overload' to wiele metod w różnych klasach, które mają tą samą nazwę i argumenty, ale różnią się ciałem. 'Override' to wiele metod w tej samej klasie, które mają tą samą nazwę, ale różnią się argumentami i ciałem","Override' to taka sama metoda w wielu klasach, którą implementuje się z interfejsu, podczas gdy 'Overload' to taka sama metoda w wielu klasach, której pierwotna wersja ma anotację @Overload",1
+7,Java,Core,Junior,Co to jest String pool?,Jest to miejsce w pamięci JVM do którego trafiają wszystkie niepotrzebne obiekty typu 'String',"Specjalna pula w pamięci JVM, przeznaczona do przechowywanie zmiennych typu String","Definiowalny parametr w aplikacji, który określa maksymalną liczbę wątków jakie mogą pracować jednocześnie","Jest to systemowa klasa i jej wbudowane metody, służące do tworzenia nowych obiektów typu String",2
+8,Java,Core,Junior,Czy w jednej klasie może być kilka metod o tej samej nazwie?,"Tak, nieskończenie wiele, bez żadnych ograniczeń","Tak, pod warunkiem, że będą się różnić argumentami lub typami zwracanymi",Nie jest to niemożliwe,"Tak, pod warunkiem, że klasa jest finalna",2
+9,Java,Core,Junior,Na jakiej zasadzie działa HashMap?,1,1,1,1,1
+10,Java,Core,Junior,Czy metoda może być jednocześnie abstract i final?,Tak,"Tak, ale tylko w Jave 10 i wyższych","Nie, jest to niemożliwe","Tak, ale tylko w Jave 8 i wyższych",3
+11,Java,Core,Junior,Różnica pomiędzy ArrayList a LinkedList w Javie?,ArrayList pozwala na znacznie szybsze wyszukiwanie i pobieranie pojedyńczego elementu,LinkedList pozwala na znacznie szybsze wyszukanie i usunięcie pojedyńczego elementu,LinkedList pozwala na znacznie szybsze dodawanie nowych elementów niż ArraList,LinkedList wymaga większej ilości pamięci JVM niż ArrayList,"1,2,3,4"
+12,Java,Core,Junior,Czym jest Iterator?,"Interfejs pakiety java.utils, który umożliwia tworzenie specjalnego obiektu, poprzez wywołanie metody 'iterator()' na obiekcie, który jest kolekcją.",Interfejs domyślnie stosowany w pętli 'forEach',Obiekt pomocny w operacjach na kolekcjach. Między innymi posiada wbudowaną metodę 'forEachNext()',Interfejs domyślnie stosowany w pętli 'forEach',"1,4"
+13,Java,Core,Junior,Jakie typy danych występują w Javie?,"Typy proste: int, float, double, long, boolean, char, short, byte i typy złożone/obiektowe","Typy proste: int, float, double, long, boolean, volatile, short, byte i typy złożone/obiektowe","Typy proste: int, float, double, long, boolean, volatile, short, vector i typy złożone/obiektowe","Java jest językiem obiektowym, wszystkie typy danych są obiektami",1
+14,Java,Core,Junior,Czym jest Serializacja (Serialization) i Deserializacja (Deserialization)?,"Deserializacja obiektu jest procesem w trakcie którego jest wywoływany konstruktor danej klasy, aby przetworzyć strumień bajtów na obiekt",Serializacja obiektu zawsze daje nam możliwość określenia nazwy pliku w jakim zapiszemy dany obiekt. Plik ten będzie miał format domyślnie '*.txt',"Konwersja obiektów na strumień bajtów, która umożliwia przesłanie obiektu z jednej aplikacji do innej aplikacji iponowne przetworzenie strumienia na obiekt Javy","Serializacja jest procesem, do którego nie możemy wprowadzać obiektów 'static'","3, 4"
+15,Java,Core,Junior,Czy argument metody w danej klasie może mieć taką samą nazwę jak pole w tej klasie?,Tak,Nie,null,null,1
+16,Java,Core,Junior,Różnica pomiędzy HashSet i TreeSet?,"HashSet oferuje szybsze operacje odczytu, lub zapisu niż TreeSet","TreeSet nie pozwala na przechowywanie duplikatów, podczas gdy HashSet nie pozwala na przechowywanie duplikatów","TreeSet zapewnia możliwość sortowania elementów i zachowania kolejności dodawania, podczas gdy HashSet nie zachowuje kolejności",HashSet zapewnia możliwość przechowywania 'null' podczas gdy TreeSet nie zapewnia takiej możliwości,36954
+17,Java,Core,Junior,Na czym polega kontrakt między metodami hashCode i equals?,Jeśli wartość metody hashCode jest taka sama x.hashCode() == y.hashCode() to nie jest wymagane aby x.equals(y) zwracało true,Jeśli metoda equals zwraca true dla x.equals(y) to metoda hashCode również musi zwrócić true dla x.hashCode() == y.hashCode(),Wielokrotne wywołanie metody hashCode na tym samym obiekcie (który nie był modyfikowany pomiędzy wywołaniami) musi zwrócić tę samą wartość,"Powinniśmy implementować te metody w danej klasie, żeby otrzymywać poprawne rezultaty","1,2,3,4'"
+18,Java,Core,Junior,Jeżeli obiekt zostaje przypisany do 'null' to czy Garbage Collector od razu zwolni pamięć wcześniej zajmowaną przez ten obiekt?,"Tak, stanie się to natychmiastowo","Być może stanie się to, natomiast nie jesteśmy w stanie określić kiedy dokładnie to nastąpi. Może nie nastąpić do końca działania programu.","Stanie się to tylko w przypadku, gdy ilość wolnej pamięci spodnie poniżej 75%.",Nie stanie się to. Nie ma potrzeby zwalniania pamięci w przypadku referencji do 'null',2
+19,Java,Core,Junior,Jaka jest różnica pomiędzy Finally a Finalize?,Finally' to blok a 'Finalize' to metoda.,Finalize' to blok a 'Finally' to metoda,"Finally' wykonuje się zawsze. W przypadku 'Finalize' nigdy nie mamy pewności, czy zostanie wykonany",,"1,3"
+20,Java,Core,Mid,Czy klasa może dziedziczyć z Enum?,"Żadna klasa nie może dziedziczyć po 'Enum', natomiast 'Enum' może implementować interfejsy",Każda klasa może dziedziczyć po 'Enum',Tylko klasa abstrakcyjna może dziedziczyć 'Enum',"Żadna klasa nie może dziedziczyć po 'Enum', oraz 'Enum' nie może może implementować interfejsów",1
+21,Java,Core,Senior,Czym jest MetaSpace?,"Wydzielony obszar pamięci JVM, w którym przechowywane są instancje m.in. 'static'","Obszar pamięci JVM, w którym nie jest prowadzony proces 'Garbage Collection'","Możemy w łatwy i przystępny sposób definiować właściwości PermGen Space, np. Maksymalny rozmar alokowanej pamięci","Wydzielony obszar pamięci JVM, w którym przsechowywane są 'Cloas-loader'","1,4"
+22,Java,Core,Mid,Wyrażenie: ((A)null)instanceof A) zwróci:,TRUE,FALSE,NullPointer Exception,0,2
+23,Java,Core,Mid,Czy null check jest konieczny przed wywołaniem 'instanceOf'?,Jest bezwzględnie wymagany tylko w sytuacji gdy pracujemy z programem wielowątkowym,W żadnej sytuacji nie jest konieczny,Zawsze jest konieczny,"Nie jest konieczny, ale stosowanie 'null check' przed wywołaniem 'instanceOf' jest dobrą praktyką",2
+24,Java,Core,Mid,Co oznacza 'volatile'przy polu w klasie?,"Każdy wątek przed operacją na referencji do takiego pola, będzie sprawdzał, czy w tym samym czasie ta referencja nie jest składowana w cache'u procesora.",Takie pole będzie zapisywane do i odczytywane zawsze z pamięci głównej,"Każdy wątek przed operacją na referencji do takiego pola, będzie działał w trybie 'synchronized'",,2
+25,Java,Core,Senior,Jaka jest różnica pomiędzy zmienną 'static' a zmienną 'volatile'?,1,1,1,1,1
+26,Java,Core,Senior,Co oznacza 'synchronized'?,"Jest to słowo kluczowe, które możemy zastosować na polu w klasie, metodzie w klasie, metodzie statycznej lub fragmencie kodu",Blokuje dostęp do danego zasobu (np. zmiennej) dla więcej niż 2 wątków w tym samym czasie,"Zastosowanie 'synchronized' może doprowadzić do ""deadLock'a""","Zapewnia, że w danym momencie z określonego zasobu może korzystać jeden wątek","3, 4"
+27,Java,Hibernate,Mid,Mid,Deselect Fetching,Sub-select Fetching,Select Fetching,Join Fetching,1
+28,Java,Hibernate,Mid,"Która platforma zapewnia możliowść tworzenia rozproszonych systemów, bazujących na aplikacjach webowych?",JVM,JMX,JSF,JSP,2
+29,Java,Hibernate,Mid,QBC oznacza?,Query by Call,Query By Column,Query By Criteria,Query By Code,3
+30,Java,Hibernate,Mid,Który tryb/przypadek mapowania nie jest możliwy w Hibernate?,Tabela dla konkretnej klasy,Tabela dla kilku klas z uwzględnieniem hierarchi (relacji),Tabela dla konkretnej pod-klasy,Tabela dla konkretnego obiektu,4
+31,Java,Hibernate,Mid,Czy wszystkie pliki mapowania w Hibernate muszą mieć format *.hbm.xml żeby działać poprawnie?,Tak,Nie,null,null,2
+32,Java,Hibernate,Mid,Skrót POJO oznacza:,Plane Old Java Objects,Particular Old Java Objects,Plain Open Java Objects,Plain Old Java Objects,1
+33,Java,J2EE,Mid,Co oznacza J2EE?,Java 2 Entrepreneur Edition,Java 2 E-Edition,Java 2 Enterprise Edition,Java 2 Extension Edition,3
+34,Java,J2EE,Mid,Co oznacza JSF?,JavaScript Functionality,Java Server Functionality,Java Server Faces,Java Script Faces,3
+35,Java,Hibernate,Mid,Której metody w Hibernate używamy by zapisać obiekt do bazy danych?,saveOrUpdate(),save(),hibernate(),store(),2
+36,Java,Hibernate,Mid,Której metody w Hibernate używamy by zmodyfikować obiekt w bazie danych na podstawie ID?,update(),hibernate(),saveOrUpdate(),store(),3
+37,Java,Hibernate,Mid,Która metoda zwraca 'null' jeżeli Hibernate nie znalazł szukanego obiektu w bazie danych?,null(),load(),get(),empty(),3
+38,Java,Hibernate,Mid,Co oznacza ORM?,Operational Risk Management,Object Relational Mapping,Object Risk Management,Object Relational Management,2
+39,Java,Hibernate,Mid,Który z interfejsów nie jest kluczowy dla Hibernate?,Session Interface,Transaction Interface,Configuration Interface,Store Interface,4
+40,Java,Hibernate,Mid,Który format odpowiada za pliki mappingu w Hibernate?,*.hbm.xml,*.hbm.ini,*.xml,*.hbn.xml,1
+41,Java,Hibernate,Mid,Czym jest HQL,Hibernate Query List,Hiber Query Language,Hibermedia Query List,Hibernate Query Language,4
+42,Java,J2EE,Mid,"Gdzie umieszczane są piliki HTML, JavaScript, lub inne plikie niezbędne w działaniu aplikacji webowych?",*.jar,*.war,*.ear,*.ini,2
+43,Java,J2EE,Mid,"Action servlet', lub 'request processor' są to komponenty w ramach:",Model,View,Controller,DataSource,3
+44,Java,J2EE,Mid,Który z wymienionych nie jest tagiem JSP?,Directives,Direction,Scriplets,Expressions,2
+45,Java,Core,Mid,Jak możemy stworzyć nowy obiekt bez użycia slowa 'new'?,getObject(),getInstances(),getInstance(),getChild(),3
+46,Java,Core,Mid,float zajmuje ___ bajtów w pamięci.,8,4,12,16,2
+47,Java,Core,Mid,Czy zmienne w Java mogą być używane bez inicjalizacji?,Nie,Tak,null,null,1
+48,Java,Core,Mid,Czy zmienna w Java może być jednocześnie lokalna oraz 'static'?,Tak,Nie,null,null,2
+49,Java,Core,Mid,Czy 'main' w Java może zwracać inny typ niż 'void'?,Tak,Nie,null,null,2
+50,Java,Core,Mid,Którą metodę z interfejsu 'Runnable' musi zaimplementować każdy wątek?,Run(),Start(),Sleep(),Wait(),1
+51,Java,Core,All,Folder: Java - kod + grafika/1,e d c b a -1,a b c 0 e d,d b c e a 1 ,e b a d c,1
+52,Java,Core,All,Folder: Java - kod + grafika/2,"[1, 1 , 2, 3]","[1, 2, 2, 3]","[1, 1, 3, 2]","[1, 2, 3]",3
+53,Java,Core,All,Folder: Java - kod + grafika/3,"[2, 3]",Runtime Exception,Compile Time Exception,Żadna z tych odpowiedz,3
+54,Java,Core,All,Folder: Java - kod + grafika/4,3,3.0,Compile Time Exception,Runtime Exception,3
+55,Java,Core,All,Folder: Java - kod + grafika/5,1,"5 <br> {null = null, 2 = ayushi, 7 = renuka, 9 = shivashish, 11 = animesh}",Runtime Exception,Compile Time Exception,2
+56,Java,Core,All,Folder: Java - kod + grafika/6,1 2',1 2 3',3 2 1',ConcurrentModificationException,1
+57,Java,Core,All,Folder: Java - kod + grafika/7,List l = new ArrayList>();,List > l = new ArrayList>();,List> l = new ArrayList();,List l = new ArrayList();,4
+58,Java,Core,All,Folder: Java - kod + grafika/8,"[a, d, b, c]","[a, b, c, d]","[d, a, d, c]",Żadna z tych odpowiedz,1
+59,Java,Core,All,Folder: Java - kod + grafika/9,1,2,0,4,2
+60,Java,Core,All,Folder: Java - kod + grafika/10,Runtime Exception,Compile Time Exception,3,3.0,1
+61,Java,Core,All,Folder: Java - kod + grafika/11,1 <br> 2 <br> 1.1 <br> 1.2,2 <br> 1 <br> 2.2 <br> 1.1,Compile Time Exception,Żadna z tych odpowiedz,1
+62,Java,Core,All,Folder: Java - kod + grafika/12,Compile Time Exception,5,5.0,Runtime Exception,3
+63,Java,Core,All,Folder: Java - kod + grafika/13,"[3, 2, 1]",Compile Time Exception,Runtime Exception,"[1, 2, 3]",2
+64,Java,Core,All,Folder: Java - kod + grafika/14,"[1, 2, 3]",Żadna z tych odpowiedz,"[3, 2, 1]",Class Cast Exception,1
+65,Java,Core,All,Folder: Java - kod + grafika/15,"{4=1, 3=2, 2=1}","{2=1, 3=1, 4=1}","{4=1, 2=1, 3=1}",Compile Time Exception,1
+66,Java,Core,All,Folder: Java - kod + grafika/16,NullPointer Exception,IndexOutOfBound Exception,23,Compile Time Exception,4
+67,Java,Core,All,Folder: Java - kod + grafika/17,Compile Time Exception,3 2 1',1 2 3',2 3 1',2
+68,Java,Core,Senior,Jaka jest różnica pomiędzy 'SoftReference' a 'WeakReference'?,"SoftReference' sprawia, że obiekt nie zostanie poddany procesowi 'Garbage Collection'. W przypadku 'WeakReference' proces GC na danym obiekcie nastąpi od razu.","SoftReference' sprawia, że obiekt zostanie poddany procesowi 'Garbage Collection' tylko w sytuacji gdy JVM będzie brakować pamięci. W przypadku 'WeakReference' proces GC na danym obiekcie nastąpi od razu.","SoftReference' sprawia, że obiekt zostanie poddany procesowi 'Garbage Collection' tylko w sytuacji gdy JVM będzie brakować pamięci. W przypadku 'WeakReference' proces GC na danym obiekcie może nastąpić, natomiast to JVM zdecyduje kiedy się to stanie.","SoftReference' sprawia, że obiekt zostanie poddany procesowi 'Garbage Collection' od razu, gdy straci 'StrongReference'. W przypadku 'WeakReference' proces GC na danym obiekcie może nastąpić, natomiast to JVM zdecyduje kiedy się to stanie.",2
+69,Java,Core,Senior,Kiedy lepiej używać LinkedList niż ArrayList?,W sytuacji kiedy relatywnie rzadko modyfikujemy (dodajemy/usuwamy elementy) daną kolekcję,W sytuacji kiedy modyfikacje (dodajemy/usuwamy elementy) występują bardzo często,Kiedy bardziej zależy nam na szybkości modyfikacji kolekcji kosztem szybkości odczytu,W aplikacjach budowanych w oparciu o J2EE,"2,3"
+70,Java,Core,Senior,Czy w Javie 8 i kolejnych jest możliwy 'java.lang.OutOfMemoryError: PermGen error'?,Tak,Nie,null,null,2
+71,Java,Core,Senior,Czym jest ThreadLocal?,Jest to klasa dostępna z pakietu 'java.lang',Klasa ta nie występuje w bibliotece Quartz,Pozwala tworzyć zestawy danych dostępne tylko dal wybranego wątku,Wykorzystanie 'ThreadLocal' wspólnie z 'ExecutorService' prowadzi do nieprzewidywalnych rezultatów i przez to jest złą praktyką w programowaniu wielowątkowym.,"1, 2, 3, 4'"
+72,Java,Spring,Senior,Jaka jest różnica pomiędzy @Controller a @RestController?,"@RestoController odpowiada m.in. za przekazanie obiektu i przyporządkowanie wyniku operacji do odpowiedniego widoku, jak również przekazanie żądania wywołania tego widoku do Springa. Podczas gdy @Controller tylko i wyłącznie przekazuje na zewnątrz dane.","W najnowszej wersji Spring Framework 5 nie ma juz żadnej różnicy, obie anotacje dają ten sam efekt","@Controller odpowiada za przekazanie obiektu i przyporządkowanie wyniku operacji do odpowiedniego widoku, jak również przekazanie żądania wywołania tego widoku do Springa. Podczas gdy @RestController tylko i wyłącznie przekazuje na zewnątrz dane.","@Controller obsługuje żądania od użytkownika, podczas gdy @RestController obsługuje żądania z Web API's.",3
+73,Java,Spring,Senior,Czy w ramach Spring MVC komponent anotowany przez @Controller i @ResponseBody może być traktowany równoznacznie do komponentu anotowanego przez @RestController?,Tak,Nie,null,null,1
+74,Java,Spring,Senior,Do czego możemy porównać funkcjonalność @Projection dostępną w ramach SpringDataJPA?,DTO's,DAO's,Adapter Pattern,JWT,1
+75,Java,Core,Mid,Czy można używać operatora '==' do porównywania 'Enum'? ,"Tak, ale tylko w sytuacji gdy porównujemy ze sobą 2 obiekty 'Enum'","Nie, tylko i wyłącznie 'equals()'","Tak, ale tylko w sytuacji, gry porównujemy 'Enum' z typem prymitywnym",Tak,4
+76,Java,Spring,Mid,Encja w JPA nie musi posiadać:,Konstruktora bezparametrowego,Konstruktora ze wszystkimi parametrami,Adnotacji @Entity,Pola dla id z adnotacją @Id,
+77,,,,,,,,,
+78,,,,,,,,,
+79,,,,,,,,,
+80,,,,,,,,,
+81,,,,,,,,,
+82,,,,,,,,,
+83,,,,,,,,,
+84,,,,,,,,,
+85,,,,,,,,,
+86,,,,,,,,,
+87,,,,,,,,,
+88,,,,,,,,,
+89,,,,,,,,,
+90,,,,,,,,,
+91,,,,,,,,,
+92,,,,,,,,,
+93,,,,,,,,,
+94,,,,,,,,,
+95,,,,,,,,,

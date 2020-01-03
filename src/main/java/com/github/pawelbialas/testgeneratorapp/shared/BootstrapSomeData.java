@@ -56,9 +56,9 @@ public class BootstrapSomeData implements ApplicationListener<ContextRefreshedEv
             answer2.setQuestion(question);
             answer3.setQuestion(question);
 
-            question.getAnswers().add(answer1);
-            question.getAnswers().add(answer2);
-            question.getAnswers().add(answer3);
+            question.add(answer1);
+            question.add(answer2);
+            question.add(answer3);
 
             question.setSpecificTech("Java");
             question.setSkillLevel(SkillLevel.JUNIOR);

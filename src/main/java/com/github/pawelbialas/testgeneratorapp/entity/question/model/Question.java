@@ -20,7 +20,7 @@ public class Question extends BaseEntity {
     private MainTech mainTech;
     private String specificTech;
     private SkillLevel skillLevel;
-    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers = new ArrayList<Answer>() {
     };
 
@@ -74,5 +74,10 @@ public class Question extends BaseEntity {
 
     public void setSkillLevel(SkillLevel skillLevel) {
         this.skillLevel = skillLevel;
+    }
+
+    public Question add (Answer answer) {
+        this.answers.add(answer);
+        return this;
     }
 }
