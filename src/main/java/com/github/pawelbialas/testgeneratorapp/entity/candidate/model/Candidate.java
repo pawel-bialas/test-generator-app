@@ -7,9 +7,8 @@ import com.github.pawelbialas.testgeneratorapp.shared.BaseEntity;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
-
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @ToString
@@ -17,15 +16,15 @@ public class Candidate extends BaseEntity {
 
     @Column(updatable = false, nullable = false)
     private Long candidateNumber;
-    @OneToMany(mappedBy = "candidate", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<SkillTest> skillTests = new HashSet<>();
-    @OneToMany(mappedBy = "candidate", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Result> results;
+    @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
+    private List<SkillTest> skillTests = new ArrayList<>();
+    @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
+    private List<Result> results = new ArrayList<>();
 
     public Candidate() {
     }
 
-    public Candidate (Long candidateNumber, HashSet<SkillTest> skillTests, HashSet<Result> results) {
+    public Candidate (Long candidateNumber, ArrayList<SkillTest> skillTests, ArrayList<Result> results) {
         this.candidateNumber = candidateNumber;
         this.skillTests = skillTests;
         this.results = results;
@@ -39,19 +38,19 @@ public class Candidate extends BaseEntity {
         this.candidateNumber = candidateNumber;
     }
 
-    public Set<SkillTest> getSkillTests() {
+    public List<SkillTest> getSkillTests() {
         return skillTests;
     }
 
-    public void setSkillTests(Set<SkillTest> skillTests) {
+    public void setSkillTests(List<SkillTest> skillTests) {
         this.skillTests = skillTests;
     }
 
-    public Set<Result> getResults() {
+    public List<Result> getResults() {
         return results;
     }
 
-    public void setResults(Set<Result> results) {
+    public void setResults(List<Result> results) {
         this.results = results;
     }
 }

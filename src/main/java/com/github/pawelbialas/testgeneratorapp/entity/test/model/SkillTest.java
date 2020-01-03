@@ -7,8 +7,7 @@ import com.github.pawelbialas.testgeneratorapp.shared.BaseEntity;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @ToString
@@ -16,29 +15,31 @@ public class SkillTest extends BaseEntity {
 
 
     @OneToMany
-    private Set<Question> questions;
-    @ManyToOne
-    @JoinColumn(name = "candidate_id", updatable = false, insertable = false)
+    private List<Question> questions = new ArrayList<>();
+    @ManyToOne (optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "candidate_id")
     private Candidate candidate;
     @OneToOne
     @JoinColumn(name = "result_id")
     private Result result;
 
+
     public SkillTest () {
 
     }
 
-    public SkillTest (HashSet<Question> questions, Candidate candidate, Result result) {
+    public SkillTest(ArrayList<Question> questions, Candidate candidate, Result result) {
         this.questions = questions;
         this.candidate = candidate;
         this.result = result;
+
     }
 
-    public Set<Question> getQuestions() {
+    public List<Question> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(Set<Question> questions) {
+    public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
 

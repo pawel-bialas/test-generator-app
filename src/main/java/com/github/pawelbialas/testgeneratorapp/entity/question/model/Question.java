@@ -7,8 +7,9 @@ import com.github.pawelbialas.testgeneratorapp.shared.SkillLevel;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 
 
 @Entity
@@ -20,9 +21,10 @@ public class Question extends BaseEntity {
     private String specificTech;
     private SkillLevel skillLevel;
     @OneToMany(mappedBy = "question", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Answer> answers;
+    private List<Answer> answers = new ArrayList<Answer>() {
+    };
 
-    public Question(String contents, MainTech mainTech, String specificTech, HashSet<Answer> answers, SkillLevel skillLevel) {
+    public Question(String contents, MainTech mainTech, String specificTech, ArrayList<Answer> answers, SkillLevel skillLevel) {
         this.contents = contents;
         this.mainTech = mainTech;
         this.specificTech = specificTech;
@@ -58,11 +60,11 @@ public class Question extends BaseEntity {
         this.specificTech = specificTech;
     }
 
-    public Set<Answer> getAnswers() {
+    public List<Answer> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(Set<Answer> answers) {
+    public void setAnswers(List<Answer> answers) {
         this.answers = answers;
     }
 

@@ -4,10 +4,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.shared.BaseEntity;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 @ToString
@@ -17,8 +14,8 @@ public class Answer extends BaseEntity {
     String answer;
     @Column(nullable = false)
     Boolean correct;
-    @ManyToOne
-    @JoinColumn(name = "question_id", updatable = false, insertable = false)
+    @ManyToOne (optional = false)
+    @JoinColumn(name = "question_id")
     Question question;
 
 // Ten układ w przypadku Question działa, Question jest nadrzędne
@@ -30,7 +27,7 @@ public class Answer extends BaseEntity {
     public Answer (String answer, Boolean correct, Question question) {
         this.answer = answer;
         this.correct = correct;
-//        this.question = question;
+        this.question = question;
     }
 
     public String getAnswer() {

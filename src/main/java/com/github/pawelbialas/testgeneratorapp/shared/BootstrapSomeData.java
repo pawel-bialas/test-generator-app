@@ -2,15 +2,17 @@ package com.github.pawelbialas.testgeneratorapp.shared;
 
 import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
 import com.github.pawelbialas.testgeneratorapp.entity.answer.repository.AnswerRepository;
-import com.github.pawelbialas.testgeneratorapp.entity.answer.service.AnswerService;
+import com.github.pawelbialas.testgeneratorapp.entity.candidate.model.Candidate;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.repository.QuestionRepository;
-import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionService;
+import com.github.pawelbialas.testgeneratorapp.entity.test.model.SkillTest;
+import com.github.pawelbialas.testgeneratorapp.entity.test.repository.SkillTestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,87 +23,63 @@ public class BootstrapSomeData implements ApplicationListener<ContextRefreshedEv
 
     private final QuestionRepository questionRepository;
     private final AnswerRepository answerRepository;
+    private final EntityManagerFactory emf;
+    private final SkillTestRepository skillTestRepository;
 
-    public BootstrapSomeData(QuestionRepository questionRepository, AnswerRepository answerRepository) {
+    public BootstrapSomeData(QuestionRepository questionRepository, AnswerRepository answerRepository, EntityManagerFactory emf, SkillTestRepository skillTestRepository) {
         this.questionRepository = questionRepository;
         this.answerRepository = answerRepository;
+        this.emf = emf;
+        this.skillTestRepository = skillTestRepository;
     }
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        Answer answer1 = new Answer();
-        Answer answer2 = new Answer();
-        Answer answer3 = new Answer();
 
-        answer1.setAnswer("aaa");
-        answer2.setAnswer("bbb");
-        answer3.setAnswer("ccc");
 
-        answer1.setCorrect(true);
-        answer2.setCorrect(false);
-        answer3.setCorrect(false);
+        for (int i = 0; i < 10; i++) {
+            Answer answer1 = new Answer();
+            Answer answer2 = new Answer();
+            Answer answer3 = new Answer();
 
-        Question question1 = new Question();
-        Question question2 = new Question();
-        Question question3 = new Question();
+            answer1.setAnswer("aaa "  + (i + 1));
+            answer2.setAnswer("bbb "  + (i + 1));
+            answer3.setAnswer("ccc "  + (i + 1));
 
-        UUID id = question1.getId();
+            answer1.setCorrect(true);
+            answer2.setCorrect(false);
+            answer3.setCorrect(false);
 
-        HashSet<Answer> answers = new HashSet<>();
+            Question question = new Question();
 
-        question1.setSpecificTech("aaa");
-        question2.setSpecificTech("bbb");
-        question3.setSpecificTech("ccc");
+            answer1.setQuestion(question);
+            answer2.setQuestion(question);
+            answer3.setQuestion(question);
 
-        question1.setSkillLevel(SkillLevel.JUNIOR);
-        question2.setSkillLevel(SkillLevel.SENIOR);
-        question3.setSkillLevel(SkillLevel.MID);
+            question.getAnswers().add(answer1);
+            question.getAnswers().add(answer2);
+            question.getAnswers().add(answer3);
 
-        question1.setContents("aaa");
-        question2.setContents("bbb");
-        question3.setContents("ccc");
-
-        question1.setMainTech(MainTech.JAVA);
-        question2.setMainTech(MainTech.JAVA);
-        question3.setMainTech(MainTech.JAVA);
-
-        questionRepository.saveAndFlush(question1);
-        questionRepository.saveAndFlush(question2);
-        questionRepository.saveAndFlush(question3);
-
-        answer1.setQuestion(question1);
-        answer2.setQuestion(question2);
-        answer3.setQuestion(question3);
-
-        answerRepository.saveAndFlush(answer1);
-        answerRepository.saveAndFlush(answer2);
-        answerRepository.saveAndFlush(answer3);
-
-        List<Question> allQuestions = questionRepository.findAll();
-        for (Question question: allQuestions) {
-            System.out.println(question.getId());
+            question.setSpecificTech("Java");
+            question.setSkillLevel(SkillLevel.JUNIOR);
+            question.setMainTech(MainTech.JAVA);
+            question.setContents("Pytanie o numerze " +  + (i + 1));
+            questionRepository.save(question);
         }
 
-        Question bbb = questionRepository.findByContentsEquals("bbb");
-        System.out.println(bbb);
+        List<Question> allByMainTech = questionRepository.findAllByMainTech(MainTech.JAVA);
 
-        Set<Question> allByMainTech = questionRepository.findAllByMainTech(MainTech.JAVA);
-        System.out.println(allByMainTech);
+        Candidate candidate = new Candidate();
+        candidate.setCandidateNumber(12341234L);
 
-        Set<Question> allByMainTechAndSkillLevel = questionRepository.findAllByMainTechAndSkillLevel(MainTech.JAVA, SkillLevel.SENIOR);
-        System.out.println(allByMainTechAndSkillLevel);
-
-        List<Answer> all = answerRepository.findAll();
-        System.out.println(all);
-        Question aaa1 = questionRepository.findByContentsEquals("aaa");
-        Answer aaa = answerRepository.findByAnswer("aaa");
-        answers.add(aaa);
-        aaa1.setAnswers(answers);
-        System.out.println(aaa1);
-        questionRepository.save(aaa1);
-
+        SkillTest skillTest = new SkillTest();
+        skillTest.setQuestions(allByMainTech);
+        skillTest.setCandidate(candidate);
+        skillTestRepository.save(skillTest);
 
 
     }
+
+
 
 }
