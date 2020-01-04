@@ -29,11 +29,11 @@ public class QuestionCsvConverter {
                 String[] nextLine;
                 while ((nextLine = reader.readNext()) != null) {
                     Question question = new Question();
-                    ArrayList<String> answers = new ArrayList<>();
                     question.setMainTech(convertMainTech(nextLine[1]));
                     question.setSpecificTech(nextLine[2]);
                     question.setSkillLevel(convertSkillLevel(nextLine[3]));
                     question.setContents(nextLine[4]);
+                    ArrayList<String> answers = new ArrayList<>();
                     answers.add(nextLine[5]);
                     answers.add(nextLine[6]);
                     answers.add(nextLine[7]);
@@ -86,8 +86,48 @@ public class QuestionCsvConverter {
     }
 
     private List<Answer> convertAnswers(ArrayList<String> answers) {
-        
+        List<Answer> result = new ArrayList<>();
+        List<Integer> correct = new ArrayList<>();
+        if (answers.get(4).length() != 1) {
+            String[] split = answers.get(4).split(",");
+            for (int i = 0; i < split.length; i++) {
+                int answerNumber = Integer.parseInt(split[i]);
+                correct.add(answerNumber);
+            }
+        } else {
+            correct.add(Integer.parseInt(answers.get(4)));
+        }
+        for (int i = 0; i < answers.size() -1; i++) {
+            Answer answer = new Answer();
+            answer.setAnswer(answers.get(i));
+            if (correct.contains(i + 1)) {
+                answer.setCorrect(true);
+            } else answer.setCorrect(false);
+            result.add(answer);
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+
+
+        ArrayList<String> answers = new ArrayList<>();
+        answers.add("12");
+        answers.add("13");
+        answers.add("14");
+        answers.add("15");
+        answers.add("1,2");
+
+        QuestionCsvConverter questionCsvConverter = new QuestionCsvConverter();
+        List<Answer> answers1 = questionCsvConverter.convertAnswers(answers);
+
+        System.out.println(answers1);
+
     }
 
 
 }
+
+
+
