@@ -1,4 +1,3 @@
-ID,Main,Technologia,Poziom,Treść,Odpowiedź 1,Odpoiwedź 2,Odpowiedź 3,Odpowiedź 4,Poprawne
 1,Java,Core,Entry,Co oznacza słowo 'final' przy klasie?,"JVM w pierwszej kolejności skompiluje tą klasę, dopiero później pozostałe",Klasa nie może być dziedziczona,Wszystkie metody w tej klasie są finalne,Garbage Collection nie dotyczy instancji tej klasy,"2,3"
 2,Java,Core,Entry,Co oznacza słowo 'final' przy metodzie,JVM w pierwszej kolejności wprowadzi tą metodę dopiero później pozostałe,Dana metoda nie jest już metodą wirtualną,Metoda nie może być nadpisana w innej klasie,"Metoda zawsze zwraca obiekt lub null, nawet kiedy jest typu 'void ()'",3
 3,Java,Core,Entry,Co oznacza słowo 'final' przy polu w klasie?,pole musi zostać zadeklarowane i zainicjowane jednocześnie,"JVM w pierwszej kolejności tworzy to pole, dopiero po tym kolejne","Można przypisać do niego nową wartość/obiekt tylko i wyłącznie wtedy, kiedy wcześniej przypiszemy do niego 'null'",To pole jest bezpieczne w programowaniu wielowątkowym tzw. 'thread-safe'.,1
@@ -12,7 +11,7 @@ ID,Main,Technologia,Poziom,Treść,Odpowiedź 1,Odpoiwedź 2,Odpowiedź 3,Odpowi
 11,Java,Core,Junior,Różnica pomiędzy ArrayList a LinkedList w Javie?,ArrayList pozwala na znacznie szybsze wyszukiwanie i pobieranie pojedyńczego elementu,LinkedList pozwala na znacznie szybsze wyszukanie i usunięcie pojedyńczego elementu,LinkedList pozwala na znacznie szybsze dodawanie nowych elementów niż ArraList,LinkedList wymaga większej ilości pamięci JVM niż ArrayList,"1,2,3,4"
 12,Java,Core,Junior,Czym jest Iterator?,"Interfejs pakiety java.utils, który umożliwia tworzenie specjalnego obiektu, poprzez wywołanie metody 'iterator()' na obiekcie, który jest kolekcją.",Interfejs domyślnie stosowany w pętli 'forEach',Obiekt pomocny w operacjach na kolekcjach. Między innymi posiada wbudowaną metodę 'forEachNext()',Interfejs domyślnie stosowany w pętli 'forEach',"1,4"
 13,Java,Core,Junior,Jakie typy danych występują w Javie?,"Typy proste: int, float, double, long, boolean, char, short, byte i typy złożone/obiektowe","Typy proste: int, float, double, long, boolean, volatile, short, byte i typy złożone/obiektowe","Typy proste: int, float, double, long, boolean, volatile, short, vector i typy złożone/obiektowe","Java jest językiem obiektowym, wszystkie typy danych są obiektami",1
-14,Java,Core,Junior,Czym jest Serializacja (Serialization) i Deserializacja (Deserialization)?,"Deserializacja obiektu jest procesem w trakcie którego jest wywoływany konstruktor danej klasy, aby przetworzyć strumień bajtów na obiekt",Serializacja obiektu zawsze daje nam możliwość określenia nazwy pliku w jakim zapiszemy dany obiekt. Plik ten będzie miał format domyślnie '*.txt',"Konwersja obiektów na strumień bajtów, która umożliwia przesłanie obiektu z jednej aplikacji do innej aplikacji iponowne przetworzenie strumienia na obiekt Javy","Serializacja jest procesem, do którego nie możemy wprowadzać obiektów 'static'","3, 4"
+14,Java,Core,Junior,Czym jest Serializacja (Serialization) i Deserializacja (Deserialization)?,"Deserializacja obiektu jest procesem w trakcie którego jest wywoływany konstruktor danej klasy, aby przetworzyć strumień bajtów na obiekt",Serializacja obiektu zawsze daje nam możliwość określenia nazwy pliku w jakim zapiszemy dany obiekt. Plik ten będzie miał format domyślnie '*.txt',"Konwersja obiektów na strumień bajtów, która umożliwia przesłanie obiektu z jednej aplikacji do innej aplikacji iponowne przetworzenie strumienia na obiekt Javy","Serializacja jest procesem, do którego nie możemy wprowadzać obiektów 'static'","3,4"
 15,Java,Core,Junior,Czy argument metody w danej klasie może mieć taką samą nazwę jak pole w tej klasie?,Tak,Nie,null,null,1
 16,Java,Core,Junior,Różnica pomiędzy HashSet i TreeSet?,"HashSet oferuje szybsze operacje odczytu, lub zapisu niż TreeSet","TreeSet nie pozwala na przechowywanie duplikatów, podczas gdy HashSet nie pozwala na przechowywanie duplikatów","TreeSet zapewnia możliwość sortowania elementów i zachowania kolejności dodawania, podczas gdy HashSet nie zachowuje kolejności",HashSet zapewnia możliwość przechowywania 'null' podczas gdy TreeSet nie zapewnia takiej możliwości,2
 17,Java,Core,Junior,Na czym polega kontrakt między metodami hashCode i equals?,Jeśli wartość metody hashCode jest taka sama x.hashCode() == y.hashCode() to nie jest wymagane aby x.equals(y) zwracało true,Jeśli metoda equals zwraca true dla x.equals(y) to metoda hashCode również musi zwrócić true dla x.hashCode() == y.hashCode(),Wielokrotne wywołanie metody hashCode na tym samym obiekcie (który nie był modyfikowany pomiędzy wywołaniami) musi zwrócić tę samą wartość,"Powinniśmy implementować te metody w danej klasie, żeby otrzymywać poprawne rezultaty","1,2,3,4"
@@ -75,22 +74,3 @@ ID,Main,Technologia,Poziom,Treść,Odpowiedź 1,Odpoiwedź 2,Odpowiedź 3,Odpowi
 74,Java,Spring,Senior,Do czego możemy porównać funkcjonalność @Projection dostępną w ramach SpringDataJPA?,DTO's,DAO's,Adapter Pattern,JWT,1
 75,Java,Core,Mid,Czy można używać operatora '==' do porównywania 'Enum'? ,"Tak, ale tylko w sytuacji gdy porównujemy ze sobą 2 obiekty 'Enum'","Nie, tylko i wyłącznie 'equals()'","Tak, ale tylko w sytuacji, gry porównujemy 'Enum' z typem prymitywnym",Tak,4
 76,Java,Spring,Mid,Encja w JPA nie musi posiadać:,Konstruktora bezparametrowego,Konstruktora ze wszystkimi parametrami,Adnotacji @Entity,Pola dla id z adnotacją @Id,2
-77,,,,,,,,,
-78,,,,,,,,,
-79,,,,,,,,,
-80,,,,,,,,,
-81,,,,,,,,,
-82,,,,,,,,,
-83,,,,,,,,,
-84,,,,,,,,,
-85,,,,,,,,,
-86,,,,,,,,,
-87,,,,,,,,,
-88,,,,,,,,,
-89,,,,,,,,,
-90,,,,,,,,,
-91,,,,,,,,,
-92,,,,,,,,,
-93,,,,,,,,,
-94,,,,,,,,,
-95,,,,,,,,,

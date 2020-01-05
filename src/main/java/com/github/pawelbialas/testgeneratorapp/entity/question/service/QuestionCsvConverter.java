@@ -3,10 +3,12 @@ package com.github.pawelbialas.testgeneratorapp.entity.question.service;
 
 import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
-import com.github.pawelbialas.testgeneratorapp.shared.MainTech;
-import com.github.pawelbialas.testgeneratorapp.shared.SkillLevel;
+import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
+import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.opencsv.CSVReader;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -14,17 +16,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.github.pawelbialas.testgeneratorapp.shared.SkillLevel.MID;
-
+@Component
 public class QuestionCsvConverter {
+
+    @Autowired
+    private QuestionService questionService;
 
     @Value("${csv.location}")
     private String fileLocation;
 
-    public List<Question> readQuestionsFromCsv(String fileName) {
-        List<Question> questions = new ArrayList<>();
+    public void readQuestionsFromCsv() {
+//        ArrayList<Question> questions = new ArrayList<>();
         try {
-            CSVReader reader = new CSVReader(new FileReader(fileLocation + fileName), ',');
+            CSVReader reader = new CSVReader(new FileReader("F:\\Files\\source\\test-generator-app\\test-generator-app\\src\\main\\resources\\tester.csv"), ',');
             try {
                 String[] nextLine;
                 while ((nextLine = reader.readNext()) != null) {
@@ -33,13 +37,18 @@ public class QuestionCsvConverter {
                     question.setSpecificTech(nextLine[2]);
                     question.setSkillLevel(convertSkillLevel(nextLine[3]));
                     question.setContents(nextLine[4]);
-                    ArrayList<String> answers = new ArrayList<>();
-                    answers.add(nextLine[5]);
-                    answers.add(nextLine[6]);
-                    answers.add(nextLine[7]);
-                    answers.add(nextLine[8]);
-                    answers.add(nextLine[9]);
-                    question.setAnswers(convertAnswers(answers));
+                    ArrayList<String> rawAnswers = new ArrayList<>();
+                    rawAnswers.add(nextLine[5]);
+                    rawAnswers.add(nextLine[6]);
+                    rawAnswers.add(nextLine[7]);
+                    rawAnswers.add(nextLine[8]);
+                    rawAnswers.add(nextLine[9]);
+                    List<Answer> answers = convertAnswers(rawAnswers);
+                    for (Answer answer: answers) {
+                        question.addAnswer(answer);
+                    }
+                    questionService.saveOrUpdate(question);
+
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -47,7 +56,8 @@ public class QuestionCsvConverter {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return questions;
+
+//        return questions;
     }
 
     private SkillLevel convertSkillLevel(String someString) {
@@ -76,7 +86,7 @@ public class QuestionCsvConverter {
     }
 
     private MainTech convertMainTech(String someString) {
-        MainTech result = MainTech.SQL;
+        MainTech result = MainTech.UNASSIGNED;
         switch (someString) {
             case "Java":
                 result = MainTech.JAVA;
@@ -88,14 +98,18 @@ public class QuestionCsvConverter {
     private List<Answer> convertAnswers(ArrayList<String> answers) {
         List<Answer> result = new ArrayList<>();
         List<Integer> correct = new ArrayList<>();
-        if (answers.get(4).length() != 1) {
-            String[] split = answers.get(4).split(",");
-            for (int i = 0; i < split.length; i++) {
-                int answerNumber = Integer.parseInt(split[i]);
-                correct.add(answerNumber);
+        try {
+            if (answers.get(4).length() != 1) {
+                String[] split = answers.get(4).split(",");
+                for (int i = 0; i < split.length; i++) {
+                    int answerNumber = Integer.parseInt(split[i]);
+                    correct.add(answerNumber);
+                }
+            } else {
+                correct.add(Integer.parseInt(answers.get(4)));
             }
-        } else {
-            correct.add(Integer.parseInt(answers.get(4)));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
         for (int i = 0; i < answers.size() -1; i++) {
             Answer answer = new Answer();
@@ -108,24 +122,6 @@ public class QuestionCsvConverter {
 
         return result;
     }
-
-    public static void main(String[] args) {
-
-
-        ArrayList<String> answers = new ArrayList<>();
-        answers.add("12");
-        answers.add("13");
-        answers.add("14");
-        answers.add("15");
-        answers.add("1,2");
-
-        QuestionCsvConverter questionCsvConverter = new QuestionCsvConverter();
-        List<Answer> answers1 = questionCsvConverter.convertAnswers(answers);
-
-        System.out.println(answers1);
-
-    }
-
 
 }
 

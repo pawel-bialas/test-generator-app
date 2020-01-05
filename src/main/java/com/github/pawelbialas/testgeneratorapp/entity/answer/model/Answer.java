@@ -14,8 +14,7 @@ public class Answer extends BaseEntity {
     String answer;
     @Column(nullable = false)
     Boolean correct;
-    @ManyToOne (optional = false)
-    @JoinColumn(name = "question_id")
+    @ManyToOne (fetch = FetchType.LAZY)
     Question question;
 
 // Ten układ w przypadku Question działa, Question jest nadrzędne

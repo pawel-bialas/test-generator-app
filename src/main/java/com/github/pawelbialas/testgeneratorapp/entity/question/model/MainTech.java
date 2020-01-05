@@ -1,4 +1,4 @@
-package com.github.pawelbialas.testgeneratorapp.shared;
+package com.github.pawelbialas.testgeneratorapp.entity.question.model;
 
 public enum MainTech {
 
@@ -9,6 +9,7 @@ public enum MainTech {
     REACT("REACT"),
     FRONT_END("FRONT_END"),
     SQL("SQL"),
+    UNASSIGNED("UNASSIGNED")
     ;
 
 

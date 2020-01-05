@@ -1,4 +1,4 @@
-package com.github.pawelbialas.testgeneratorapp.shared;
+package com.github.pawelbialas.testgeneratorapp.entity.question.model;
 
 public enum SkillLevel {
 
@@ -7,7 +7,8 @@ public enum SkillLevel {
     MID("MID"),
     SENIOR("SENIOR"),
     EXPERT("EXPERT"),
-    ALL("ALL")
+    ALL("ALL"),
+    UNASSIGNED("UNASSIGNED")
     ;
 
 

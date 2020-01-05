@@ -1,9 +1,7 @@
 package com.github.pawelbialas.testgeneratorapp.entity.question.model;
 
 import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
-import com.github.pawelbialas.testgeneratorapp.shared.MainTech;
 import com.github.pawelbialas.testgeneratorapp.shared.BaseEntity;
-import com.github.pawelbialas.testgeneratorapp.shared.SkillLevel;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -17,8 +15,10 @@ import java.util.List;
 public class Question extends BaseEntity {
 
     private String contents;
+    @Enumerated
     private MainTech mainTech;
     private String specificTech;
+    @Enumerated
     private SkillLevel skillLevel;
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers = new ArrayList<Answer>() {
@@ -76,8 +76,13 @@ public class Question extends BaseEntity {
         this.skillLevel = skillLevel;
     }
 
-    public Question add (Answer answer) {
-        this.answers.add(answer);
-        return this;
+    public void addAnswer(Answer answer) {
+        answers.add(answer);
+        answer.setQuestion(this);
+    }
+
+    public void removeAnswer (Answer answer) {
+        answers.remove(answer);
+        answer.setQuestion(null);
     }
 }

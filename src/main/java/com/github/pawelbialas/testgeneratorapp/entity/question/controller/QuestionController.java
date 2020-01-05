@@ -22,6 +22,6 @@ public class QuestionController {
     @ResponseStatus(HttpStatus.CREATED)
     private void addNewQuestion(@RequestBody Question question) {
 
-        questionService.newQuestion(question);
+        questionService.saveOrUpdate(question);
     }
 }
