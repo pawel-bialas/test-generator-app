@@ -6,8 +6,10 @@ import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.entity.question.repository.QuestionRepository;
+import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionService;
 import com.github.pawelbialas.testgeneratorapp.entity.test.repository.SkillTestRepository;
 import com.opencsv.CSVReader;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -22,127 +24,12 @@ import java.util.List;
 @Component
 public class BootstrapSomeData implements ApplicationListener<ContextRefreshedEvent> {
 
-    private final QuestionRepository questionRepository;
-    private final AnswerRepository answerRepository;
-    private final EntityManagerFactory emf;
-    private final SkillTestRepository skillTestRepository;
-
-    public BootstrapSomeData(QuestionRepository questionRepository, AnswerRepository answerRepository, EntityManagerFactory emf, SkillTestRepository skillTestRepository) {
-        this.questionRepository = questionRepository;
-        this.answerRepository = answerRepository;
-        this.emf = emf;
-        this.skillTestRepository = skillTestRepository;
-    }
+    @Autowired private QuestionService questionService;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
-        try {
-            CSVReader reader = new CSVReader(new FileReader("F:\\Files\\source\\test-generator-app\\test-generator-app\\src\\main\\resources\\tester.csv"), ',');
-            try {
-                String[] nextLine;
-                while ((nextLine = reader.readNext()) != null) {
-                    Question question = new Question();
-                    question.setMainTech(convertMainTech(nextLine[1]));
-                    question.setSpecificTech(nextLine[2]);
-                    question.setSkillLevel(convertSkillLevel(nextLine[3]));
-                    question.setContents(nextLine[4]);
-                    ArrayList<String> rawAnswers = new ArrayList<>();
-                    rawAnswers.add(nextLine[5]);
-                    rawAnswers.add(nextLine[6]);
-                    rawAnswers.add(nextLine[7]);
-                    rawAnswers.add(nextLine[8]);
-                    rawAnswers.add(nextLine[9]);
-                    List<Answer> answers = convertAnswers(rawAnswers);
-                    for (Answer answer : answers) {
-                        question.addAnswer(answer);
-                    }
-                    questionRepository.save(question);
-
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-//        return questions;
-    }
-
-    private SkillLevel convertSkillLevel(String someString) {
-        SkillLevel result = SkillLevel.ALL;
-
-        switch (someString) {
-
-            case "Entry":
-                result = SkillLevel.ENTRY;
-                break;
-            case "Junior":
-                result = SkillLevel.JUNIOR;
-                break;
-            case "Mid":
-                result = SkillLevel.MID;
-                break;
-            case "Senior":
-                result = SkillLevel.SENIOR;
-                break;
-            case "Expert":
-                result = SkillLevel.EXPERT;
-                break;
-        }
-
-        return result;
-    }
-
-    private MainTech convertMainTech(String someString) {
-        MainTech result = MainTech.UNASSIGNED;
-        switch (someString) {
-            case "Java":
-                result = MainTech.JAVA;
-                break;
-        }
-        return result;
-    }
-
-    private List<Answer> convertAnswers(ArrayList<String> answers) {
-        List<Answer> result = new ArrayList<>();
-        List<Integer> correct = new ArrayList<>();
-        try {
-            if (answers.get(4).length() != 1) {
-                String[] split = answers.get(4).split(",");
-                for (int i = 0; i < split.length; i++) {
-                    int answerNumber = Integer.parseInt(split[i]);
-                    correct.add(answerNumber);
-                }
-            } else {
-                correct.add(Integer.parseInt(answers.get(4)));
-            }
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
-        for (int i = 0; i < answers.size() -1; i++) {
-            Answer answer = new Answer();
-            answer.setAnswer(answers.get(i));
-            if (correct.contains(i + 1)) {
-                answer.setCorrect(true);
-            } else answer.setCorrect(false);
-            result.add(answer);
-        }
-
-        return result;
-    }
-
-
-
-
-
-
-
-
-
-
-
+        questionService.readQuestionsFromCsv();
 
 
 
@@ -188,6 +75,7 @@ public class BootstrapSomeData implements ApplicationListener<ContextRefreshedEv
 //        skillTestRepository.save(skillTest);
 
 
+    }
 }
 
 

@@ -77,8 +77,8 @@ public class QuestionService {
                 result = SkillLevel.ENTRY;
             case "Junior":
                  result = SkillLevel.JUNIOR;
-//            case "Mid":
-//                 result = SkillLevel.MID;
+            case "Mid":
+                 result = SkillLevel.MID;
             case "Senior":
                  result = SkillLevel.SENIOR;
             case "Expert":
