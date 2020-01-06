@@ -24,7 +24,8 @@ public class QuestionService {
 
     @Autowired private QuestionRepository questions;
     @Autowired private EntityManagerFactory emf;
-    @Value("${csv.location}")private String fileLocation;
+    @Value("${csv.location}")
+    private String fileLocation;
 
 
     public void saveOrUpdate (Question question) {
@@ -34,10 +35,21 @@ public class QuestionService {
         emf.createEntityManager().merge(question);
     }
 
+    public List<Question> findAllByMainTech (MainTech mainTech) {
+        return questions.findAllByMainTech(mainTech);
+    }
+
+    public List<Question> findAllByMainTechAndSkillLevel (MainTech mainTech, SkillLevel skillLevel) {
+        return questions.findAllByMainTechAndSkillLevel(mainTech, skillLevel);
+    }
+
+
+
+
     public void readQuestionsFromCsv() {
 //        ArrayList<Question> questions = new ArrayList<>();
         try {
-            CSVReader reader = new CSVReader(new FileReader("F:\\Files\\source\\test-generator-app\\test-generator-app\\src\\main\\resources\\tester.csv"), ',');
+            CSVReader reader = new CSVReader(new FileReader(fileLocation), ',');
             try {
                 String[] nextLine;
                 while ((nextLine = reader.readNext()) != null) {

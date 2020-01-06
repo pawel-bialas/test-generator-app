@@ -16,8 +16,7 @@ public class Result extends BaseEntity {
     @OneToOne
     @JoinColumn(name = "skill_test_id", nullable = false)
     private SkillTest skillTest;
-    @ManyToOne
-    @JoinColumn(name = "candidate_id", updatable = false, insertable = false)
+    @ManyToOne (fetch = FetchType.LAZY)
     private Candidate candidate;
 
     public Result() {

@@ -9,15 +9,21 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.util.*;
 
-@Entity
 @ToString
+@Entity
 public class SkillTest extends BaseEntity {
 
 
-    @OneToMany
-    private List<Question> questions = new ArrayList<>();
-    @ManyToOne (optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "candidate_id")
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "skill_test_questions",
+            joinColumns = @JoinColumn(name = "skill_test_id"),
+            inverseJoinColumns = @JoinColumn(name = "question_id")
+    )
+    private Set<Question> questions = new HashSet<>();
+    @ManyToOne (fetch = FetchType.LAZY)
     private Candidate candidate;
     @OneToOne
     @JoinColumn(name = "result_id")
@@ -28,18 +34,18 @@ public class SkillTest extends BaseEntity {
 
     }
 
-    public SkillTest(ArrayList<Question> questions, Candidate candidate, Result result) {
+    public SkillTest(HashSet<Question> questions, Candidate candidate, Result result) {
         this.questions = questions;
         this.candidate = candidate;
         this.result = result;
 
     }
 
-    public List<Question> getQuestions() {
+    public Set<Question> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(List<Question> questions) {
+    public void setQuestions(Set<Question> questions) {
         this.questions = questions;
     }
 
