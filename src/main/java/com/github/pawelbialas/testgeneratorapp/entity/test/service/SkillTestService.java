@@ -22,11 +22,16 @@ public class SkillTestService {
     @Autowired private QuestionService questionService;
     @Autowired private SkillTestRepository skillTestRepository;
     @Value("${regular.test.size}")
-    private Integer testSize;
+    private Integer regularTestSize;
+    @Value("${short.test.size}")
+    private Integer shortTestSize;
 
 
-    public void generateTest (Candidate candidate, MainTech mainTech, SkillLevel skillLevel) {
+    public void generateTest (Candidate candidate, MainTech mainTech, SkillLevel skillLevel, Boolean isRegularTest) {
+
         List<Question> mainTechQuestions = questionService.findAllByMainTech(mainTech);
+
+
 
 
     }

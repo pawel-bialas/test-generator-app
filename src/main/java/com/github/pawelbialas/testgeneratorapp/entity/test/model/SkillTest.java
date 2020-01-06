@@ -25,8 +25,8 @@ public class SkillTest extends BaseEntity {
     private Set<Question> questions = new HashSet<>();
     @ManyToOne (fetch = FetchType.LAZY)
     private Candidate candidate;
-    @OneToOne
-    @JoinColumn(name = "result_id")
+    @OneToOne (fetch = FetchType.LAZY)
+    @MapsId
     private Result result;
 
 

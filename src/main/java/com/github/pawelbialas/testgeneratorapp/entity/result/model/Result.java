@@ -13,8 +13,8 @@ public class Result extends BaseEntity {
 
     @Column(nullable = false)
     private Integer score;
-    @OneToOne
-    @JoinColumn(name = "skill_test_id", nullable = false)
+    @OneToOne (fetch = FetchType.LAZY)
+    @MapsId
     private SkillTest skillTest;
     @ManyToOne (fetch = FetchType.LAZY)
     private Candidate candidate;
