@@ -7,7 +7,6 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Entity
-@ToString
 public class Answer extends BaseEntity {
 
     @Column(nullable = false)
@@ -15,9 +14,9 @@ public class Answer extends BaseEntity {
     @Column(nullable = false)
     Boolean correct;
     @ManyToOne (fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_id", insertable = false, updatable = false)
     Question question;
 
-// Ten układ w przypadku Question działa, Question jest nadrzędne
 
     public Answer () {
 
@@ -51,5 +50,12 @@ public class Answer extends BaseEntity {
 
     public void setQuestion(Question question) {
         this.question = question;
+    }
+
+    @Override
+    public String toString() {
+        return "Answer{" +
+                "answer='" + answer + '\'' +
+                ", correct=" + correct + '}';
     }
 }

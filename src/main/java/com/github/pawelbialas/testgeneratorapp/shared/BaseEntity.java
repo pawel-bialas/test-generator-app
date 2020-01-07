@@ -15,7 +15,7 @@ public abstract class BaseEntity implements Serializable {
     @GenericGenerator(
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(updatable = false, nullable = false)
+    @Column(updatable = false)
     private UUID id;
 
 

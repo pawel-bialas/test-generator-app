@@ -14,37 +14,30 @@ import java.util.*;
 public class SkillTest extends BaseEntity {
 
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(name = "skill_test_questions",
-            joinColumns = @JoinColumn(name = "skill_test_id"),
-            inverseJoinColumns = @JoinColumn(name = "question_id")
-    )
-    private Set<Question> questions = new HashSet<>();
-    @ManyToOne (optional = false)
+    @OneToMany
+    private List<Question> questions = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
     private Candidate candidate;
-    @OneToOne (optional = false)
+    @OneToOne(mappedBy = "skillTest", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     private Result result;
 
 
-    public SkillTest () {
+    public SkillTest() {
 
     }
 
-    public SkillTest(HashSet<Question> questions, Candidate candidate, Result result) {
+    public SkillTest(ArrayList<Question> questions, Candidate candidate, Result result) {
         this.questions = questions;
         this.candidate = candidate;
         this.result = result;
 
     }
 
-    public Set<Question> getQuestions() {
+    public List<Question> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(Set<Question> questions) {
+    public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
 
@@ -64,13 +57,5 @@ public class SkillTest extends BaseEntity {
         this.result = result;
     }
 
-    public void addQuestion (Question question) {
-        questions.add(question);
-        question.addTests(this);
-    }
 
-    public void removeQuestion (Question question) {
-        questions.remove(question);
-        question.removeTest(this);
-    }
 }

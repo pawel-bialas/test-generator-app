@@ -1,20 +1,15 @@
 package com.github.pawelbialas.testgeneratorapp.entity.question.model;
-
 import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
-import com.github.pawelbialas.testgeneratorapp.entity.test.model.SkillTest;
-import com.github.pawelbialas.testgeneratorapp.entity.test.repository.SkillTestRepository;
 import com.github.pawelbialas.testgeneratorapp.shared.BaseEntity;
-import lombok.ToString;
+
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 
 @Entity
-@ToString
 public class Question extends BaseEntity {
 
     private String contents;
@@ -23,10 +18,8 @@ public class Question extends BaseEntity {
     private String specificTech;
     @Enumerated
     private SkillLevel skillLevel;
-    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Answer> answers = new ArrayList<>();
-    @ManyToMany (fetch = FetchType.EAGER, mappedBy = "questions")
-    private Set<SkillTest> tests = new HashSet<>();
 
     public Question(String contents, MainTech mainTech, String specificTech, ArrayList<Answer> answers, SkillLevel skillLevel) {
         this.contents = contents;
@@ -90,14 +83,14 @@ public class Question extends BaseEntity {
         answer.setQuestion(null);
     }
 
-    public void addTests (SkillTest test) {
-        tests.add(test);
-        test.addQuestion(this);
-
-    }
-
-    public void removeTest (SkillTest test) {
-        tests.remove(test);
-        test.removeQuestion(this);
+    @Override
+    public String toString() {
+        return "Question: "+ getId() +"{" +
+                "contents='" + contents + '\'' +
+                ", mainTech=" + mainTech +
+                ", specificTech='" + specificTech + '\'' +
+                ", skillLevel=" + skillLevel +
+                ", answers=" + answers +
+                '}';
     }
 }

@@ -10,4 +10,6 @@ public interface AnswerRepository extends JpaRepository<Answer, UUID> {
 
    Answer findByAnswer(String answer);
 
+   Answer findByQuestionId (UUID uuid);
+
 }

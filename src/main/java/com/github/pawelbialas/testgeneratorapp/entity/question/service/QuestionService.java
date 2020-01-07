@@ -22,28 +22,28 @@ import java.util.List;
 @Transactional
 public class QuestionService {
 
-    @Autowired private QuestionRepository questions;
-    @Autowired private EntityManagerFactory emf;
+    @Autowired
+    private QuestionRepository questions;
+    @Autowired
+    private EntityManagerFactory emf;
     @Value("${csv.location}")
     private String fileLocation;
 
 
-    public void saveOrUpdate (Question question) {
+    public void saveOrUpdate(Question question) {
         if (question.getId() == null) {
             questions.save(question);
         }
         emf.createEntityManager().merge(question);
     }
 
-    public List<Question> findAllByMainTech (MainTech mainTech) {
+    public List<Question> findAllByMainTech(MainTech mainTech) {
         return questions.findAllByMainTech(mainTech);
     }
 
-    public List<Question> findAllByMainTechAndSkillLevel (MainTech mainTech, SkillLevel skillLevel) {
+    public List<Question> findAllByMainTechAndSkillLevel(MainTech mainTech, SkillLevel skillLevel) {
         return questions.findAllByMainTechAndSkillLevel(mainTech, skillLevel);
     }
-
-
 
 
     public void readQuestionsFromCsv() {
@@ -65,8 +65,9 @@ public class QuestionService {
                     rawAnswers.add(nextLine[8]);
                     rawAnswers.add(nextLine[9]);
                     List<Answer> answers = convertAnswers(rawAnswers);
-                    for (Answer answer: answers) {
-                        question.addAnswer(answer);
+                    for (Answer answer : answers) {
+                        answer.setQuestion(question);
+                        question.getAnswers().add(answer);
                     }
                     questions.save(question);
 
@@ -82,19 +83,23 @@ public class QuestionService {
     }
 
     private SkillLevel convertSkillLevel(String someString) {
-        SkillLevel result = SkillLevel.UNASSIGNED;
+        SkillLevel result = null;
         switch (someString) {
-
             case "Entry":
                 result = SkillLevel.ENTRY;
+                break;
             case "Junior":
-                 result = SkillLevel.JUNIOR;
+                result = SkillLevel.JUNIOR;
+                break;
             case "Mid":
-                 result = SkillLevel.MID;
+                result = SkillLevel.MID;
+                break;
             case "Senior":
-                 result = SkillLevel.SENIOR;
+                result = SkillLevel.SENIOR;
+                break;
             case "Expert":
-                 result = SkillLevel.EXPERT;
+                result = SkillLevel.EXPERT;
+                break;
         }
         return result;
     }
@@ -125,7 +130,7 @@ public class QuestionService {
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-        for (int i = 0; i < answers.size() -1; i++) {
+        for (int i = 0; i < answers.size() - 1; i++) {
             Answer answer = new Answer();
             answer.setAnswer(answers.get(i));
             if (correct.contains(i + 1)) {
