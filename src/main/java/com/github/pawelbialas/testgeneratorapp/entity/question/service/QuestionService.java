@@ -82,7 +82,7 @@ public class QuestionService {
     }
 
     private SkillLevel convertSkillLevel(String someString) {
-        SkillLevel result;
+        SkillLevel result = SkillLevel.UNASSIGNED;
         switch (someString) {
 
             case "Entry":
@@ -95,8 +95,6 @@ public class QuestionService {
                  result = SkillLevel.SENIOR;
             case "Expert":
                  result = SkillLevel.EXPERT;
-            default:
-                result = SkillLevel.UNASSIGNED;
         }
         return result;
     }

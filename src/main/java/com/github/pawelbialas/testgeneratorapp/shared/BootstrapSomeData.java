@@ -1,5 +1,6 @@
 package com.github.pawelbialas.testgeneratorapp.shared;
 
+import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -16,7 +17,7 @@ public class BootstrapSomeData implements ApplicationListener<ContextRefreshedEv
 
         questionService.readQuestionsFromCsv();
 
-
+        System.out.println(questionService.findAllByMainTech(MainTech.JAVA));
 
 
 //        for (int i = 0; i < 10; i++) {

@@ -23,9 +23,9 @@ public class Question extends BaseEntity {
     private String specificTech;
     @Enumerated
     private SkillLevel skillLevel;
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers = new ArrayList<>();
-    @ManyToMany (mappedBy = "questions")
+    @ManyToMany (fetch = FetchType.EAGER, mappedBy = "questions")
     private Set<SkillTest> tests = new HashSet<>();
 
     public Question(String contents, MainTech mainTech, String specificTech, ArrayList<Answer> answers, SkillLevel skillLevel) {
@@ -88,5 +88,16 @@ public class Question extends BaseEntity {
     public void removeAnswer (Answer answer) {
         answers.remove(answer);
         answer.setQuestion(null);
+    }
+
+    public void addTests (SkillTest test) {
+        tests.add(test);
+        test.addQuestion(this);
+
+    }
+
+    public void removeTest (SkillTest test) {
+        tests.remove(test);
+        test.removeQuestion(this);
     }
 }

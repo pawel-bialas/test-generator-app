@@ -23,10 +23,9 @@ public class SkillTest extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "question_id")
     )
     private Set<Question> questions = new HashSet<>();
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne (optional = false)
     private Candidate candidate;
-    @OneToOne (fetch = FetchType.LAZY)
-    @MapsId
+    @OneToOne (optional = false)
     private Result result;
 
 
@@ -63,5 +62,15 @@ public class SkillTest extends BaseEntity {
 
     public void setResult(Result result) {
         this.result = result;
+    }
+
+    public void addQuestion (Question question) {
+        questions.add(question);
+        question.addTests(this);
+    }
+
+    public void removeQuestion (Question question) {
+        questions.remove(question);
+        question.removeTest(this);
     }
 }
