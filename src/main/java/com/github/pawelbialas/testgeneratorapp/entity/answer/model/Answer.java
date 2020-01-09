@@ -56,6 +56,8 @@ public class Answer extends BaseEntity {
     public String toString() {
         return "Answer{" +
                 "answer='" + answer + '\'' +
-                ", correct=" + correct + '}';
+                ", correct=" + correct +
+                ", question=" + question.getId() +
+                '}';
     }
 }

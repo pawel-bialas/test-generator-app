@@ -20,7 +20,7 @@ public interface QuestionRepository extends JpaRepository<Question, UUID> {
 
     List<Question> findAllByMainTechAndSkillLevel (MainTech mainTech, SkillLevel skillLevel);
 
-    List<Question> findAllBySpecificTechAndSkillLevel (String specificTech, SkillLevel skillLevel);
+    List<Question> findAllByMainTechAndSkillLevelAndSpecificTech (MainTech mainTech, SkillLevel skillLevel, String specificTech);
 
 
 }

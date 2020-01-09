@@ -12,27 +12,52 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class SkillTestService {
 
 
-    @Autowired private QuestionService questionService;
-    @Autowired private SkillTestRepository skillTestRepository;
+    @Autowired
+    private QuestionService questionService;
+    @Autowired
+    private SkillTestRepository skillTestRepository;
     @Value("${regular.test.size}")
     private Integer regularTestSize;
-    @Value("${short.test.size}")
-    private Integer shortTestSize;
 
+    public SkillTest generateTest(Candidate candidate, MainTech mainTech, SkillLevel skillLevel, Boolean isRegularTest) {
+        SkillTest result = new SkillTest(new ArrayList<Question>(), candidate, null);
+        int [] codeQuestionPattern = {3,5,7,9,10};
 
-    public void generateTest (Candidate candidate, MainTech mainTech, SkillLevel skillLevel, Boolean isRegularTest) {
+        HashSet<Question> questions = new HashSet<>(questionService.findAllByMainTechAndSkillLevel(mainTech, skillLevel));
 
-        List<Question> mainTechQuestions = questionService.findAllByMainTech(mainTech);
+        questions.stream()
+                .filter(question -> !question.getSpecificTech().equals("Code"))
+                .limit(20)
+                .forEachOrdered(result.getQuestions()::add);
 
+        List<Question> codeQuestions = questionService.findAllByMainTechAndSkillLevelAndSpecificTech(mainTech, "Code", skillLevel) ;
+        for (int i = 0; i < 5; i++) {
+            result.getQuestions().add(codeQuestionPattern[i],codeQuestions.get(i));
+        }
+        return result;
+    }
 
-
-
+    private SkillLevel defineOtherSkillLevels(SkillLevel skillLevel) {
+        SkillLevel result = null;
+        switch (skillLevel) {
+            case SENIOR:
+            case JUNIOR:
+                result = SkillLevel.MID;
+                break;
+            case MID:
+                result = SkillLevel.SENIOR;
+                break;
+        }
+        return result;
     }
 }

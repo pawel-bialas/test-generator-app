@@ -23,7 +23,7 @@ import java.util.List;
 public class QuestionService {
 
     @Autowired
-    private QuestionRepository questions;
+    private QuestionRepository questionRepository;
     @Autowired
     private EntityManagerFactory emf;
     @Value("${csv.location}")
@@ -32,22 +32,25 @@ public class QuestionService {
 
     public void saveOrUpdate(Question question) {
         if (question.getId() == null) {
-            questions.save(question);
+            questionRepository.save(question);
         }
         emf.createEntityManager().merge(question);
     }
 
     public List<Question> findAllByMainTech(MainTech mainTech) {
-        return questions.findAllByMainTech(mainTech);
+        return questionRepository.findAllByMainTech(mainTech);
     }
 
     public List<Question> findAllByMainTechAndSkillLevel(MainTech mainTech, SkillLevel skillLevel) {
-        return questions.findAllByMainTechAndSkillLevel(mainTech, skillLevel);
+        return questionRepository.findAllByMainTechAndSkillLevel(mainTech, skillLevel);
+    }
+
+    public List<Question> findAllByMainTechAndSkillLevelAndSpecificTech (MainTech mainTech, String specificTech, SkillLevel skillLevel) {
+        return questionRepository.findAllByMainTechAndSkillLevelAndSpecificTech(mainTech, skillLevel, specificTech);
     }
 
 
     public void readQuestionsFromCsv() {
-//        ArrayList<Question> questions = new ArrayList<>();
         try {
             CSVReader reader = new CSVReader(new FileReader(fileLocation), ',');
             try {
@@ -69,7 +72,7 @@ public class QuestionService {
                         answer.setQuestion(question);
                         question.getAnswers().add(answer);
                     }
-                    questions.save(question);
+                    questionRepository.save(question);
 
                 }
             } catch (IOException e) {
@@ -78,8 +81,6 @@ public class QuestionService {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-//        return questions;
     }
 
     private SkillLevel convertSkillLevel(String someString) {

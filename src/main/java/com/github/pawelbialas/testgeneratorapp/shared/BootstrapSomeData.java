@@ -2,19 +2,25 @@ package com.github.pawelbialas.testgeneratorapp.shared;
 
 import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
 import com.github.pawelbialas.testgeneratorapp.entity.answer.repository.AnswerRepository;
+import com.github.pawelbialas.testgeneratorapp.entity.candidate.model.Candidate;
+import com.github.pawelbialas.testgeneratorapp.entity.candidate.repository.CandidateRepository;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.entity.question.repository.QuestionRepository;
 import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionService;
+import com.github.pawelbialas.testgeneratorapp.entity.test.model.SkillTest;
+import com.github.pawelbialas.testgeneratorapp.entity.test.service.SkillTestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class BootstrapSomeData implements ApplicationListener<ContextRefreshedEvent> {
@@ -25,6 +31,10 @@ public class BootstrapSomeData implements ApplicationListener<ContextRefreshedEv
     private QuestionRepository questionRepository;
     @Autowired
     private AnswerRepository answerRepository;
+    @Autowired
+    private SkillTestService skillTestService;
+    @Autowired
+    private CandidateRepository candidateRepository;
 
     @Override
     @Transactional
@@ -32,62 +42,19 @@ public class BootstrapSomeData implements ApplicationListener<ContextRefreshedEv
 
         questionService.readQuestionsFromCsv();
 
-        List<Question> javaQuestions = questionService.findAllByMainTech(MainTech.JAVA);
+        Candidate candidate = new Candidate();
+        candidate.setCandidateNumber(1234234L);
+        candidate.setResults(null);
+        candidate.setSkillTests(null);
 
-        System.out.println(javaQuestions.get(12).getAnswers());
+        SkillTest skillTest = skillTestService.generateTest(candidate, MainTech.JAVA, SkillLevel.SENIOR, true);
+
+        System.out.println(skillTest.getQuestions());
+        System.out.println(skillTest.getQuestions().size());
 
 
-//        for (int i = 0; i < 10; i++) {
-//            Answer answer1 = new Answer();
-//            Answer answer2 = new Answer();
-//            Answer answer3 = new Answer();
-//
-//            answer1.setAnswer("aaa " + (i + 1));
-//            answer2.setAnswer("bbb " + (i + 1));
-//            answer3.setAnswer("ccc " + (i + 1));
-//
-//            answer1.setCorrect(true);
-//            answer2.setCorrect(false);
-//            answer3.setCorrect(false);
-//
-//            Question question = new Question();
-//
-//            answer1.setQuestion(question);
-//            answer2.setQuestion(question);
-//            answer3.setQuestion(question);
-//
-//            question.getAnswers().add(answer1);
-//            question.getAnswers().add(answer2);
-//            question.getAnswers().add(answer3);
-//
-//            question.setSpecificTech("Java");
-//            question.setSkillLevel(SkillLevel.JUNIOR);
-//            question.setMainTech(MainTech.JAVA);
-//            question.setContents("Pytanie o numerze " + +(i + 1));
-//            questionRepository.save(question);
-//
-//
-//
-//
-//
-//
-//        Candidate candidate = new Candidate();
-//        candidate.setCandidateNumber(12341234L);
-//
-//        SkillTest skillTest = new SkillTest();
-//        skillTest.setQuestions(allByMainTech);
-//        skillTest.setCandidate(candidate);
-//        skillTestRepository.save(skillTest);
     }
 }
-//
-//        List<Question> allByMainTech = questionRepository.findAllByMainTech(MainTech.JAVA);
-//
-//        allByMainTech.stream().forEach(System.out::println);
-//
-//        System.out.println(answerRepository.findAll());
-//    }
-//}
 
 
 

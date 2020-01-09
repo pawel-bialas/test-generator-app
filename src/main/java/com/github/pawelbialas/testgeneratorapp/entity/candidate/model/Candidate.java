@@ -53,4 +53,25 @@ public class Candidate extends BaseEntity {
     public void setResults(List<Result> results) {
         this.results = results;
     }
+
+    public void addTest (SkillTest skillTest) {
+        skillTests.add(skillTest);
+        skillTest.setCandidate(this);
+    }
+
+    public void removeTest (SkillTest skillTest) {
+        skillTests.remove(skillTest);
+        skillTest.setCandidate(null);
+    }
+
+    public void addResult (Result result) {
+        results.add(result);
+        result.setCandidate(this);
+    }
+
+    public void removeResult (Result result) {
+        results.remove(result);
+        result.setCandidate(null);
+    }
+
 }
