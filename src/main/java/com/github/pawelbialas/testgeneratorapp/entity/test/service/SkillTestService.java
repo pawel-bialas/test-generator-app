@@ -37,7 +37,7 @@ public class SkillTestService {
 
         questions.stream()
                 .filter(question -> !question.getSpecificTech().equals("Code"))
-                .limit(20)
+                .limit(regularTestSize -5)
                 .forEachOrdered(result.getQuestions()::add);
 
         List<Question> codeQuestions = questionService.findAllByMainTechAndSkillLevelAndSpecificTech(mainTech, "Code", skillLevel) ;

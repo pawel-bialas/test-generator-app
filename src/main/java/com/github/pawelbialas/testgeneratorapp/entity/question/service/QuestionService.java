@@ -106,7 +106,7 @@ public class QuestionService {
     }
 
     private MainTech convertMainTech(String someString) {
-        MainTech result = MainTech.UNASSIGNED;
+        MainTech result = null;
         switch (someString) {
             case "Java":
                 result = MainTech.JAVA;
@@ -129,7 +129,7 @@ public class QuestionService {
                 correct.add(Integer.parseInt(answers.get(4)));
             }
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            System.out.println("EmptyAnswerException");
         }
         for (int i = 0; i < answers.size() - 1; i++) {
             Answer answer = new Answer();
