@@ -47,10 +47,7 @@ public class BootstrapSomeData implements ApplicationListener<ContextRefreshedEv
         candidate.setResults(null);
         candidate.setSkillTests(null);
 
-        SkillTest skillTest = skillTestService.generateTest(candidate, MainTech.JAVA, SkillLevel.MID, true);
-
-        skillTest.getQuestions().stream().forEach(System.out::println);
-        System.out.println(skillTest.getQuestions().size());
+        skillTestService.generateTest(candidate, MainTech.JAVA, SkillLevel.MID, true);
 
 
     }

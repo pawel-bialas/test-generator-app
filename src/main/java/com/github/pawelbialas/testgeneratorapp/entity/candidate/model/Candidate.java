@@ -16,9 +16,9 @@ public class Candidate extends BaseEntity {
 
     @Column(updatable = false, nullable = false)
     private Long candidateNumber;
-    @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
     private List<SkillTest> skillTests = new ArrayList<>();
-    @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
     private List<Result> results = new ArrayList<>();
 
     public Candidate() {

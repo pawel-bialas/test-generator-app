@@ -29,7 +29,7 @@ public class SkillTestService {
     @Value("${regular.test.size}")
     private Integer regularTestSize;
 
-    public SkillTest generateTest(Candidate candidate, MainTech mainTech, SkillLevel skillLevel, Boolean isRegularTest) {
+    public void generateTest(Candidate candidate, MainTech mainTech, SkillLevel skillLevel, Boolean isRegularTest) {
         SkillTest result = new SkillTest(new ArrayList<Question>(), candidate, null);
         int [] codeQuestionPattern = {3,5,7,9,10};
 
@@ -37,14 +37,14 @@ public class SkillTestService {
 
         questions.stream()
                 .filter(question -> !question.getSpecificTech().equals("Code"))
-                .limit(regularTestSize -5)
+                .limit(regularTestSize - 5)
                 .forEachOrdered(result.getQuestions()::add);
 
         List<Question> codeQuestions = questionService.findAllByMainTechAndSkillLevelAndSpecificTech(mainTech, "Code", skillLevel) ;
         for (int i = 0; i < 5; i++) {
             result.getQuestions().add(codeQuestionPattern[i],codeQuestions.get(i));
         }
-        return result;
+        skillTestRepository.save(result);
     }
 
     private SkillLevel defineOtherSkillLevels(SkillLevel skillLevel) {
