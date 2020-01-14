@@ -11,4 +11,6 @@ import java.util.UUID;
 public interface SkillTestRepository extends JpaRepository<SkillTest, UUID> {
 
     List<SkillTest> findAllByCandidate (Candidate candidate);
+
+    SkillTest findByCandidate_CandidateNumber (String candidateNumber);
 }

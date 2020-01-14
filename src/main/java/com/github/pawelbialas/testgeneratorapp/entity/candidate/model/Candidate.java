@@ -15,7 +15,7 @@ import java.util.List;
 public class Candidate extends BaseEntity {
 
     @Column(updatable = false, nullable = false)
-    private Long candidateNumber;
+    private String candidateNumber;
     @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
     private List<SkillTest> skillTests = new ArrayList<>();
     @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
@@ -24,17 +24,17 @@ public class Candidate extends BaseEntity {
     public Candidate() {
     }
 
-    public Candidate (Long candidateNumber, ArrayList<SkillTest> skillTests, ArrayList<Result> results) {
+    public Candidate (String candidateNumber, ArrayList<SkillTest> skillTests, ArrayList<Result> results) {
         this.candidateNumber = candidateNumber;
         this.skillTests = skillTests;
         this.results = results;
     }
 
-    public Long getCandidateNumber() {
+    public String getCandidateNumber() {
         return candidateNumber;
     }
 
-    public void setCandidateNumber(Long candidateNumber) {
+    public void setCandidateNumber(String candidateNumber) {
         this.candidateNumber = candidateNumber;
     }
 
