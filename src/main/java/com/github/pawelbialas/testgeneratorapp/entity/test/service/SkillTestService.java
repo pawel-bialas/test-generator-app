@@ -6,6 +6,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionService;
+import com.github.pawelbialas.testgeneratorapp.entity.result.service.ResultService;
 import com.github.pawelbialas.testgeneratorapp.entity.test.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.entity.test.repository.SkillTestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Service
 @Transactional
@@ -34,7 +32,38 @@ public class SkillTestService {
     private Integer regularTestSize;
     @Autowired
     private CandidateService candidateService;
+    @Autowired
+    private ResultService resultService;
 
+
+
+    public SkillTest findTestByUUID(UUID testUUID) {
+        try {
+            Optional<SkillTest> test = skillTestRepository.findById(testUUID);
+            if (test.isPresent()) {
+                return test.get();
+            } else throw new EntityNotFoundException("message name to change");
+        } catch (EntityNotFoundException notFound) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    notFound.getMessage()
+            );
+        }
+    }
+
+    public List<SkillTest> findTestByCandidate(String candidateNumber) {
+        try {
+            if (!candidateService.confirmCandidate(candidateNumber)) {
+                throw new EntityNotFoundException("message name to change");
+            }
+            return skillTestRepository.findByCandidate_CandidateNumber(candidateNumber);
+        } catch (EntityNotFoundException notFound) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    notFound.getMessage()
+            );
+        }
+    }
 
     public SkillTest createNewTest(String candidateNumber, MainTech mainTech, SkillLevel skillLevel, Boolean isRegularTest) {
         try {
@@ -42,30 +71,17 @@ public class SkillTestService {
                 throw new IllegalArgumentException("message name to change");
             }
             Candidate candidate = candidateService.findCandidateByNumber(candidateNumber);
+            if (candidate == null) {
+                candidate = new Candidate(candidateNumber, new ArrayList<>(), new ArrayList<>());
+                candidate = candidateService.saveOrUpdate(candidate);
+            }
             SkillTest skillTest = generateTest(candidate, mainTech, skillLevel, isRegularTest);
             skillTestRepository.save(skillTest);
             return skillTest;
-        } catch (IllegalArgumentException corruptedData) {
+        } catch (IllegalArgumentException illegalArgument) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
-                    corruptedData.getMessage()
-            );
-        }
-    }
-
-    public 
-
-    public SkillTest findTestByCandidate(String candidateNumber) {
-        try {
-            SkillTest result = skillTestRepository.findByCandidate_CandidateNumber(candidateNumber);
-            if (result == null) {
-                throw new EntityNotFoundException("message name to change");
-            }
-            return result;
-        } catch (EntityNotFoundException missingCandidate) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    missingCandidate.getMessage()
+                    illegalArgument.getMessage()
             );
         }
     }
@@ -102,4 +118,6 @@ public class SkillTestService {
         }
         return result;
     }
+
+
 }
