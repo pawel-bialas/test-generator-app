@@ -40,14 +40,14 @@ public class BootstrapSomeData implements ApplicationListener<ContextRefreshedEv
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
-        questionService.readQuestionsFromCsv();
-
-        Candidate candidate = new Candidate();
-        candidate.setCandidateNumber(1234234L);
-        candidate.setResults(null);
-        candidate.setSkillTests(null);
-
-        skillTestService.generateTest(candidate, MainTech.JAVA, SkillLevel.MID, true);
+//        questionService.readQuestionsFromCsv();
+//
+//        Candidate candidate = new Candidate();
+//        candidate.setCandidateNumber(1234234L);
+//        candidate.setResults(null);
+//        candidate.setSkillTests(null);
+//
+//        skillTestService.generateTest(candidate, MainTech.JAVA, SkillLevel.MID, true);
 
 
     }
