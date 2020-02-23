@@ -25,7 +25,7 @@ public class CandidateService {
 
     public Candidate saveOrUpdate(Candidate candidate) {
         if (candidateRepository.findById(candidate.getId()).isPresent()) {
-            emf.createEntityManager().merge(candidate);
+            return emf.createEntityManager().merge(candidate);
         }
         return candidateRepository.save(candidate);
     }

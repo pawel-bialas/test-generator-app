@@ -8,7 +8,9 @@ import com.github.pawelbialas.testgeneratorapp.entity.question.repository.Questi
 import com.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityManagerFactory;
 import javax.transaction.Transactional;
@@ -30,11 +32,16 @@ public class QuestionService {
     private String fileLocation;
 
 
-    public void saveOrUpdate(Question question) {
+    public Question saveOrUpdate(Question question) {
         if (question.getId() == null) {
-            questionRepository.save(question);
+            return questionRepository.save(question);
         }
-        emf.createEntityManager().merge(question);
+        System.out.println("Merge");
+        return emf.createEntityManager().merge(question);
+    }
+
+    public List<Question> findAll () {
+        return questionRepository.findAll();
     }
 
     public List<Question> findAllByMainTech(MainTech mainTech) {
@@ -45,7 +52,7 @@ public class QuestionService {
         return questionRepository.findAllByMainTechAndSkillLevel(mainTech, skillLevel);
     }
 
-    public List<Question> findAllByMainTechAndSkillLevelAndSpecificTech (MainTech mainTech, String specificTech, SkillLevel skillLevel) {
+    public List<Question> findAllByMainTechAndSkillLevelAndSpecificTech(MainTech mainTech, String specificTech, SkillLevel skillLevel) {
         return questionRepository.findAllByMainTechAndSkillLevelAndSpecificTech(mainTech, skillLevel, specificTech);
     }
 
@@ -75,50 +82,85 @@ public class QuestionService {
                     questionRepository.save(question);
 
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException ioException) {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        ioException.getMessage()
+                );
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException fileNotFound) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    fileNotFound.getMessage()
+            );
         }
     }
 
-    private SkillLevel convertSkillLevel(String someString) {
-        SkillLevel result = null;
-        switch (someString) {
-            case "Entry":
-                result = SkillLevel.ENTRY;
-                break;
-            case "Junior":
-                result = SkillLevel.JUNIOR;
-                break;
-            case "Mid":
-                result = SkillLevel.MID;
-                break;
-            case "Senior":
-                result = SkillLevel.SENIOR;
-                break;
-            case "Expert":
-                result = SkillLevel.EXPERT;
-                break;
+    private SkillLevel convertSkillLevel(String skillString) {
+        try {
+            SkillLevel result = null;
+            if (!skillString.isBlank()) {
+                switch (skillString) {
+                    case "Entry":
+                        result = SkillLevel.ENTRY;
+                        break;
+                    case "Junior":
+                        result = SkillLevel.JUNIOR;
+                        break;
+                    case "Mid":
+                        result = SkillLevel.MID;
+                        break;
+                    case "Senior":
+                        result = SkillLevel.SENIOR;
+                        break;
+                    case "Expert":
+                        result = SkillLevel.EXPERT;
+                        break;
+                }
+            } else throw new IllegalArgumentException("message name to change");
+            return result;
+        } catch (IllegalArgumentException illegalArgument) {
+            throw new ResponseStatusException(
+                    HttpStatus.PARTIAL_CONTENT,
+                    illegalArgument.getMessage()
+            );
         }
-        return result;
+
     }
 
-    private MainTech convertMainTech(String someString) {
-        MainTech result = null;
-        switch (someString) {
-            case "Java":
-                result = MainTech.JAVA;
-                break;
+
+    private MainTech convertMainTech(String techString) {
+        try {
+            MainTech result = null;
+            if (!techString.isBlank()) {
+                switch (techString) {
+                    case "Java":
+                        result = MainTech.JAVA;
+                        break;
+                    case "PHP":
+                        result = MainTech.PHP;
+                        break;
+                    case "ANGULAR":
+                        result = MainTech.ANGULAR;
+                        break;
+                    default:
+                        result = MainTech.UNASSIGNED;
+                }
+            } else throw new IllegalArgumentException("message name to change");
+            return result;
+        } catch (IllegalArgumentException illegalArgument) {
+            throw new ResponseStatusException(
+                    HttpStatus.PARTIAL_CONTENT,
+                    illegalArgument.getMessage()
+            );
         }
-        return result;
     }
+
 
     private List<Answer> convertAnswers(ArrayList<String> answers) {
-        List<Answer> result = new ArrayList<>();
-        List<Integer> correct = new ArrayList<>();
         try {
+            List<Answer> result = new ArrayList<>();
+            List<Integer> correct = new ArrayList<>();
             if (answers.get(4).length() != 1) {
                 String[] split = answers.get(4).split(",");
                 for (int i = 0; i < split.length; i++) {
@@ -128,18 +170,21 @@ public class QuestionService {
             } else {
                 correct.add(Integer.parseInt(answers.get(4)));
             }
-        } catch (NumberFormatException e) {
-            System.out.println("EmptyAnswerException");
+            for (int i = 0; i < answers.size() - 1; i++) {
+                Answer answer = new Answer();
+                answer.setAnswer(answers.get(i));
+                if (correct.contains(i + 1)) {
+                    answer.setCorrect(true);
+                } else answer.setCorrect(false);
+                result.add(answer);
+            }
+            return result;
+        } catch (NumberFormatException badData) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_ACCEPTABLE,
+                    badData.getMessage()
+            );
         }
-        for (int i = 0; i < answers.size() - 1; i++) {
-            Answer answer = new Answer();
-            answer.setAnswer(answers.get(i));
-            if (correct.contains(i + 1)) {
-                answer.setCorrect(true);
-            } else answer.setCorrect(false);
-            result.add(answer);
-        }
-
-        return result;
     }
+
 }

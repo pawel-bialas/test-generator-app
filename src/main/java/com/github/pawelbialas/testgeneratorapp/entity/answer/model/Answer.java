@@ -1,8 +1,7 @@
 package com.github.pawelbialas.testgeneratorapp.entity.answer.model;
 
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
-import com.github.pawelbialas.testgeneratorapp.shared.BaseEntity;
-import lombok.ToString;
+import com.github.pawelbialas.testgeneratorapp.entity.BaseEntity;
 
 import javax.persistence.*;
 

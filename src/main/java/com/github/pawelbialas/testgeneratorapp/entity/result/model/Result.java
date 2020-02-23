@@ -2,7 +2,7 @@ package com.github.pawelbialas.testgeneratorapp.entity.result.model;
 
 import com.github.pawelbialas.testgeneratorapp.entity.candidate.model.Candidate;
 import com.github.pawelbialas.testgeneratorapp.entity.test.model.SkillTest;
-import com.github.pawelbialas.testgeneratorapp.shared.BaseEntity;
+import com.github.pawelbialas.testgeneratorapp.entity.BaseEntity;
 import lombok.ToString;
 
 import javax.persistence.*;

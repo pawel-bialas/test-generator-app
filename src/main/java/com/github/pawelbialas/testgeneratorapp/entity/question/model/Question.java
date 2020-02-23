@@ -1,6 +1,6 @@
 package com.github.pawelbialas.testgeneratorapp.entity.question.model;
 import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
-import com.github.pawelbialas.testgeneratorapp.shared.BaseEntity;
+import com.github.pawelbialas.testgeneratorapp.entity.BaseEntity;
 
 
 import javax.persistence.*;
@@ -32,6 +32,7 @@ public class Question extends BaseEntity {
     public Question () {
 
     }
+
 
     public String getContents() {
         return contents;

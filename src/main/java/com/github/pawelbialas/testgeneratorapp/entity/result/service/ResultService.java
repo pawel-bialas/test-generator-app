@@ -57,7 +57,7 @@ public class ResultService {
             if (!integrity) {
                 throw new DataIntegrityViolationException("message name to change");
             }
-            calculateScore(baseQuestions,resultQuestions);
+            calculateFinalScore(baseQuestions,resultQuestions);
 
         } catch (DataIntegrityViolationException corruptedData) {
             throw new ResponseStatusException(
@@ -70,7 +70,7 @@ public class ResultService {
     }
 
     //do zmiany zwrot
-    private void calculateScore(List<Question> baseQuestions, List<Question> resultQuestions) {
+    private void calculateFinalScore(List<Question> baseQuestions, List<Question> resultQuestions) {
         Integer score = 0;
 
         for (int i = 0; i < baseQuestions.size(); i++) {

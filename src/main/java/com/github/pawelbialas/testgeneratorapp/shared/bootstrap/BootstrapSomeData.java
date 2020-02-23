@@ -1,4 +1,4 @@
-package com.github.pawelbialas.testgeneratorapp.shared;
+package com.github.pawelbialas.testgeneratorapp.shared.bootstrap;
 
 import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
 import com.github.pawelbialas.testgeneratorapp.entity.answer.repository.AnswerRepository;
