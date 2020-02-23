@@ -20,17 +20,22 @@ import java.util.UUID;
 public class ResultService {
 
 
-    @Autowired
-    private ResultRepository resultRepository;
-    @Autowired
-    private SkillTestService skillTestService;
+    private final ResultRepository resultRepository;
+    private final SkillTestService skillTestService;
+
+    public ResultService(ResultRepository resultRepository, SkillTestService skillTestService) {
+        this.resultRepository = resultRepository;
+        this.skillTestService = skillTestService;
+    }
 
 
-    public void resolveTest(UUID candidateId, UUID baseTestId, SkillTest result) {
+    public Double resolveTest(UUID candidateId, UUID baseTestId, SkillTest resultTest) {
 
         SkillTest baseTest = skillTestService.findTestByUUID(baseTestId);
-//        Integer score = checkAnswers(baseTest, result);
+        Integer score = checkAnswers(baseTest, resultTest);
         Integer maxScore = calculateMaxScore(baseTest);
+
+        return 0D;
 
     }
 
@@ -49,15 +54,15 @@ public class ResultService {
     }
 
     //do zmiany zwrot
-    private void checkAnswers(SkillTest baseTest, SkillTest result) {
+    private Integer checkAnswers(SkillTest baseTest, SkillTest resultTest) {
         try {
             List<Question> baseQuestions = baseTest.getQuestions();
-            List<Question> resultQuestions = result.getQuestions();
+            List<Question> resultQuestions = resultTest.getQuestions();
             boolean integrity = questionIntegrityValidator(baseQuestions, resultQuestions);
             if (!integrity) {
                 throw new DataIntegrityViolationException("message name to change");
             }
-            calculateFinalScore(baseQuestions,resultQuestions);
+            return calculateFinalScore(baseQuestions, resultQuestions);
 
         } catch (DataIntegrityViolationException corruptedData) {
             throw new ResponseStatusException(
@@ -69,8 +74,7 @@ public class ResultService {
 
     }
 
-    //do zmiany zwrot
-    private void calculateFinalScore(List<Question> baseQuestions, List<Question> resultQuestions) {
+    private Integer calculateFinalScore(List<Question> baseQuestions, List<Question> resultQuestions) {
         Integer score = 0;
 
         for (int i = 0; i < baseQuestions.size(); i++) {
@@ -82,6 +86,7 @@ public class ResultService {
                 }
             }
         }
+        return score;
     }
 
     private boolean questionIntegrityValidator(List<Question> baseQuestions, List<Question> resultQuestions) {
@@ -90,16 +95,16 @@ public class ResultService {
             return integrityValidator = false;
         }
         for (int i = 0; i < baseQuestions.size(); i++) {
-            if (!baseQuestions.get(i).getContents().equals(resultQuestions.get(i).getContents())){
+            if (!baseQuestions.get(i).getContents().equals(resultQuestions.get(i).getContents())) {
                 integrityValidator = false;
                 break;
             }
-            if (!answerIntegrityValidation(baseQuestions.get(i).getAnswers(),resultQuestions.get(i).getAnswers())){
-             integrityValidator = false;
-             break;
+            if (!answerIntegrityValidation(baseQuestions.get(i).getAnswers(), resultQuestions.get(i).getAnswers())) {
+                integrityValidator = false;
+                break;
             }
         }
-        return integrityValidator; 
+        return integrityValidator;
     }
 
     private boolean answerIntegrityValidation(List<Answer> baseAnswers, List<Answer> resultAnswers) {
@@ -108,7 +113,7 @@ public class ResultService {
             return integrityValidator = false;
         }
         for (int i = 0; i < baseAnswers.size(); i++) {
-            if (!baseAnswers.get(i).getAnswer().equals(resultAnswers.get(i).getAnswer())){
+            if (!baseAnswers.get(i).getAnswer().equals(resultAnswers.get(i).getAnswer())) {
                 integrityValidator = false;
                 break;
             }

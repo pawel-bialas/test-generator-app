@@ -18,7 +18,15 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @MappedSuperclass
-public abstract class BaseEntity implements Serializable {
+public class BaseEntity implements Serializable {
+
+
+    public BaseEntity(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate) {
+        this.id = id;
+        this.version = version;
+        this.createdDate = createdDate;
+        this.lastModifiedDate = lastModifiedDate;
+    }
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -28,7 +36,6 @@ public abstract class BaseEntity implements Serializable {
     @Type(type="org.hibernate.type.UUIDCharType")
     @Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false )
     private UUID id;
-
 
     @Version
     private Long version;

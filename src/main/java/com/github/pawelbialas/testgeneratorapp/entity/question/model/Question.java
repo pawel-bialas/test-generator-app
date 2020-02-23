@@ -1,14 +1,22 @@
 package com.github.pawelbialas.testgeneratorapp.entity.question.model;
 import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
 import com.github.pawelbialas.testgeneratorapp.entity.BaseEntity;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-
-
+@Setter
+@Getter
+@NoArgsConstructor
+@ToString
 @Entity
 public class Question extends BaseEntity {
 
@@ -21,56 +29,13 @@ public class Question extends BaseEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Answer> answers = new ArrayList<>();
 
-    public Question(String contents, MainTech mainTech, String specificTech, ArrayList<Answer> answers, SkillLevel skillLevel) {
+    public Question(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,
+                    String contents, MainTech mainTech, String specificTech, ArrayList<Answer> answers, SkillLevel skillLevel) {
+        super(id, version, createdDate, lastModifiedDate);
         this.contents = contents;
         this.mainTech = mainTech;
         this.specificTech = specificTech;
         this.answers = answers;
-        this.skillLevel = skillLevel;
-    }
-
-    public Question () {
-
-    }
-
-
-    public String getContents() {
-        return contents;
-    }
-
-    public void setContents(String contents) {
-        this.contents = contents;
-    }
-
-    public MainTech getMainTech() {
-        return mainTech;
-    }
-
-    public void setMainTech(MainTech mainTech) {
-        this.mainTech = mainTech;
-    }
-
-    public String getSpecificTech() {
-        return specificTech;
-    }
-
-    public void setSpecificTech(String specificTech) {
-        this.specificTech = specificTech;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(List<Answer> answers) {
-        this.answers = answers;
-    }
-
-    public SkillLevel getSkillLevel() {
-        return skillLevel;
-    }
-
-    public void setSkillLevel(SkillLevel skillLevel) {
         this.skillLevel = skillLevel;
     }
 
@@ -84,14 +49,4 @@ public class Question extends BaseEntity {
         answer.setQuestion(null);
     }
 
-    @Override
-    public String toString() {
-        return "Question: "+ getId() +"{" +
-                "contents='" + contents + '\'' +
-                ", mainTech=" + mainTech +
-                ", specificTech='" + specificTech + '\'' +
-                ", skillLevel=" + skillLevel +
-                ", answers=" + answers +
-                '}';
-    }
 }

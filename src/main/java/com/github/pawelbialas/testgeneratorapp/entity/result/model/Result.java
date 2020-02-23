@@ -3,12 +3,20 @@ package com.github.pawelbialas.testgeneratorapp.entity.result.model;
 import com.github.pawelbialas.testgeneratorapp.entity.candidate.model.Candidate;
 import com.github.pawelbialas.testgeneratorapp.entity.test.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.entity.BaseEntity;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.UUID;
 
 @Entity
+@Getter
+@Setter
 @ToString
+@NoArgsConstructor
 public class Result extends BaseEntity {
 
     @Column(nullable = false)
@@ -18,37 +26,13 @@ public class Result extends BaseEntity {
     @ManyToOne (fetch = FetchType.LAZY)
     private Candidate candidate;
 
-    public Result() {
-    }
 
-    public Result (Integer score, SkillTest skillTest, Candidate candidate) {
+    public Result (UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,
+                   Integer score, SkillTest skillTest, Candidate candidate) {
+        super(id, version, createdDate, lastModifiedDate);
         this.score = score;
         this.skillTest = skillTest;
         this.candidate = candidate;
     }
 
-
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
-    }
-
-    public SkillTest getSkillTest() {
-        return skillTest;
-    }
-
-    public void setSkillTest(SkillTest skillTest) {
-        this.skillTest = skillTest;
-    }
-
-    public Candidate getCandidate() {
-        return candidate;
-    }
-
-    public void setCandidate(Candidate candidate) {
-        this.candidate = candidate;
-    }
 }

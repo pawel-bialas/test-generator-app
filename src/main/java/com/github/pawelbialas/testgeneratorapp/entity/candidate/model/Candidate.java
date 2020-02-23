@@ -4,14 +4,22 @@ package com.github.pawelbialas.testgeneratorapp.entity.candidate.model;
 import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 import com.github.pawelbialas.testgeneratorapp.entity.test.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.entity.BaseEntity;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-@Entity
+@Setter
+@Getter
+@NoArgsConstructor
 @ToString
+@Entity
 public class Candidate extends BaseEntity {
 
     @Column(updatable = false, nullable = false)
@@ -21,36 +29,12 @@ public class Candidate extends BaseEntity {
     @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
     private List<Result> results = new ArrayList<>();
 
-    public Candidate() {
-    }
 
-    public Candidate (String candidateNumber, ArrayList<SkillTest> skillTests, ArrayList<Result> results) {
+    public Candidate (UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,
+                      String candidateNumber, ArrayList<SkillTest> skillTests, ArrayList<Result> results) {
+        super(id, version, createdDate, lastModifiedDate);
         this.candidateNumber = candidateNumber;
         this.skillTests = skillTests;
-        this.results = results;
-    }
-
-    public String getCandidateNumber() {
-        return candidateNumber;
-    }
-
-    public void setCandidateNumber(String candidateNumber) {
-        this.candidateNumber = candidateNumber;
-    }
-
-    public List<SkillTest> getSkillTests() {
-        return skillTests;
-    }
-
-    public void setSkillTests(List<SkillTest> skillTests) {
-        this.skillTests = skillTests;
-    }
-
-    public List<Result> getResults() {
-        return results;
-    }
-
-    public void setResults(List<Result> results) {
         this.results = results;
     }
 
