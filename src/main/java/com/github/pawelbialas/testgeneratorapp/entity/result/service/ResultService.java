@@ -4,6 +4,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.result.repository.ResultRepository;
 import com.github.pawelbialas.testgeneratorapp.entity.test.model.SkillTest;
+import com.github.pawelbialas.testgeneratorapp.entity.test.repository.SkillTestRepository;
 import com.github.pawelbialas.testgeneratorapp.entity.test.service.SkillTestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -13,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -21,22 +23,35 @@ public class ResultService {
 
 
     private final ResultRepository resultRepository;
-    private final SkillTestService skillTestService;
+    private final SkillTestRepository skillTestRepository;
 
-    public ResultService(ResultRepository resultRepository, SkillTestService skillTestService) {
+    public ResultService(ResultRepository resultRepository, SkillTestRepository skillTestRepository) {
         this.resultRepository = resultRepository;
-        this.skillTestService = skillTestService;
+        this.skillTestRepository = skillTestRepository;
     }
 
 
     public Double resolveTest(UUID candidateId, UUID baseTestId, SkillTest resultTest) {
+        SkillTest baseTest = null;
+        Integer maxScore = 0;
+        Integer contestantScore = 0;
+        try {
 
-        SkillTest baseTest = skillTestService.findTestByUUID(baseTestId);
-        Integer score = checkAnswers(baseTest, resultTest);
-        Integer maxScore = calculateMaxScore(baseTest);
 
-        return 0D;
+            Optional<SkillTest> searchResult = skillTestRepository.findById(baseTestId);
 
+            if (searchResult.isPresent()) {
+                baseTest = searchResult.get();
+                maxScore = calculateMaxScore(baseTest);
+                contestantScore = checkAnswers(baseTest, resultTest);
+            } else throw new DataIntegrityViolationException("message name to change");
+        } catch (DataIntegrityViolationException corruptedData) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    corruptedData.getMessage()
+            );
+        }
+        return (double) (contestantScore / maxScore);
     }
 
     public Integer calculateMaxScore(SkillTest baseTest) {
@@ -70,8 +85,6 @@ public class ResultService {
                     corruptedData.getMessage()
             );
         }
-
-
     }
 
     private Integer calculateFinalScore(List<Question> baseQuestions, List<Question> resultQuestions) {

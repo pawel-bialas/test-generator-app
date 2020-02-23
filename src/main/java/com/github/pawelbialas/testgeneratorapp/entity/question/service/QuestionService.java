@@ -24,13 +24,13 @@ import java.util.List;
 @Transactional
 public class QuestionService {
 
-    @Autowired
-    private QuestionRepository questionRepository;
-    @Autowired
-    private EntityManagerFactory emf;
-    @Value("${csv.location}")
-    private String fileLocation;
+    private final QuestionRepository questionRepository;
+    private final EntityManagerFactory emf;
 
+    public QuestionService(QuestionRepository questionRepository, EntityManagerFactory emf) {
+        this.questionRepository = questionRepository;
+        this.emf = emf;
+    }
 
     public Question saveOrUpdate(Question question) {
         if (question.getId() == null) {
@@ -57,7 +57,7 @@ public class QuestionService {
     }
 
 
-    public void readQuestionsFromCsv() {
+    public void readQuestionsFromCsv(String fileLocation) {
         try {
             CSVReader reader = new CSVReader(new FileReader(fileLocation), ',');
             try {

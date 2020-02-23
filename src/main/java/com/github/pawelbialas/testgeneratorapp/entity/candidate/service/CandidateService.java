@@ -1,8 +1,7 @@
 package com.github.pawelbialas.testgeneratorapp.entity.candidate.service;
 
-import com.github.pawelbialas.testgeneratorapp.entity.candidate.model.Candidate;
+import com.github.pawelbialas.testgeneratorapp.entity.candidate.model.Contestant;
 import com.github.pawelbialas.testgeneratorapp.entity.candidate.repository.CandidateRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManagerFactory;
@@ -12,10 +11,15 @@ import javax.transaction.Transactional;
 @Transactional
 public class CandidateService {
 
-    @Autowired private CandidateRepository candidateRepository;
-    @Autowired private EntityManagerFactory emf;
+    private final CandidateRepository candidateRepository;
+    private final EntityManagerFactory emf;
 
-    public Candidate findCandidateByNumber (String candidateNumber) {
+    public CandidateService(CandidateRepository candidateRepository, EntityManagerFactory emf) {
+        this.candidateRepository = candidateRepository;
+        this.emf = emf;
+    }
+
+    public Contestant findCandidateByNumber (String candidateNumber) {
         return candidateRepository.findCandidateByCandidateNumber(candidateNumber);
     }
 
@@ -23,11 +27,11 @@ public class CandidateService {
         return candidateRepository.findCandidateByCandidateNumber(candidateNumber) != null;
     }
 
-    public Candidate saveOrUpdate(Candidate candidate) {
-        if (candidateRepository.findById(candidate.getId()).isPresent()) {
-            return emf.createEntityManager().merge(candidate);
+    public Contestant saveOrUpdate(Contestant contestant) {
+        if (candidateRepository.findById(contestant.getId()).isPresent()) {
+            return emf.createEntityManager().merge(contestant);
         }
-        return candidateRepository.save(candidate);
+        return candidateRepository.save(contestant);
     }
 
     

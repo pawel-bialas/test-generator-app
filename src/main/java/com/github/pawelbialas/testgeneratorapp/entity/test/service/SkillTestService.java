@@ -1,15 +1,15 @@
 package com.github.pawelbialas.testgeneratorapp.entity.test.service;
 
-import com.github.pawelbialas.testgeneratorapp.entity.candidate.model.Candidate;
+import com.github.pawelbialas.testgeneratorapp.entity.candidate.model.Contestant;
 import com.github.pawelbialas.testgeneratorapp.entity.candidate.service.CandidateService;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionService;
+import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 import com.github.pawelbialas.testgeneratorapp.entity.result.service.ResultService;
 import com.github.pawelbialas.testgeneratorapp.entity.test.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.entity.test.repository.SkillTestRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,17 +24,19 @@ import java.util.*;
 public class SkillTestService {
 
 
-    @Autowired
-    private QuestionService questionService;
-    @Autowired
-    private SkillTestRepository skillTestRepository;
+    private final QuestionService questionService;
+    private final SkillTestRepository skillTestRepository;
     @Value("${regular.test.size}")
     private Integer regularTestSize;
-    @Autowired
-    private CandidateService candidateService;
-    @Autowired
-    private ResultService resultService;
+    private final CandidateService candidateService;
+    private final ResultService resultService;
 
+    public SkillTestService(QuestionService questionService, SkillTestRepository skillTestRepository, CandidateService candidateService, ResultService resultService) {
+        this.questionService = questionService;
+        this.skillTestRepository = skillTestRepository;
+        this.candidateService = candidateService;
+        this.resultService = resultService;
+    }
 
 
     public SkillTest findTestByUUID(UUID testUUID) {
@@ -70,12 +72,16 @@ public class SkillTestService {
             if (candidateNumber == null || skillLevel == null || mainTech == null) {
                 throw new IllegalArgumentException("message name to change");
             }
-            Candidate candidate = candidateService.findCandidateByNumber(candidateNumber);
-            if (candidate == null) {
-                candidate = new Candidate(candidateNumber, new ArrayList<>(), new ArrayList<>());
-                candidate = candidateService.saveOrUpdate(candidate);
+            Contestant contestant = candidateService.findCandidateByNumber(candidateNumber);
+            if (contestant == null) {
+                 contestant = Contestant.builder()
+                        .candidateNumber(candidateNumber)
+                        .results(new ArrayList<Result>())
+                        .skillTests(new ArrayList<SkillTest>())
+                        .build();
+                contestant = candidateService.saveOrUpdate(contestant);
             }
-            SkillTest skillTest = generateTest(candidate, mainTech, skillLevel, isRegularTest);
+            SkillTest skillTest = generateTest(contestant, mainTech, skillLevel, isRegularTest);
             skillTestRepository.save(skillTest);
             return skillTest;
         } catch (IllegalArgumentException illegalArgument) {
@@ -86,8 +92,10 @@ public class SkillTestService {
         }
     }
 
-    private SkillTest generateTest(Candidate candidate, MainTech mainTech, SkillLevel skillLevel, Boolean isRegularTest) {
-        SkillTest result = new SkillTest(new ArrayList<Question>(), candidate, null);
+    private SkillTest generateTest(Contestant contestant, MainTech mainTech, SkillLevel skillLevel, Boolean isRegularTest) {
+        SkillTest result = SkillTest.builder()
+                .candidate(contestant)
+                .build();
         int[] codeQuestionPattern = {3, 5, 7, 9, 10};
 
         HashSet<Question> questions = new HashSet<>(questionService.findAllByMainTechAndSkillLevel(mainTech, skillLevel));

@@ -1,10 +1,7 @@
 package com.github.pawelbialas.testgeneratorapp.entity.question.model;
 import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
 import com.github.pawelbialas.testgeneratorapp.entity.BaseEntity;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 
 import javax.persistence.*;
@@ -29,6 +26,7 @@ public class Question extends BaseEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Answer> answers = new ArrayList<>();
 
+    @Builder
     public Question(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,
                     String contents, MainTech mainTech, String specificTech, ArrayList<Answer> answers, SkillLevel skillLevel) {
         super(id, version, createdDate, lastModifiedDate);

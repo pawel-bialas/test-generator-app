@@ -4,10 +4,7 @@ package com.github.pawelbialas.testgeneratorapp.entity.candidate.model;
 import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 import com.github.pawelbialas.testgeneratorapp.entity.test.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.entity.BaseEntity;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -20,7 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @ToString
 @Entity
-public class Candidate extends BaseEntity {
+public class Contestant extends BaseEntity {
 
     @Column(updatable = false, nullable = false)
     private String candidateNumber;
@@ -29,8 +26,8 @@ public class Candidate extends BaseEntity {
     @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
     private List<Result> results = new ArrayList<>();
 
-
-    public Candidate (UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,
+    @Builder
+    public Contestant(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,
                       String candidateNumber, ArrayList<SkillTest> skillTests, ArrayList<Result> results) {
         super(id, version, createdDate, lastModifiedDate);
         this.candidateNumber = candidateNumber;
@@ -40,22 +37,22 @@ public class Candidate extends BaseEntity {
 
     public void addTest (SkillTest skillTest) {
         skillTests.add(skillTest);
-        skillTest.setCandidate(this);
+        skillTest.setContestant(this);
     }
 
     public void removeTest (SkillTest skillTest) {
         skillTests.remove(skillTest);
-        skillTest.setCandidate(null);
+        skillTest.setContestant(null);
     }
 
     public void addResult (Result result) {
         results.add(result);
-        result.setCandidate(this);
+        result.setContestant(this);
     }
 
     public void removeResult (Result result) {
         results.remove(result);
-        result.setCandidate(null);
+        result.setContestant(null);
     }
 
 }

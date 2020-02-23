@@ -2,6 +2,7 @@ package com.github.pawelbialas.testgeneratorapp.entity.answer.model;
 
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.BaseEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,6 +25,7 @@ public class Answer extends BaseEntity {
     @JoinColumn(name = "question_id", insertable = false, updatable = false)
     Question question;
 
+    @Builder
     public Answer (UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,
                    String answer, Boolean correct, Question question) {
         super(id, version, createdDate, lastModifiedDate);
