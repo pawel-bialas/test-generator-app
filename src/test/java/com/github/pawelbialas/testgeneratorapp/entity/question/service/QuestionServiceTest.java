@@ -42,34 +42,9 @@ class QuestionServiceTest {
     @BeforeEach
     void setUp() {
 
-    }
-
-    @Test
-    public void findAllQuestionsNoData() {
-        // Given
-        List<Question> result = service.findAll();
-        // When
-        int size = result.size();
-        // Then
-        assertThat(size).isEqualTo(0);
+        service.readQuestionsFromCsv();
 
     }
-
-    @Test
-    public void basicSaveOrUpdateTest() {
-        // Given
-        Question question = Question.builder().contents("abc").build();
-        System.out.println(question);
-        // When
-        Question result = service.saveOrUpdate(question);
-        System.out.println(result);
-        // Then
-        assertThat(result).isNotNull();
-        assertThat(result.getContents()).isEqualTo("abc");
-
-    }
-
-
 
 
 }
