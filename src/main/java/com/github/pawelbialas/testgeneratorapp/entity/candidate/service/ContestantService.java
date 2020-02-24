@@ -2,6 +2,7 @@ package com.github.pawelbialas.testgeneratorapp.entity.candidate.service;
 
 import com.github.pawelbialas.testgeneratorapp.entity.candidate.model.Contestant;
 import com.github.pawelbialas.testgeneratorapp.entity.candidate.repository.ContestantRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManagerFactory;
@@ -14,6 +15,7 @@ public class ContestantService {
     private final ContestantRepository contestantRepository;
     private final EntityManagerFactory emf;
 
+    @Autowired
     public ContestantService(ContestantRepository contestantRepository, EntityManagerFactory emf) {
         this.contestantRepository = contestantRepository;
         this.emf = emf;

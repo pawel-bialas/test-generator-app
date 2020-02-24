@@ -25,6 +25,7 @@ public class ResultService {
     private final ResultRepository resultRepository;
     private final SkillTestRepository skillTestRepository;
 
+    @Autowired
     public ResultService(ResultRepository resultRepository, SkillTestRepository skillTestRepository) {
         this.resultRepository = resultRepository;
         this.skillTestRepository = skillTestRepository;

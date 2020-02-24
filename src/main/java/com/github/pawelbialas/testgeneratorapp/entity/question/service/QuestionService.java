@@ -27,9 +27,12 @@ public class QuestionService {
 
     private final QuestionRepository questionRepository;
     private final EntityManagerFactory emf;
-    @Value("${csv.location}")
-    private String csvPath;
+    @Value("${csv.location.prod}")
+    private String csvProdPath;
+    @Value("${csv.location.test}")
+    private String csvTestPath;
 
+    @Autowired
     public QuestionService(QuestionRepository questionRepository, EntityManagerFactory emf) {
         this.questionRepository = questionRepository;
         this.emf = emf;
@@ -61,9 +64,10 @@ public class QuestionService {
     }
 
 
-    public void readQuestionsFromCsv() {
+    public void readQuestionsFromCsv(String fileLocation) {
+        fileLocation = csvTestPath;
         try {
-            CSVReader reader = new CSVReader(new FileReader(csvPath), ',');
+            CSVReader reader = new CSVReader(new FileReader(fileLocation), ',');
             try {
                 String[] nextLine;
                 while ((nextLine = reader.readNext()) != null) {

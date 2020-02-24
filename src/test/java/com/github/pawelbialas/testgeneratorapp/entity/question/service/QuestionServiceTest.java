@@ -39,10 +39,25 @@ class QuestionServiceTest {
     @InjectMocks
     QuestionService service;
 
+    @Value("${csv.location.test}")
+    String csvPath;
+
     @BeforeEach
     void setUp() {
+        service.readQuestionsFromCsv("F:\\Files\\source\\test-generator-app\\test-generator-app\\src\\test\\java\\resources\\input.csv");
 
-        service.readQuestionsFromCsv();
+        List<Question> all = service.findAll();
+
+        all.forEach(System.out::println);
+    }
+
+    @Test
+    public void basicSaveOrUpdateTest() {
+        // Given
+
+        // When
+
+        // Then
 
     }
 

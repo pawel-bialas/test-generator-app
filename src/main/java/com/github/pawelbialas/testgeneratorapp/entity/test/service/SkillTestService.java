@@ -10,6 +10,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 import com.github.pawelbialas.testgeneratorapp.entity.result.service.ResultService;
 import com.github.pawelbialas.testgeneratorapp.entity.test.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.entity.test.repository.SkillTestRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,14 +24,15 @@ import java.util.*;
 @Transactional
 public class SkillTestService {
 
+    @Value("${regular.test.size}")
+    private Integer regularTestSize;
 
     private final QuestionService questionService;
     private final SkillTestRepository skillTestRepository;
-    @Value("${regular.test.size}")
-    private Integer regularTestSize;
     private final ContestantService contestantService;
     private final ResultService resultService;
 
+    @Autowired
     public SkillTestService(QuestionService questionService, SkillTestRepository skillTestRepository, ContestantService contestantService, ResultService resultService) {
         this.questionService = questionService;
         this.skillTestRepository = skillTestRepository;

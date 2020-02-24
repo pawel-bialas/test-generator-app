@@ -38,17 +38,17 @@ public class BootstrapSomeData implements ApplicationListener<ContextRefreshedEv
     @Transactional
     public void onApplicationEvent(@NotNull ContextRefreshedEvent contextRefreshedEvent) {
 
-        questionService.readQuestionsFromCsv();
-
-        List<Question> all = questionService.findAll();
-
-        all.forEach(System.out::println);
-
-        System.out.println("======================");
-
-        List<Question> allByMainTechAndSkillLevel = questionService.findAllByMainTechAndSkillLevel(MainTech.JAVA, SkillLevel.JUNIOR);
-
-        allByMainTechAndSkillLevel.forEach(System.out::println);
+//        questionService.readQuestionsFromCsv("aaa");
+//
+//        List<Question> all = questionService.findAll();
+//
+//        all.forEach(System.out::println);
+//
+//        System.out.println("======================");
+//
+//        List<Question> allByMainTechAndSkillLevel = questionService.findAllByMainTechAndSkillLevel(MainTech.JAVA, SkillLevel.JUNIOR);
+//
+//        allByMainTechAndSkillLevel.forEach(System.out::println);
 
 //
 //        Candidate candidate = new Candidate();
