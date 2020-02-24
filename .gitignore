@@ -43,3 +43,4 @@ testem.log
 Thumbs.db
 
 application.properties
+tester.csv
