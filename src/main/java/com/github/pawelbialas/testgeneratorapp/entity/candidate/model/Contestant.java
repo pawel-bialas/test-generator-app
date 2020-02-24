@@ -14,8 +14,7 @@ import java.util.UUID;
 
 @Setter
 @Getter
-@NoArgsConstructor
-@ToString
+@Table(name = "contestants")
 @Entity
 public class Contestant extends BaseEntity {
 
@@ -25,6 +24,11 @@ public class Contestant extends BaseEntity {
     private List<SkillTest> skillTests = new ArrayList<>();
     @OneToMany(mappedBy = "contestant", cascade = CascadeType.ALL)
     private List<Result> results = new ArrayList<>();
+
+
+    public Contestant () {
+
+    }
 
     @Builder
     public Contestant(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,
@@ -55,4 +59,12 @@ public class Contestant extends BaseEntity {
         result.setContestant(null);
     }
 
+    @Override
+    public String toString() {
+        return "Contestant{" +
+                "contestantNumber='" + contestantNumber + '\'' +
+                ", skillTests=" + skillTests +
+                ", results=" + results +
+                '}';
+    }
 }

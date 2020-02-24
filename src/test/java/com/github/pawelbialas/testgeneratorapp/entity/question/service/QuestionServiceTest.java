@@ -36,13 +36,11 @@ class QuestionServiceTest {
     @Mock
     EntityManagerFactory emf;
 
+    @InjectMocks
     QuestionService service;
 
     @BeforeEach
     void setUp() {
-        service = new QuestionService(repository, emf);
-
-
 
     }
 
@@ -54,6 +52,20 @@ class QuestionServiceTest {
         int size = result.size();
         // Then
         assertThat(size).isEqualTo(0);
+
+    }
+
+    @Test
+    public void basicSaveOrUpdateTest() {
+        // Given
+        Question question = Question.builder().contents("abc").build();
+        System.out.println(question);
+        // When
+        Question result = service.saveOrUpdate(question);
+        System.out.println(result);
+        // Then
+        assertThat(result).isNotNull();
+        assertThat(result.getContents()).isEqualTo("abc");
 
     }
 

@@ -6,6 +6,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.entity.question.repository.QuestionRepository;
 import com.opencsv.CSVReader;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -26,15 +27,18 @@ public class QuestionService {
 
     private final QuestionRepository questionRepository;
     private final EntityManagerFactory emf;
+    @Value("${csv.location}")
+    private String csvPath;
 
     public QuestionService(QuestionRepository questionRepository, EntityManagerFactory emf) {
         this.questionRepository = questionRepository;
         this.emf = emf;
     }
 
-    public Question saveOrUpdate(Question question) {
+    public Question saveOrUpdate(@NotNull Question question) {
         if (question.getId() == null) {
-            return questionRepository.save(question);
+            Question result = questionRepository.save(question);
+            return  result;
         }
         System.out.println("Merge");
         return emf.createEntityManager().merge(question);
@@ -57,9 +61,9 @@ public class QuestionService {
     }
 
 
-    public void readQuestionsFromCsv(String fileLocation) {
+    public void readQuestionsFromCsv() {
         try {
-            CSVReader reader = new CSVReader(new FileReader(fileLocation), ',');
+            CSVReader reader = new CSVReader(new FileReader(csvPath), ',');
             try {
                 String[] nextLine;
                 while ((nextLine = reader.readNext()) != null) {

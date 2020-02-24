@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Setter
 @Getter
-@NoArgsConstructor
+@Table(name = "answers")
 @Entity
 public class Answer extends BaseEntity {
 
@@ -25,36 +25,16 @@ public class Answer extends BaseEntity {
     @JoinColumn(name = "question_id", insertable = false, updatable = false)
     Question question;
 
+    public Answer () {
+
+    }
+
     @Builder
     public Answer (UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,
                    String answer, Boolean correct, Question question) {
         super(id, version, createdDate, lastModifiedDate);
         this.answer = answer;
         this.correct = correct;
-        this.question = question;
-    }
-
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
-
-    public Boolean getCorrect() {
-        return correct;
-    }
-
-    public void setCorrect(Boolean correct) {
-        this.correct = correct;
-    }
-
-    public Question getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(Question question) {
         this.question = question;
     }
 

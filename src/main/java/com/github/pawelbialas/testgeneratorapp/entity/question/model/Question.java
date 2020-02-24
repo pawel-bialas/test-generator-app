@@ -12,8 +12,7 @@ import java.util.UUID;
 
 @Setter
 @Getter
-@NoArgsConstructor
-@ToString
+@Table(name = "questions")
 @Entity
 public class Question extends BaseEntity {
 
@@ -25,6 +24,10 @@ public class Question extends BaseEntity {
     private SkillLevel skillLevel;
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Answer> answers = new ArrayList<>();
+
+    public Question () {
+
+    }
 
     @Builder
     public Question(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,
@@ -47,4 +50,14 @@ public class Question extends BaseEntity {
         answer.setQuestion(null);
     }
 
+    @Override
+    public String toString() {
+        return "Question{" +
+                "contents='" + contents + '\'' +
+                ", mainTech=" + mainTech +
+                ", specificTech='" + specificTech + '\'' +
+                ", skillLevel=" + skillLevel +
+                ", answers=" + answers +
+                '}';
+    }
 }

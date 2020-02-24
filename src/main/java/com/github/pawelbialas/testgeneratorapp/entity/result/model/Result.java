@@ -9,11 +9,11 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-@Entity
+
 @Getter
 @Setter
-@ToString
-@NoArgsConstructor
+@Table(name = "results")
+@Entity
 public class Result extends BaseEntity {
 
     @Column(nullable = false)
@@ -22,6 +22,10 @@ public class Result extends BaseEntity {
     private SkillTest skillTest;
     @ManyToOne (fetch = FetchType.LAZY)
     private Contestant contestant;
+
+    public Result () {
+
+    }
 
     @Builder
     public Result (UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,
@@ -32,4 +36,12 @@ public class Result extends BaseEntity {
         this.contestant = contestant;
     }
 
+    @Override
+    public String toString() {
+        return "Result{" +
+                "score=" + score +
+                ", skillTest=" + skillTest +
+                ", contestant=" + contestant +
+                '}';
+    }
 }

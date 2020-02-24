@@ -12,8 +12,7 @@ import java.util.*;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@ToString
+@Table(name = "skill_tests")
 @Entity
 public class SkillTest extends BaseEntity {
 
@@ -26,6 +25,10 @@ public class SkillTest extends BaseEntity {
     private Result result;
 
 
+    public SkillTest () {
+
+    }
+
     @Builder
     public SkillTest(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,
                      ArrayList<Question> questions, Contestant contestant, Result result) {
@@ -35,4 +38,12 @@ public class SkillTest extends BaseEntity {
         this.result = result;
     }
 
+    @Override
+    public String toString() {
+        return "SkillTest{" +
+                "questions=" + questions +
+                ", contestant=" + contestant +
+                ", result=" + result +
+                '}';
+    }
 }
