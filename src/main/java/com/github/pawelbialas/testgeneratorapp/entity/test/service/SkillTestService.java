@@ -1,7 +1,7 @@
 package com.github.pawelbialas.testgeneratorapp.entity.test.service;
 
 import com.github.pawelbialas.testgeneratorapp.entity.candidate.model.Contestant;
-import com.github.pawelbialas.testgeneratorapp.entity.candidate.service.CandidateService;
+import com.github.pawelbialas.testgeneratorapp.entity.candidate.service.ContestantService;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
@@ -28,13 +28,13 @@ public class SkillTestService {
     private final SkillTestRepository skillTestRepository;
     @Value("${regular.test.size}")
     private Integer regularTestSize;
-    private final CandidateService candidateService;
+    private final ContestantService contestantService;
     private final ResultService resultService;
 
-    public SkillTestService(QuestionService questionService, SkillTestRepository skillTestRepository, CandidateService candidateService, ResultService resultService) {
+    public SkillTestService(QuestionService questionService, SkillTestRepository skillTestRepository, ContestantService contestantService, ResultService resultService) {
         this.questionService = questionService;
         this.skillTestRepository = skillTestRepository;
-        this.candidateService = candidateService;
+        this.contestantService = contestantService;
         this.resultService = resultService;
     }
 
@@ -53,12 +53,12 @@ public class SkillTestService {
         }
     }
 
-    public List<SkillTest> findTestByCandidate(String candidateNumber) {
+    public List<SkillTest> findTestByContestantNumber(String contestantNumber) {
         try {
-            if (!candidateService.confirmCandidate(candidateNumber)) {
+            if (!contestantService.confirmCandidate(contestantNumber)) {
                 throw new EntityNotFoundException("message name to change");
             }
-            return skillTestRepository.findByCandidate_CandidateNumber(candidateNumber);
+            return skillTestRepository.findByContestant_ContestantNumber(contestantNumber);
         } catch (EntityNotFoundException notFound) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
@@ -67,19 +67,19 @@ public class SkillTestService {
         }
     }
 
-    public SkillTest createNewTest(String candidateNumber, MainTech mainTech, SkillLevel skillLevel, Boolean isRegularTest) {
+    public SkillTest createNewTest(String contestantNumber, MainTech mainTech, SkillLevel skillLevel, Boolean isRegularTest) {
         try {
-            if (candidateNumber == null || skillLevel == null || mainTech == null) {
+            if (contestantNumber == null || skillLevel == null || mainTech == null) {
                 throw new IllegalArgumentException("message name to change");
             }
-            Contestant contestant = candidateService.findCandidateByNumber(candidateNumber);
+            Contestant contestant = contestantService.findCandidateByNumber(contestantNumber);
             if (contestant == null) {
                  contestant = Contestant.builder()
-                        .candidateNumber(candidateNumber)
+                        .contestantNumber(contestantNumber)
                         .results(new ArrayList<Result>())
                         .skillTests(new ArrayList<SkillTest>())
                         .build();
-                contestant = candidateService.saveOrUpdate(contestant);
+                contestant = contestantService.saveOrUpdate(contestant);
             }
             SkillTest skillTest = generateTest(contestant, mainTech, skillLevel, isRegularTest);
             skillTestRepository.save(skillTest);
@@ -94,7 +94,7 @@ public class SkillTestService {
 
     private SkillTest generateTest(Contestant contestant, MainTech mainTech, SkillLevel skillLevel, Boolean isRegularTest) {
         SkillTest result = SkillTest.builder()
-                .candidate(contestant)
+                .contestant(contestant)
                 .build();
         int[] codeQuestionPattern = {3, 5, 7, 9, 10};
 

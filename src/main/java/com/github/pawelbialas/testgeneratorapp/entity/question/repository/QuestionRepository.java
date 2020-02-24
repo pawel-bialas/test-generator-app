@@ -11,7 +11,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import java.util.List;
 import java.util.UUID;
 
-@EnableJpaRepositories
 public interface QuestionRepository extends JpaRepository<Question, UUID> {
 
     Question findByContentsEquals (String contents);

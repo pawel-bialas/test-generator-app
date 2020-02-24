@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-public interface CandidateRepository extends JpaRepository<Contestant, UUID> {
+public interface ContestantRepository extends JpaRepository<Contestant, UUID> {
 
-    Contestant findCandidateByCandidateNumber (String candidateNumber);
+    Contestant findByContestantNumber (String contestantNumber);
 
 }

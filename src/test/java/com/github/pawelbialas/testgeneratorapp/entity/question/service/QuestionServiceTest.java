@@ -12,8 +12,11 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import javax.persistence.EntityManagerFactory;
 
@@ -24,8 +27,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.reset;
 
 @ExtendWith(MockitoExtension.class)
-@SpringBootTest
 class QuestionServiceTest {
+
 
     @Mock
     QuestionRepository repository;
@@ -33,18 +36,14 @@ class QuestionServiceTest {
     @Mock
     EntityManagerFactory emf;
 
-    @Mock
-    SkillTestService skillTestService;
-
-    @Mock
-    ResultService resultService;
-
-    @InjectMocks
     QuestionService service;
 
     @BeforeEach
     void setUp() {
-        reset(service);
+        service = new QuestionService(repository, emf);
+
+
+
     }
 
     @Test

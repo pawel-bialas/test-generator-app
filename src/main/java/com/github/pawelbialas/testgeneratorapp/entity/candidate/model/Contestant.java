@@ -20,17 +20,17 @@ import java.util.UUID;
 public class Contestant extends BaseEntity {
 
     @Column(updatable = false, nullable = false)
-    private String candidateNumber;
-    @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
+    private String contestantNumber;
+    @OneToMany(mappedBy = "contestant", cascade = CascadeType.ALL)
     private List<SkillTest> skillTests = new ArrayList<>();
-    @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "contestant", cascade = CascadeType.ALL)
     private List<Result> results = new ArrayList<>();
 
     @Builder
     public Contestant(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,
-                      String candidateNumber, ArrayList<SkillTest> skillTests, ArrayList<Result> results) {
+                      String contestantNumber, ArrayList<SkillTest> skillTests, ArrayList<Result> results) {
         super(id, version, createdDate, lastModifiedDate);
-        this.candidateNumber = candidateNumber;
+        this.contestantNumber = contestantNumber;
         this.skillTests = skillTests;
         this.results = results;
     }

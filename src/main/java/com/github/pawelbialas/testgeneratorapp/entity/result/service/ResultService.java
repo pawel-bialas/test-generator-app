@@ -37,7 +37,6 @@ public class ResultService {
         Integer contestantScore = 0;
         try {
 
-
             Optional<SkillTest> searchResult = skillTestRepository.findById(baseTestId);
 
             if (searchResult.isPresent()) {

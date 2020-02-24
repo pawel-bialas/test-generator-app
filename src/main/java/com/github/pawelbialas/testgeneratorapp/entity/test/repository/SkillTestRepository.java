@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public interface SkillTestRepository extends JpaRepository<SkillTest, UUID> {
 
-    List<SkillTest> findAllByCandidate (Contestant contestant);
+    List<SkillTest> findAllByContestant (Contestant contestant);
 
-    List<SkillTest> findByCandidate_CandidateNumber (String candidateNumber);
+    List<SkillTest> findByContestant_ContestantNumber (String contestantNumber);
 }

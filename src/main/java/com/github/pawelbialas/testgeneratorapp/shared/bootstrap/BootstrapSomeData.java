@@ -1,7 +1,7 @@
 package com.github.pawelbialas.testgeneratorapp.shared.bootstrap;
 
 import com.github.pawelbialas.testgeneratorapp.entity.answer.repository.AnswerRepository;
-import com.github.pawelbialas.testgeneratorapp.entity.candidate.repository.CandidateRepository;
+import com.github.pawelbialas.testgeneratorapp.entity.candidate.repository.ContestantRepository;
 import com.github.pawelbialas.testgeneratorapp.entity.question.repository.QuestionRepository;
 import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionService;
 import com.github.pawelbialas.testgeneratorapp.entity.test.service.SkillTestService;
@@ -24,7 +24,7 @@ public class BootstrapSomeData implements ApplicationListener<ContextRefreshedEv
     @Autowired
     private SkillTestService skillTestService;
     @Autowired
-    private CandidateRepository candidateRepository;
+    private ContestantRepository contestantRepository;
 
     @Override
     @Transactional
