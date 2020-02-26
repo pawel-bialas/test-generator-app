@@ -5,13 +5,13 @@
 /dist
 /tmp
 /out-tsc
+/target
 
 # dependencies
 /node_modules
 
 # IDEs and editors
 /.idea
-/.target
 .project
 .classpath
 .c9/
