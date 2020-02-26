@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionServiceTest
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.573 s - in com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionServiceTest
