@@ -27,8 +27,13 @@ public class Answer extends BaseEntity {
     private Question question;
 
     @Builder
-    public Answer (UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,
-                   String answer, Boolean correct, Question question) {
+    public Answer (UUID id,
+                   Long version,
+                   Timestamp createdDate,
+                   Timestamp lastModifiedDate,
+                   String answer,
+                   Boolean correct,
+                   Question question) {
         super(id, version, createdDate, lastModifiedDate);
         this.answer = answer;
         this.correct = correct;

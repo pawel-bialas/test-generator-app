@@ -1,7 +1,7 @@
-package com.github.pawelbialas.testgeneratorapp.entity.candidate.service;
+package com.github.pawelbialas.testgeneratorapp.entity.contestant.service;
 
-import com.github.pawelbialas.testgeneratorapp.entity.candidate.model.Contestant;
-import com.github.pawelbialas.testgeneratorapp.entity.candidate.repository.ContestantRepository;
+import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
+import com.github.pawelbialas.testgeneratorapp.entity.contestant.repository.ContestantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

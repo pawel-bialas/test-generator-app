@@ -1,7 +1,7 @@
-package com.github.pawelbialas.testgeneratorapp.entity.candidate.repository;
+package com.github.pawelbialas.testgeneratorapp.entity.contestant.repository;
 
 
-import com.github.pawelbialas.testgeneratorapp.entity.candidate.model.Contestant;
+import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

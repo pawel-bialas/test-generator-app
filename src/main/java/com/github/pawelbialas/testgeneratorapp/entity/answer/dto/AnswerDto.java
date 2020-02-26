@@ -2,6 +2,7 @@ package com.github.pawelbialas.testgeneratorapp.entity.answer.dto;
 
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionDto;
 import com.github.pawelbialas.testgeneratorapp.shared.BaseItem;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,18 @@ public class AnswerDto extends BaseItem {
     Boolean correct;
     QuestionDto questionDto;
 
-    public AnswerDto (UUID id, Long version, OffsetDateTime createdDate, OffsetDateTime lastModifiedDate, String answer, Boolean correct) {
+    @Builder
+    public AnswerDto (UUID id,
+                      Long version,
+                      OffsetDateTime createdDate,
+                      OffsetDateTime lastModifiedDate,
+                      String answer,
+                      Boolean correct,
+                      QuestionDto questionDto) {
+        super(id, version, createdDate, lastModifiedDate);
+        this.answer = answer;
+        this.correct = correct;
+        this.questionDto = questionDto;
 
     }
 }

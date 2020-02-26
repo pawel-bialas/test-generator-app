@@ -1,15 +1,15 @@
-package com.github.pawelbialas.testgeneratorapp.entity.test.service;
+package com.github.pawelbialas.testgeneratorapp.entity.skilltest.service;
 
-import com.github.pawelbialas.testgeneratorapp.entity.candidate.model.Contestant;
-import com.github.pawelbialas.testgeneratorapp.entity.candidate.service.ContestantService;
+import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
+import com.github.pawelbialas.testgeneratorapp.entity.contestant.service.ContestantService;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionService;
 import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 import com.github.pawelbialas.testgeneratorapp.entity.result.service.ResultService;
-import com.github.pawelbialas.testgeneratorapp.entity.test.model.SkillTest;
-import com.github.pawelbialas.testgeneratorapp.entity.test.repository.SkillTestRepository;
+import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
+import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,7 @@
 package com.github.pawelbialas.testgeneratorapp.entity.result.model;
 
-import com.github.pawelbialas.testgeneratorapp.entity.candidate.model.Contestant;
-import com.github.pawelbialas.testgeneratorapp.entity.test.model.SkillTest;
+import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
+import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.shared.BaseEntity;
 import lombok.*;
 
