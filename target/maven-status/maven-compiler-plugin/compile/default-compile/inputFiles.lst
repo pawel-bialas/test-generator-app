@@ -16,6 +16,7 @@ F:\Files\source\test-generator-app\test-generator-app\src\main\java\com\github\p
 F:\Files\source\test-generator-app\test-generator-app\src\main\java\com\github\pawelbialas\testgeneratorapp\entity\result\service\ResultService.java
 F:\Files\source\test-generator-app\test-generator-app\src\main\java\com\github\pawelbialas\testgeneratorapp\entity\question\model\MainTech.java
 F:\Files\source\test-generator-app\test-generator-app\src\main\java\com\github\pawelbialas\testgeneratorapp\entity\skilltest\model\SkillTest.java
+F:\Files\source\test-generator-app\test-generator-app\src\main\java\com\github\pawelbialas\testgeneratorapp\shared\DateMapper.java
 F:\Files\source\test-generator-app\test-generator-app\src\main\java\com\github\pawelbialas\testgeneratorapp\entity\answer\dto\AnswerMapper.java
 F:\Files\source\test-generator-app\test-generator-app\src\main\java\com\github\pawelbialas\testgeneratorapp\entity\result\model\Result.java
 F:\Files\source\test-generator-app\test-generator-app\src\main\java\com\github\pawelbialas\testgeneratorapp\entity\contestant\repository\ContestantRepository.java

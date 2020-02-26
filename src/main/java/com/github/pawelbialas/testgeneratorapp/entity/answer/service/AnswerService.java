@@ -1,9 +1,10 @@
 package com.github.pawelbialas.testgeneratorapp.entity.answer.service;
 
-import org.springframework.stereotype.Service;
-import javax.transaction.Transactional;
+import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerMapper;
+import com.github.pawelbialas.testgeneratorapp.entity.answer.repository.AnswerRepository;
+import org.mapstruct.factory.Mappers;
 
-@Service
-@Transactional
-public class AnswerService {
+public interface AnswerService {
+
+
 }

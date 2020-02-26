@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.mapstruct.factory.Mappers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,4 +21,6 @@ public class ContestantDto extends BaseItem {
     private String contestantNumber;
     private List<SkillTestDto> skillTests = new ArrayList<>();
     private List<ResultDto> results = new ArrayList<>();
+
+
 }
