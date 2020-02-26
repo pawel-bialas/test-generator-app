@@ -1,7 +1,7 @@
 package com.github.pawelbialas.testgeneratorapp.entity.answer.model;
 
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
-import com.github.pawelbialas.testgeneratorapp.entity.BaseEntity;
+import com.github.pawelbialas.testgeneratorapp.shared.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,20 +14,17 @@ import java.util.UUID;
 @Setter
 @Getter
 @Table(name = "answers")
+@NoArgsConstructor
 @Entity
 public class Answer extends BaseEntity {
 
     @Column(nullable = false)
-    String answer;
+    private String answer;
     @Column(nullable = false)
-    Boolean correct;
+    private Boolean correct;
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id", insertable = false, updatable = false)
-    Question question;
-
-    public Answer () {
-
-    }
+    private Question question;
 
     @Builder
     public Answer (UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,

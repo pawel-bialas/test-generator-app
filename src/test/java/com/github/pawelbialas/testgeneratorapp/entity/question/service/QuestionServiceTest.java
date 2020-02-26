@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
 
 import javax.persistence.EntityManagerFactory;
 
@@ -26,35 +27,40 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.reset;
 
-@ExtendWith(MockitoExtension.class)
+@WebMvcTest(QuestionService.class)
 class QuestionServiceTest {
 
 
-    @Mock
+    @MockBean
     QuestionRepository repository;
 
-    @Mock
+    @MockBean
     EntityManagerFactory emf;
 
-    @InjectMocks
-    QuestionService service;
+    @Autowired
+    MockMvc mockMvc;
 
     @Value("${csv.location.test}")
     String csvPath;
 
+    QuestionService questionService;
+
     @BeforeEach
     void setUp() {
-        service.readQuestionsFromCsv("F:\\Files\\source\\test-generator-app\\test-generator-app\\src\\test\\java\\resources\\input.csv");
+       questionService = new QuestionService(repository, emf);
 
-        List<Question> all = service.findAll();
-
-        all.forEach(System.out::println);
     }
 
     @Test
     public void basicSaveOrUpdateTest() {
         // Given
 
+        questionService.readQuestionsFromCsv("F:\\Files\\source\\test-generator-app\\test-generator-app\\src\\test\\java\\resources\\input.csv");
+
+        List<Question> all = questionService.findAll();
+
+        System.out.println(all.size());
+        all.forEach(System.out::println);
         // When
 
         // Then
