@@ -1,8 +1,7 @@
 package com.github.pawelbialas.testgeneratorapp.entity.question.controller;
 
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
-import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,16 +11,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class QuestionController {
 
-    private final QuestionService questionService;
+    private final QuestionServiceImpl questionServiceImpl;
 
-    public QuestionController(QuestionService questionService) {
-        this.questionService = questionService;
+    public QuestionController(QuestionServiceImpl questionServiceImpl) {
+        this.questionServiceImpl = questionServiceImpl;
     }
 
     @PostMapping(path = "/manage/question/new")
     @ResponseStatus(HttpStatus.CREATED)
     private void addNewQuestion(@RequestBody Question question) {
 
-        questionService.saveOrUpdate(question);
+        questionServiceImpl.saveOrUpdate(question);
     }
 }

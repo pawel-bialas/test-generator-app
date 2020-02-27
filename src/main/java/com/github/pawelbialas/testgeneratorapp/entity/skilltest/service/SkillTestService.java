@@ -1,11 +1,11 @@
 package com.github.pawelbialas.testgeneratorapp.entity.skilltest.service;
 
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
-import com.github.pawelbialas.testgeneratorapp.entity.contestant.service.ContestantService;
+import com.github.pawelbialas.testgeneratorapp.entity.contestant.service.ContestantServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
-import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionService;
+import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 import com.github.pawelbialas.testgeneratorapp.entity.result.service.ResultService;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
@@ -27,16 +27,16 @@ public class SkillTestService {
     @Value("${regular.test.size}")
     private Integer regularTestSize;
 
-    private final QuestionService questionService;
+    private final QuestionServiceImpl questionServiceImpl;
     private final SkillTestRepository skillTestRepository;
-    private final ContestantService contestantService;
+    private final ContestantServiceImpl contestantServiceImpl;
     private final ResultService resultService;
 
     @Autowired
-    public SkillTestService(QuestionService questionService, SkillTestRepository skillTestRepository, ContestantService contestantService, ResultService resultService) {
-        this.questionService = questionService;
+    public SkillTestService(QuestionServiceImpl questionServiceImpl, SkillTestRepository skillTestRepository, ContestantServiceImpl contestantServiceImpl, ResultService resultService) {
+        this.questionServiceImpl = questionServiceImpl;
         this.skillTestRepository = skillTestRepository;
-        this.contestantService = contestantService;
+        this.contestantServiceImpl = contestantServiceImpl;
         this.resultService = resultService;
     }
 
@@ -57,7 +57,7 @@ public class SkillTestService {
 
     public List<SkillTest> findTestByContestantNumber(String contestantNumber) {
         try {
-            if (!contestantService.confirmCandidate(contestantNumber)) {
+            if (!contestantServiceImpl.confirmCandidate(contestantNumber)) {
                 throw new EntityNotFoundException("message name to change");
             }
             return skillTestRepository.findByContestant_ContestantNumber(contestantNumber);
@@ -74,14 +74,14 @@ public class SkillTestService {
             if (contestantNumber == null || skillLevel == null || mainTech == null) {
                 throw new IllegalArgumentException("message name to change");
             }
-            Contestant contestant = contestantService.findCandidateByNumber(contestantNumber);
+            Contestant contestant = contestantServiceImpl.findCandidateByNumber(contestantNumber);
             if (contestant == null) {
                  contestant = Contestant.builder()
                         .contestantNumber(contestantNumber)
                         .results(new ArrayList<Result>())
                         .skillTests(new ArrayList<SkillTest>())
                         .build();
-                contestant = contestantService.saveOrUpdate(contestant);
+                contestant = contestantServiceImpl.saveOrUpdate(contestant);
             }
             SkillTest skillTest = generateTest(contestant, mainTech, skillLevel, isRegularTest);
             skillTestRepository.save(skillTest);
@@ -100,14 +100,14 @@ public class SkillTestService {
                 .build();
         int[] codeQuestionPattern = {3, 5, 7, 9, 10};
 
-        HashSet<Question> questions = new HashSet<>(questionService.findAllByMainTechAndSkillLevel(mainTech, skillLevel));
+        HashSet<Question> questions = new HashSet<>(questionServiceImpl.findAllByMainTechAndSkillLevel(mainTech, skillLevel));
 
         questions.stream()
                 .filter(question -> !question.getSpecificTech().equals("Code"))
                 .limit(regularTestSize - 5)
                 .forEachOrdered(result.getQuestions()::add);
 
-        List<Question> codeQuestions = questionService.findAllByMainTechAndSkillLevelAndSpecificTech(mainTech, "Code", skillLevel);
+        List<Question> codeQuestions = questionServiceImpl.findAllByMainTechAndSkillLevelAndSpecificTech(mainTech, "Code", skillLevel);
         for (int i = 0; i < 5; i++) {
             result.getQuestions().add(codeQuestionPattern[i], codeQuestions.get(i));
         }

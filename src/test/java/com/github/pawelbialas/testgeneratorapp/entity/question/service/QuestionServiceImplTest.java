@@ -16,8 +16,8 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@WebMvcTest(QuestionService.class)
-class QuestionServiceTest {
+@WebMvcTest(QuestionServiceImpl.class)
+class QuestionServiceImplTest {
 
 
     @MockBean
@@ -32,11 +32,11 @@ class QuestionServiceTest {
     @Value("${csv.location.test}")
     String csvPath;
 
-    QuestionService questionService;
+    QuestionServiceImpl questionServiceImpl;
 
     @BeforeEach
     void setUp() {
-       questionService = new QuestionService(repository, emf);
+       questionServiceImpl = new QuestionServiceImpl(repository, emf);
 
     }
 
@@ -44,9 +44,9 @@ class QuestionServiceTest {
     public void basicSaveOrUpdateTest() {
         // Given
 
-        questionService.readQuestionsFromCsv("F:\\Files\\source\\test-generator-app\\test-generator-app\\src\\test\\java\\resources\\input.csv");
+        questionServiceImpl.readQuestionsFromCsv("F:\\Files\\source\\test-generator-app\\test-generator-app\\src\\test\\java\\resources\\input.csv");
 
-        List<Question> all = questionService.findAll();
+        List<Question> all = questionServiceImpl.findAll();
 
         System.out.println(all.size());
         all.forEach(System.out::println);

@@ -3,7 +3,7 @@ package com.github.pawelbialas.testgeneratorapp.shared;
 import com.github.pawelbialas.testgeneratorapp.entity.answer.repository.AnswerRepository;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.repository.ContestantRepository;
 import com.github.pawelbialas.testgeneratorapp.entity.question.repository.QuestionRepository;
-import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionService;
+import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.service.SkillTestService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.ApplicationListener;
@@ -15,14 +15,14 @@ import javax.transaction.Transactional;
 @Component
 public class BootstrapSomeData implements ApplicationListener<ContextRefreshedEvent> {
 
-    private final QuestionService questionService;
+    private final QuestionServiceImpl questionServiceImpl;
     private final QuestionRepository questionRepository;
     private final AnswerRepository answerRepository;
     private final SkillTestService skillTestService;
     private final ContestantRepository contestantRepository;
 
-    public BootstrapSomeData(QuestionService questionService, QuestionRepository questionRepository, AnswerRepository answerRepository, SkillTestService skillTestService, ContestantRepository contestantRepository) {
-        this.questionService = questionService;
+    public BootstrapSomeData(QuestionServiceImpl questionServiceImpl, QuestionRepository questionRepository, AnswerRepository answerRepository, SkillTestService skillTestService, ContestantRepository contestantRepository) {
+        this.questionServiceImpl = questionServiceImpl;
         this.questionRepository = questionRepository;
         this.answerRepository = answerRepository;
         this.skillTestService = skillTestService;
