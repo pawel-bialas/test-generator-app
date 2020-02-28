@@ -13,6 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Table(name = "results")
+@NoArgsConstructor
 @Entity
 public class Result extends BaseEntity {
 
@@ -22,10 +23,6 @@ public class Result extends BaseEntity {
     private SkillTest skillTest;
     @ManyToOne (fetch = FetchType.LAZY)
     private Contestant contestant;
-
-    public Result () {
-
-    }
 
     @Builder
     public Result (UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,

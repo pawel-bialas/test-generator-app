@@ -1,6 +1,7 @@
 package com.github.pawelbialas.testgeneratorapp.entity.question.repository;
 
 
+import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionDto;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
@@ -14,6 +15,8 @@ import java.util.UUID;
 public interface QuestionRepository extends JpaRepository<Question, UUID> {
 
     Question findByContentsEquals (String contents);
+
+    List<Question> findAllByMainTechAndSpecificTech (MainTech mainTech, String specificTech);
 
     List<Question> findAllByMainTech (MainTech mainTech);
 

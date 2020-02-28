@@ -13,6 +13,7 @@ import java.util.*;
 @Getter
 @Setter
 @Table(name = "skill_tests")
+@NoArgsConstructor
 @Entity
 public class SkillTest extends BaseEntity {
 
@@ -23,11 +24,8 @@ public class SkillTest extends BaseEntity {
     private Contestant contestant;
     @OneToOne(mappedBy = "skillTest", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     private Result result;
-
-
-    public SkillTest () {
-
-    }
+    @Enumerated
+    private TestStatus testStatus;
 
     @Builder
     public SkillTest(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,

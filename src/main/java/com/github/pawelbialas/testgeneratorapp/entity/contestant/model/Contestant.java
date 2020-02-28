@@ -15,6 +15,7 @@ import java.util.UUID;
 @Setter
 @Getter
 @Table(name = "contestants")
+@NoArgsConstructor
 @Entity
 public class Contestant extends BaseEntity {
 
@@ -25,10 +26,6 @@ public class Contestant extends BaseEntity {
     @OneToMany(mappedBy = "contestant", cascade = CascadeType.ALL)
     private List<Result> results = new ArrayList<>();
 
-
-    public Contestant () {
-
-    }
 
     @Builder
     public Contestant(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,

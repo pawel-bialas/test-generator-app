@@ -2,6 +2,7 @@ package com.github.pawelbialas.testgeneratorapp.entity.result.service;
 
 import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
+import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.result.repository.ResultRepository;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
@@ -23,11 +24,13 @@ public class ResultService {
 
     private final ResultRepository resultRepository;
     private final SkillTestRepository skillTestRepository;
+    private final ResultMapper mapper;
 
-    @Autowired
-    public ResultService(ResultRepository resultRepository, SkillTestRepository skillTestRepository) {
+
+    public ResultService(ResultRepository resultRepository, SkillTestRepository skillTestRepository, ResultMapper mapper) {
         this.resultRepository = resultRepository;
         this.skillTestRepository = skillTestRepository;
+        this.mapper = mapper;
     }
 
 

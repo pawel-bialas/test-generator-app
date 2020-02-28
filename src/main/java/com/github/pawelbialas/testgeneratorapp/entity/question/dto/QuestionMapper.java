@@ -6,10 +6,14 @@ import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.shared.DateMapper;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring", uses = DateMapper.class)
 public interface QuestionMapper {
 
     Question dtoToObject (QuestionDto questionDto);
 
     QuestionDto objectToDto (Question question);
+
+
 }

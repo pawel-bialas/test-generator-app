@@ -13,6 +13,7 @@ import java.util.UUID;
 @Setter
 @Getter
 @Table(name = "questions")
+@NoArgsConstructor
 @Entity
 public class Question extends BaseEntity {
 
@@ -24,10 +25,6 @@ public class Question extends BaseEntity {
     private SkillLevel skillLevel;
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Answer> answers = new ArrayList<>();
-
-    public Question () {
-
-    }
 
     @Builder
     public Question(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,

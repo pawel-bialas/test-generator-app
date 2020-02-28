@@ -5,10 +5,11 @@ import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestan
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface ContestantRepository extends JpaRepository<Contestant, UUID> {
 
-    Contestant findByContestantNumber (String contestantNumber);
+    Optional<Contestant> findByContestantNumber (String contestantNumber);
 
 }
