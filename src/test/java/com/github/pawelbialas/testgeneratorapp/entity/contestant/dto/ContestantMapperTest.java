@@ -1,9 +1,12 @@
 package com.github.pawelbialas.testgeneratorapp.entity.contestant.dto;
 
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
+import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
+import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultDto;
 import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultMapperImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
+import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMapperImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
@@ -56,6 +59,7 @@ class ContestantMapperTest {
                 .build();
 
         testSkillTest = SkillTest.builder()
+                .questions(new ArrayList<Question>())
                 .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                 .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
                 .version(1L)
@@ -70,8 +74,7 @@ class ContestantMapperTest {
                 .version(1L)
                 .build();
 
-        testSkillTest.setContestant(testContestant);
-        testResult.setContestant(testContestant);
+
         testContestant.addResult(testResult);
         testContestant.addTest(testSkillTest);
 
@@ -86,7 +89,10 @@ class ContestantMapperTest {
 
     @Test
     void dtoToObject() {
+        ContestantDto contestantDto = contestantMapper.objectToDto(testContestant);
 
+        SkillTestDto skillTestDto = skillTestMapper.objectToDto(testSkillTest);
+        ResultDto resultDto = resultMapper.objectToDto(testResult);
 
 
     }
@@ -97,11 +103,18 @@ class ContestantMapperTest {
         //When
         ContestantDto contestantDto = contestantMapper.objectToDto(testContestant);
 
+        SkillTestDto skillTestDto = skillTestMapper.objectToDto(testSkillTest);
+        ResultDto resultDto = resultMapper.objectToDto(testResult);
+
+        contestantDto.addTest(skillTestDto);
+        contestantDto.addResult(resultDto);
+
+
+
+        //Then
         assertAll(
                 () -> assertThat(contestantDto).isNotNull(),
                 () -> assertThat(contestantDto.getContestantNumber()).isEqualTo(testContestant.getContestantNumber()),
-                () -> assertThat(contestantDto.getResults()).isNull(),
-                () -> assertThat(contestantDto.getSkillTests()).isNull(),
                 () -> assertThat(contestantDto.getId()).isEqualTo(testContestant.getId())
 
         );

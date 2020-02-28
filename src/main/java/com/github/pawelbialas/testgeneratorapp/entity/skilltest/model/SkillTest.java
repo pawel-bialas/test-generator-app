@@ -39,9 +39,9 @@ public class SkillTest extends BaseEntity {
     @Override
     public String toString() {
         return "SkillTest{" +
-                "questions=" + questions +
-                ", contestant=" + contestant +
-                ", result=" + result +
+                "questions=" + questions.size() +
+                ", contestant=" + contestant.getId() +
+                ", result=" + result.getId() +
                 '}';
     }
 }

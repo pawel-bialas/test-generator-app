@@ -43,4 +43,12 @@ public class ResultDto extends BaseItem {
     }
 
 
+    @Override
+    public String toString() {
+        return "ResultDto{" +
+                "score=" + score +
+                ", skillTest=" + skillTest+
+                ", contestant=" + contestant+
+                '}';
+    }
 }

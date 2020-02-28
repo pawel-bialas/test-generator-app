@@ -45,4 +45,15 @@ public class SkillTestDto extends BaseItem {
         this.contestant = contestant;
         this.result = result;
     }
+
+
+    @Override
+    public String toString() {
+        return "SkillTestDto{" +
+                "questions=" + questions +
+                ", contestant=" + contestant +
+                ", result=" + result +
+                ", testStatus=" + testStatus +
+                '}';
+    }
 }

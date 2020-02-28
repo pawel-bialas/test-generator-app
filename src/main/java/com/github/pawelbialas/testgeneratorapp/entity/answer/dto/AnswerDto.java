@@ -33,4 +33,13 @@ public class AnswerDto extends BaseItem {
         this.questionDto = questionDto;
 
     }
+
+    @Override
+    public String toString() {
+        return "AnswerDto{" +
+                "answer='" + answer + '\'' +
+                ", correct=" + correct +
+                ", question_id=" + questionDto +
+                '}';
+    }
 }

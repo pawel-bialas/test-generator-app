@@ -58,4 +58,16 @@ public class QuestionDto extends BaseItem {
         answers.remove(answerDto);
         answerDto.setQuestionDto(null);
     }
+
+
+    @Override
+    public String toString() {
+        return "QuestionDto{" +
+                "contents='" + contents + '\'' +
+                ", mainTech=" + mainTech +
+                ", specificTech='" + specificTech + '\'' +
+                ", skillLevel=" + skillLevel +
+                ", answers=" + answers +
+                '}';
+    }
 }

@@ -37,8 +37,8 @@ public class Result extends BaseEntity {
     public String toString() {
         return "Result{" +
                 "score=" + score +
-                ", skillTest=" + skillTest +
-                ", contestant=" + contestant +
+                ", skillTest=" + skillTest.getId() +
+                ", contestant=" + contestant.getId() +
                 '}';
     }
 }

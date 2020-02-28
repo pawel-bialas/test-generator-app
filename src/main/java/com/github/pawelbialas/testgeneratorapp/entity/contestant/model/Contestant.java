@@ -60,8 +60,8 @@ public class Contestant extends BaseEntity {
     public String toString() {
         return "Contestant{" +
                 "contestantNumber='" + contestantNumber + '\'' +
-                ", skillTests=" + skillTests +
-                ", results=" + results +
+                ", skillTests=" + skillTests.size() +
+                ", results=" + results.size() +
                 '}';
     }
 }

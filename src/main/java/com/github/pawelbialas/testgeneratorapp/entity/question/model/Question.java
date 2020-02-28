@@ -54,7 +54,7 @@ public class Question extends BaseEntity {
                 ", mainTech=" + mainTech +
                 ", specificTech='" + specificTech + '\'' +
                 ", skillLevel=" + skillLevel +
-                ", answers=" + answers +
+                ", answers=" + answers.size() +
                 '}';
     }
 }

@@ -10,7 +10,7 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring", uses = DateMapper.class)
 public interface ResultMapper {
 
-    ResultDto dtoToObject (Result result);
+    Result dtoToObject (ResultDto resultDto);
 
-    Result objectToDto (ResultDto resultDto);
+    ResultDto objectToDto (Result result);
 }
