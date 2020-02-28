@@ -36,25 +36,9 @@ class QuestionServiceImplTest {
 
     @BeforeEach
     void setUp() {
-       questionServiceImpl = new QuestionServiceImpl(repository, emf);
 
     }
 
-    @Test
-    public void basicSaveOrUpdateTest() {
-        // Given
-
-        questionServiceImpl.readQuestionsFromCsv("F:\\Files\\source\\test-generator-app\\test-generator-app\\src\\test\\java\\resources\\input.csv");
-
-        List<Question> all = questionServiceImpl.findAll();
-
-        System.out.println(all.size());
-        all.forEach(System.out::println);
-        // When
-
-        // Then
-
-    }
 
 
 }

@@ -48,6 +48,7 @@ public class SkillTestServiceImpl {
                                 SkillTestMapper testMapper
                               ) {
         this.questionServiceImpl = questionServiceImpl;
+        this.contestantServiceImpl = contestantServiceImpl;
         this.skillTestRepository = skillTestRepository;
         this.resultService = resultService;
         this.testMapper = testMapper;
@@ -121,7 +122,7 @@ public class SkillTestServiceImpl {
                 .limit(regularTestSize - 5)
                 .forEachOrdered(result.getQuestions()::add);
 
-        List<Question> codeQuestions = questionServiceImpl.findAllByMainTechAndSkillLevelAndSpecificTech(mainTech, "Code", skillLevel);
+        List<QuestionDto> codeQuestions = questionServiceImpl.findAllByMainTechAndSkillLevelAndSpecificTech(mainTech, "Code", skillLevel);
         for (int i = 0; i < 5; i++) {
             result.getQuestions().add(codeQuestionPattern[i], codeQuestions.get(i));
         }
