@@ -15,9 +15,9 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = true)
 public class AnswerDto extends BaseItem {
 
-    String answer;
-    Boolean correct;
-    QuestionDto questionDto;
+    private String answer;
+    private Boolean correct;
+    private QuestionDto questionDto;
 
     @Builder
     public AnswerDto (UUID id,
