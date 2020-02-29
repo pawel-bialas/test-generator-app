@@ -89,10 +89,6 @@ class ContestantMapperTest {
 
     @Test
     void dtoToObject() {
-        ContestantDto contestantDto = contestantMapper.objectToDto(testContestant);
-
-        SkillTestDto skillTestDto = skillTestMapper.objectToDto(testSkillTest);
-        ResultDto resultDto = resultMapper.objectToDto(testResult);
 
 
     }
@@ -104,20 +100,13 @@ class ContestantMapperTest {
         ContestantDto contestantDto = contestantMapper.objectToDto(testContestant);
 
         SkillTestDto skillTestDto = skillTestMapper.objectToDto(testSkillTest);
-        ResultDto resultDto = resultMapper.objectToDto(testResult);
 
         contestantDto.addTest(skillTestDto);
-        contestantDto.addResult(resultDto);
-
 
 
         //Then
-        assertAll(
-                () -> assertThat(contestantDto).isNotNull(),
-                () -> assertThat(contestantDto.getContestantNumber()).isEqualTo(testContestant.getContestantNumber()),
-                () -> assertThat(contestantDto.getId()).isEqualTo(testContestant.getId())
 
-        );
+
 
     }
 }
