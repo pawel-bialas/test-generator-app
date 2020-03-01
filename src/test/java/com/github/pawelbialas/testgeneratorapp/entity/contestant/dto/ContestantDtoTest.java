@@ -35,12 +35,14 @@ class ContestantDtoTest {
     @BeforeEach
     void setUp() {
 
-         contestantDto = ContestantDto.builder()
+        contestantDto = ContestantDto.builder()
                 .contestantNumber("1234")
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
                 .id(UUID.randomUUID())
                 .version(1L)
+                .resultDtos(new ArrayList<ResultDto>())
+                .skillTestDtos(new ArrayList<SkillTestDto>())
                 .build();
 
         skillTestDto = SkillTestDto.builder()
@@ -64,23 +66,61 @@ class ContestantDtoTest {
     void addTest() {
         //When
         contestantDto.addTest(skillTestDto);
-
         //Then
-        assertAll(
-                () -> assertThat(contestantDto.getSkillTests().size()).isEqualTo(1)
 
+        assertAll(
+                () -> assertThat(contestantDto.getSkillTests().size()).isEqualTo(1),
+                () -> assertThat(contestantDto.getSkillTests().get(0)).isEqualTo(skillTestDto)
         );
+
+
     }
 
     @Test
     void removeTest() {
+        //When
+        contestantDto.addTest(skillTestDto);
+        assertAll(
+                () -> assertThat(contestantDto.getSkillTests().size()).isEqualTo(1),
+                () -> assertThat(contestantDto.getSkillTests().get(0)).isEqualTo(skillTestDto),
+                () -> assertThat(skillTestDto.getContestant()).isEqualTo(contestantDto)
+        );
+        contestantDto.removeTest(skillTestDto);
+        //Then
+        assertAll(
+                () -> assertThat(contestantDto.getSkillTests()).isNullOrEmpty(),
+                () -> assertThat(skillTestDto.getContestant()).isNull()
+        );
     }
 
     @Test
     void addResult() {
+        //When
+        contestantDto.addResult(resultDto);
+        //Then
+
+        assertAll(
+                () -> assertThat(contestantDto.getResults().size()).isEqualTo(1),
+                () -> assertThat(contestantDto.getResults().get(0)).isEqualTo(resultDto)
+        );
     }
 
     @Test
     void removeResult() {
+        //When
+        contestantDto.addResult(resultDto);
+        assertAll(
+                () -> assertThat(contestantDto.getResults().size()).isEqualTo(1),
+                () -> assertThat(contestantDto.getResults().get(0)).isEqualTo(resultDto),
+                () -> assertThat(resultDto.getContestant()).isEqualTo(contestantDto)
+        );
+        contestantDto.removeResult(resultDto);
+        //Then
+
+        assertAll(
+                () -> assertThat(contestantDto.getResults()).isNullOrEmpty(),
+                () -> assertThat(resultDto.getContestant()).isNull()
+        );
+
     }
 }

@@ -10,7 +10,6 @@ import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMapperImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
-import com.github.pawelbialas.testgeneratorapp.entity.skilltest.service.SkillTestServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.shared.DateMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -39,16 +37,16 @@ class ContestantMapperTest {
     @Autowired
     ResultMapper resultMapper;
 
-    Contestant testContestant;
+    Contestant contestant;
 
-    SkillTest testSkillTest;
+    SkillTest skillTest;
 
-    Result testResult;
+    Result result;
 
     @BeforeEach
     void setUp() {
 
-        testContestant = Contestant.builder()
+        contestant = Contestant.builder()
                 .contestantNumber("1234")
                 .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                 .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
@@ -58,7 +56,7 @@ class ContestantMapperTest {
                 .skillTests(new ArrayList<SkillTest>())
                 .build();
 
-        testSkillTest = SkillTest.builder()
+        skillTest = SkillTest.builder()
                 .questions(new ArrayList<Question>())
                 .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                 .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
@@ -66,7 +64,7 @@ class ContestantMapperTest {
                 .id(UUID.randomUUID())
                 .build();
 
-        testResult = Result.builder()
+        result = Result.builder()
                 .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                 .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
                 .score(12)
@@ -75,20 +73,39 @@ class ContestantMapperTest {
                 .build();
 
 
-        testContestant.addResult(testResult);
-        testContestant.addTest(testSkillTest);
+        contestant.addResult(result);
+        contestant.addTest(skillTest);
 
         assertAll(
-                () -> assertThat(testContestant.getContestantNumber()).isEqualTo("1234"),
-                () -> assertThat(testContestant.getResults().get(0)).isEqualTo(testResult),
-                () -> assertThat(testContestant.getSkillTests().get(0)).isEqualTo(testSkillTest),
-                () -> assertThat(testContestant.getResults().get(0).getScore()).isEqualTo(12)
+                () -> assertThat(contestant.getContestantNumber()).isEqualTo("1234"),
+                () -> assertThat(contestant.getResults().get(0)).isEqualTo(result),
+                () -> assertThat(contestant.getSkillTests().get(0)).isEqualTo(skillTest),
+                () -> assertThat(contestant.getResults().get(0).getScore()).isEqualTo(12)
         );
 
     }
 
     @Test
     void dtoToObject() {
+        //When
+        contestant.addTest(skillTest);
+        contestant.addResult(result);
+        ContestantDto contestantDto = contestantMapper.objectToDto(contestant);
+        contestantDto.setSkillTests(new ArrayList<SkillTestDto>());
+        contestantDto.addTest(skillTestMapper.objectToDto(contestant.getSkillTests().get(contestant.getSkillTests().size()-1)));
+        contestantDto.setResults(new ArrayList<ResultDto>());
+        contestantDto.addResult(resultMapper.objectToDto(contestant.getResults().get(contestant.getResults().size()-1)));
+
+        //Then
+
+        assertAll(
+                () -> assertThat(contestantDto.getId()).isEqualTo(contestant.getId()),
+                () -> assertThat(contestantDto.getContestantNumber()).isEqualTo("1234"),
+                () -> assertThat(contestantDto.getSkillTests().size()).isEqualTo(1),
+                () -> assertThat(contestantDto.getSkillTests().get(0)).isEqualTo(skillTestMapper.objectToDto(skillTest))
+        );
+
+
 
 
     }
@@ -97,15 +114,8 @@ class ContestantMapperTest {
     void objectToDto() {
 
         //When
-        ContestantDto contestantDto = contestantMapper.objectToDto(testContestant);
-
-        SkillTestDto skillTestDto = skillTestMapper.objectToDto(testSkillTest);
-
-        contestantDto.addTest(skillTestDto);
-
 
         //Then
-
 
 
     }

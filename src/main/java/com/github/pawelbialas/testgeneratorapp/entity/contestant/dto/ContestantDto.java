@@ -15,12 +15,12 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 public class ContestantDto extends BaseItem {
 
-    private String contestantNumber;
-    private List<SkillTestDto> skillTests = new ArrayList<>();
-    private List<ResultDto> results = new ArrayList<>();
+    public String contestantNumber;
+    public List<SkillTestDto> skillTests = new ArrayList<>();
+    public List<ResultDto> results = new ArrayList<>();
 
     @Builder
     public ContestantDto (UUID id,
@@ -57,12 +57,4 @@ public class ContestantDto extends BaseItem {
         resultDto.setContestant(null);
     }
 
-    @Override
-    public String toString() {
-        return "ContestantDto{" +
-                "contestantNumber='" + contestantNumber + '\'' +
-                ", number of skillTests=" + skillTests +
-                ", number of results=" + results +
-                '}';
-    }
 }
