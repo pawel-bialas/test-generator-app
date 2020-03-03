@@ -7,6 +7,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionMappe
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
+import com.github.pawelbialas.testgeneratorapp.shared.CycleAvoidingMappingContext;
 import com.github.pawelbialas.testgeneratorapp.shared.DateMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -33,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {QuestionMapperImpl.class, AnswerMapperImpl.class, DateMapper.class})
 class AnswerMapperTest {
+
 
 
     @Autowired

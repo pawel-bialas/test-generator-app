@@ -29,11 +29,12 @@ public class SkillTest extends BaseEntity {
 
     @Builder
     public SkillTest(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,
-                     ArrayList<Question> questions, Contestant contestant, Result result) {
+                     ArrayList<Question> questions, Contestant contestant, Result result, TestStatus status) {
         super(id, version, createdDate, lastModifiedDate);
         this.questions = questions;
         this.contestant = contestant;
         this.result = result;
+        this.testStatus = status;
     }
 
     @Override

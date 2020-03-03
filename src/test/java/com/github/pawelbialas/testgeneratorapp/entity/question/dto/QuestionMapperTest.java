@@ -4,6 +4,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
+import com.github.pawelbialas.testgeneratorapp.shared.CycleAvoidingMappingContext;
 import com.github.pawelbialas.testgeneratorapp.shared.DateMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

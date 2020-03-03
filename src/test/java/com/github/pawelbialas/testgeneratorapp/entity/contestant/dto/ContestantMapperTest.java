@@ -10,6 +10,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMapperImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
+import com.github.pawelbialas.testgeneratorapp.shared.CycleAvoidingMappingContext;
 import com.github.pawelbialas.testgeneratorapp.shared.DateMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {ContestantMapperImpl.class, SkillTestMapperImpl.class, ResultMapperImpl.class, DateMapper.class})
 class ContestantMapperTest {
+
 
     @Autowired
     ContestantMapper contestantMapper;
