@@ -51,12 +51,12 @@ public class QuestionDto extends BaseItem {
 
     public void addAnswer(AnswerDto answerDto) {
         answers.add(answerDto);
-        answerDto.setQuestionDto(this);
+        answerDto.setQuestion(this);
     }
 
     public void removeAnswer (AnswerDto answerDto) {
         answers.remove(answerDto);
-        answerDto.setQuestionDto(null);
+        answerDto.setQuestion(null);
     }
 
 

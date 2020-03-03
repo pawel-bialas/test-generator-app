@@ -7,6 +7,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.entity.question.repository.QuestionRepository;
+import com.github.pawelbialas.testgeneratorapp.shared.CycleAvoidingMappingContext;
 import com.opencsv.CSVReader;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,15 +46,15 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question saveOrUpdate(@NotNull QuestionDto questionDto) {
-        return questionRepository.findById(mapper.dtoToObject(questionDto).getId())
-                .map(val -> emf.createEntityManager().merge(mapper.dtoToObject(questionDto)))
-                .orElse(questionRepository.save(mapper.dtoToObject(questionDto)));
+        return questionRepository.findById(mapper.dtoToObject(questionDto, new CycleAvoidingMappingContext()).getId())
+                .map(val -> emf.createEntityManager().merge(mapper.dtoToObject(questionDto, new CycleAvoidingMappingContext())))
+                .orElse(questionRepository.save(mapper.dtoToObject(questionDto, new CycleAvoidingMappingContext())));
     }
 
     @Override
     public List<QuestionDto> findAll() {
         return questionRepository.findAll().stream()
-                .map(mapper::objectToDto)
+                .map(question -> mapper.objectToDto(question, new CycleAvoidingMappingContext()))
                 .collect(Collectors.toList());
     }
 
@@ -61,7 +62,7 @@ public class QuestionServiceImpl implements QuestionService {
     public List<QuestionDto> findAllByMainTech(MainTech mainTech) {
         return questionRepository.findAllByMainTech(mainTech).stream()
                 .filter(question -> question.getMainTech().equals(mainTech))
-                .map(mapper::objectToDto)
+                .map(question -> mapper.objectToDto(question, new CycleAvoidingMappingContext()))
                 .collect(Collectors.toList());
     }
 
@@ -69,7 +70,7 @@ public class QuestionServiceImpl implements QuestionService {
     public List<QuestionDto> findAllByMainTechAndSpecificTech(MainTech mainTech, String specificTech) {
         return questionRepository.findAllByMainTechAndSpecificTech(mainTech, specificTech)
                 .stream()
-                .map(mapper::objectToDto)
+                .map(question -> mapper.objectToDto(question, new CycleAvoidingMappingContext()))
                 .collect(Collectors.toList());
     }
 
@@ -77,7 +78,7 @@ public class QuestionServiceImpl implements QuestionService {
     public List<QuestionDto> findAllByMainTechAndSkillLevel(MainTech mainTech, SkillLevel skillLevel) {
         return questionRepository.findAllByMainTechAndSkillLevel(mainTech, skillLevel)
                 .stream()
-                .map(mapper::objectToDto)
+                .map(question -> mapper.objectToDto(question, new CycleAvoidingMappingContext()))
                 .collect(Collectors.toList());
     }
 
@@ -85,7 +86,7 @@ public class QuestionServiceImpl implements QuestionService {
     public List<QuestionDto> findAllByMainTechAndSkillLevelAndSpecificTech(MainTech mainTech, String specificTech, SkillLevel skillLevel) {
         return questionRepository.findAllByMainTechAndSkillLevelAndSpecificTech(mainTech, skillLevel, specificTech)
                 .stream()
-                .map(mapper::objectToDto)
+                .map(question -> mapper.objectToDto(question, new CycleAvoidingMappingContext()))
                 .collect(Collectors.toList());
     }
 

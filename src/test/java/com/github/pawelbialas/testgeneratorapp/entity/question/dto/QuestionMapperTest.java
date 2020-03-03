@@ -79,13 +79,13 @@ class QuestionMapperTest {
     @Test
     void dtoToObject() {
         //When
-        QuestionDto questionDto = questionMapper.objectToDto(question);
+        QuestionDto questionDto = questionMapper.objectToDto(question, new CycleAvoidingMappingContext());
         assertAll(
                 () -> assertThat(questionDto.getAnswers().size()).isEqualTo(2),
                 () -> assertThat(questionDto.getId()).isEqualTo(question.getId()),
                 () -> assertThat(questionDto.getAnswers().get(0).getAnswer()).isEqualTo(answer1.getAnswer())
         );
-        Question result = questionMapper.dtoToObject(questionDto);
+        Question result = questionMapper.dtoToObject(questionDto, new CycleAvoidingMappingContext());
 
         assertAll(
                 () -> assertThat(result.getId()).isEqualTo(questionDto.getId()),
@@ -97,7 +97,7 @@ class QuestionMapperTest {
     @Test
     void objectToDto() {
         //When
-        QuestionDto questionDto = questionMapper.objectToDto(question);
+        QuestionDto questionDto = questionMapper.objectToDto(question, new CycleAvoidingMappingContext());
         //Then
         assertAll(
                 () -> assertThat(questionDto.getAnswers().size()).isEqualTo(2),

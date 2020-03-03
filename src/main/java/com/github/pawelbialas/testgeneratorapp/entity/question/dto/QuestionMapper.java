@@ -1,21 +1,22 @@
 package com.github.pawelbialas.testgeneratorapp.entity.question.dto;
 
-import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantDto;
-import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
+import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.shared.CycleAvoidingMappingContext;
 import com.github.pawelbialas.testgeneratorapp.shared.DateMapper;
 import org.mapstruct.Context;
+import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 
-import java.util.List;
-
-@Mapper(componentModel = "spring", uses = DateMapper.class)
+@Mapper(componentModel = "spring",
+        disableSubMappingMethodsGeneration = true,
+        uses = {DateMapper.class, AnswerMapper.class})
 public interface QuestionMapper {
 
-    Question dtoToObject (QuestionDto questionDto);
+    Question dtoToObject (QuestionDto questionDto, @Context CycleAvoidingMappingContext context);
 
-    QuestionDto objectToDto (Question question);
+    @InheritInverseConfiguration
+    QuestionDto objectToDto (Question question, @Context CycleAvoidingMappingContext context);
 
 
 }

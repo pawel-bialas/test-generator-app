@@ -97,7 +97,7 @@ class ResultMapperTest {
     @Test
     void objectToDto() {
 
-        ResultDto resultDto = resultMapper.objectToDto(result);
+        ResultDto resultDto = resultMapper.objectToDto(result, new CycleAvoidingMappingContext());
 
         System.out.println(resultDto);
 

@@ -17,7 +17,7 @@ public class AnswerDto extends BaseItem {
 
     private String answer;
     private Boolean correct;
-    private QuestionDto questionDto;
+    private QuestionDto question;
 
     @Builder
     public AnswerDto (UUID id,
@@ -26,11 +26,11 @@ public class AnswerDto extends BaseItem {
                       OffsetDateTime lastModifiedDate,
                       String answer,
                       Boolean correct,
-                      QuestionDto questionDto) {
+                      QuestionDto question) {
         super(id, version, createdDate, lastModifiedDate);
         this.answer = answer;
         this.correct = correct;
-        this.questionDto = questionDto;
+        this.question = question;
 
     }
 
@@ -39,7 +39,7 @@ public class AnswerDto extends BaseItem {
         return "AnswerDto{" +
                 "answer='" + answer + '\'' +
                 ", correct=" + correct +
-                ", question_id=" + questionDto +
+                ", question_id=" + question +
                 '}';
     }
 }
