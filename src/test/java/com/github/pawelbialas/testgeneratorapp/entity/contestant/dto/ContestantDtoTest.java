@@ -41,12 +41,12 @@ class ContestantDtoTest {
                 .lastModifiedDate(OffsetDateTime.now())
                 .id(UUID.randomUUID())
                 .version(1L)
-                .resultDtos(new ArrayList<ResultDto>())
-                .skillTestDtos(new ArrayList<SkillTestDto>())
+                .results(new ArrayList<>())
+                .skillTests(new ArrayList<>())
                 .build();
 
         skillTestDto = SkillTestDto.builder()
-                .questions(new ArrayList<QuestionDto>())
+                .questions(new ArrayList<>())
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
                 .version(1L)

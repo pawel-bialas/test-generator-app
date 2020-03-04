@@ -30,7 +30,7 @@ public class SkillTestDto extends BaseItem {
     private List<QuestionDto> questions = new ArrayList<>();
     private ContestantDto contestant;
     private ResultDto result;
-    private TestStatus testStatus;
+    private String testStatus;
 
     @Builder
     public SkillTestDto (UUID id,
@@ -39,11 +39,13 @@ public class SkillTestDto extends BaseItem {
                          OffsetDateTime lastModifiedDate,
                          ArrayList<QuestionDto> questions,
                          ContestantDto contestant,
-                         ResultDto result) {
+                         ResultDto result,
+                         String testStatus) {
         super(id, version, createdDate, lastModifiedDate);
         this.questions = questions;
         this.contestant = contestant;
         this.result = result;
+        this.testStatus = testStatus;
     }
 
 }

@@ -12,13 +12,12 @@ import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring",
-        disableSubMappingMethodsGeneration = true,
+//        disableSubMappingMethodsGeneration = true,
         uses = {DateMapper.class, ResultMapper.class, SkillTestMapper.class})
 public interface ContestantMapper {
 
 
-    Contestant dtoToObject (ContestantDto contestantDto, @Context CycleAvoidingMappingContext context);
+    Contestant dtoToObject (ContestantDto contestantDto);
 
-    @InheritInverseConfiguration
-    ContestantDto objectToDto (Contestant contestant, @Context CycleAvoidingMappingContext context);
+    ContestantDto objectToDto (Contestant contestant);
 }

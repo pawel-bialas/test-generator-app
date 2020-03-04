@@ -118,7 +118,7 @@ class AnswerMapperTest {
         //Then
         assertAll(
                 () -> assertThat(answerDto.getId()).isEqualTo(testAnswer.getId()),
-                () -> assertThat(answerDto.getQuestionDto()).isEqualTo(questionDto),
+                () -> assertThat(answerDto.getQuestion()).isEqualTo(questionDto),
                 () -> assertThat(answerDto.getAnswer()).isEqualTo("testAnswer")
         );
     }

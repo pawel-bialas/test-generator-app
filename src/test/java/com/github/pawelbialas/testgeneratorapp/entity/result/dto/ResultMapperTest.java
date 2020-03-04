@@ -63,7 +63,7 @@ class ResultMapperTest {
                 .contestant(null)
                 .createdDate(new Timestamp(System.currentTimeMillis()))
                 .lastModifiedDate(new Timestamp(System.currentTimeMillis()))
-                .status(TestStatus.BASE)
+                .testStatus(TestStatus.BASE)
                 .build();
 
         contestant = Contestant.builder()
@@ -97,7 +97,7 @@ class ResultMapperTest {
     @Test
     void objectToDto() {
 
-        ResultDto resultDto = resultMapper.objectToDto(result, new CycleAvoidingMappingContext());
+        ResultDto resultDto = resultMapper.objectToDto(result);
 
         System.out.println(resultDto);
 

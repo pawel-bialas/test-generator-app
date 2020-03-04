@@ -16,6 +16,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
+import com.github.pawelbialas.testgeneratorapp.shared.CycleAvoidingMappingContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -57,7 +58,7 @@ public class SkillTestServiceImpl {
     public SkillTestDto findTestByUUID(UUID testUUID) {
         try {
             return skillTestRepository.findById(testUUID)
-                    .map(testMapper::objectToDto)
+                    .map(skillTest -> testMapper.objectToDto(skillTest))
                     .orElseThrow(EntityNotFoundException::new);
         } catch (EntityNotFoundException notFound) {
             throw new ResponseStatusException(
@@ -72,7 +73,7 @@ public class SkillTestServiceImpl {
             if (contestantServiceImpl.confirmContestant(contestantNumber)) {
                 return skillTestRepository.findByContestant_ContestantNumber(contestantNumber)
                         .stream()
-                        .map(testMapper::objectToDto)
+                        .map(skillTest -> testMapper.objectToDto(skillTest))
                         .collect(Collectors.toList());
             } else throw new EntityNotFoundException("message name to change");
         } catch (EntityNotFoundException notFound) {
@@ -92,8 +93,8 @@ public class SkillTestServiceImpl {
             if (contestant == null) {
                 contestant = ContestantDto.builder()
                         .contestantNumber(contestantNumber)
-                        .resultDtos(new ArrayList<ResultDto>())
-                        .skillTestDtos(new ArrayList<SkillTestDto>())
+                        .results(new ArrayList<>())
+                        .skillTests(new ArrayList<>())
                         .build();
                 contestantServiceImpl.saveOrUpdate(contestant);
             }

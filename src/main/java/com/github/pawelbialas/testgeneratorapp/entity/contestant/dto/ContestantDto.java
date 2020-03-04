@@ -28,12 +28,12 @@ public class ContestantDto extends BaseItem {
                           OffsetDateTime createdDate,
                           OffsetDateTime lastModifiedDate,
                           String contestantNumber,
-                          List<SkillTestDto> skillTestDtos,
-                          List<ResultDto> resultDtos) {
+                          List<SkillTestDto> skillTests,
+                          List<ResultDto> results) {
         super(id, version, createdDate, lastModifiedDate);
         this.contestantNumber = contestantNumber;
-        this.results = resultDtos;
-        this.skillTests = skillTestDtos;
+        this.results = results;
+        this.skillTests = skillTests;
     }
 
 

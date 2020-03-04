@@ -9,14 +9,13 @@ import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring",
-        disableSubMappingMethodsGeneration = true,
+//        disableSubMappingMethodsGeneration = true,
         uses = {DateMapper.class, AnswerMapper.class})
 public interface QuestionMapper {
 
-    Question dtoToObject (QuestionDto questionDto, @Context CycleAvoidingMappingContext context);
+    Question dtoToObject (QuestionDto questionDto);
 
-    @InheritInverseConfiguration
-    QuestionDto objectToDto (Question question, @Context CycleAvoidingMappingContext context);
+    QuestionDto objectToDto (Question question);
 
 
 }

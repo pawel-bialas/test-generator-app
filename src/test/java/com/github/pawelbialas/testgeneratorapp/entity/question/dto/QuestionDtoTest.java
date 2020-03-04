@@ -74,8 +74,8 @@ class QuestionDtoTest {
         //Then
         assertAll(
                 () -> assertThat(question.getAnswers().size()).isEqualTo(2),
-                () -> assertThat(answer1.getQuestionDto()).isEqualTo(question),
-                () -> assertThat(answer2.getQuestionDto()).isEqualTo(question)
+                () -> assertThat(answer1.getQuestion()).isEqualTo(question),
+                () -> assertThat(answer2.getQuestion()).isEqualTo(question)
         );
     }
 
@@ -87,8 +87,8 @@ class QuestionDtoTest {
         question.addAnswer(answer2);
         assertAll(
                 () -> assertThat(question.getAnswers().size()).isEqualTo(2),
-                () -> assertThat(answer1.getQuestionDto()).isEqualTo(question),
-                () -> assertThat(answer2.getQuestionDto()).isEqualTo(question)
+                () -> assertThat(answer1.getQuestion()).isEqualTo(question),
+                () -> assertThat(answer2.getQuestion()).isEqualTo(question)
         );
         question.removeAnswer(answer1);
         question.removeAnswer(answer2);
@@ -96,8 +96,8 @@ class QuestionDtoTest {
         assertAll(
                 () -> assertThat(question.getAnswers().size()).isEqualTo(0),
                 () -> assertThat(question.getAnswers()).isNullOrEmpty(),
-                () -> assertThat(answer1.getQuestionDto()).isNotEqualTo(question),
-                () -> assertThat(answer2.getQuestionDto()).isNotEqualTo(question)
+                () -> assertThat(answer1.getQuestion()).isNotEqualTo(question),
+                () -> assertThat(answer2.getQuestion()).isNotEqualTo(question)
         );
     }
 }

@@ -92,11 +92,11 @@ class ContestantMapperTest {
         //When
         contestant.addTest(skillTest);
         contestant.addResult(result);
-        ContestantDto contestantDto = contestantMapper.objectToDto(contestant, new CycleAvoidingMappingContext());
+        ContestantDto contestantDto = contestantMapper.objectToDto(contestant);
         contestantDto.setSkillTests(new ArrayList<SkillTestDto>());
         contestantDto.addTest(skillTestMapper.objectToDto(contestant.getSkillTests().get(contestant.getSkillTests().size()-1)));
         contestantDto.setResults(new ArrayList<ResultDto>());
-        contestantDto.addResult(resultMapper.objectToDto(contestant.getResults().get(contestant.getResults().size()-1), new CycleAvoidingMappingContext()));
+        contestantDto.addResult(resultMapper.objectToDto(contestant.getResults().get(contestant.getResults().size()-1)));
 
         //Then
 
