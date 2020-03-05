@@ -1,23 +1,15 @@
 package com.github.pawelbialas.testgeneratorapp.entity.skilltest.service;
 
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantDto;
-import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantMapper;
-import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.service.ContestantServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionDto;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
-import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionServiceImpl;
-import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultDto;
-import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
-import com.github.pawelbialas.testgeneratorapp.entity.result.service.ResultService;
+import com.github.pawelbialas.testgeneratorapp.entity.result.service.ResultServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMapper;
-import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
-import com.github.pawelbialas.testgeneratorapp.shared.CycleAvoidingMappingContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -25,12 +17,15 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class SkillTestServiceImpl {
+public class SkillTestServiceImpl implements SkillTestService {
 
     @Value("${regular.test.size}")
     private Integer regularTestSize;
@@ -38,20 +33,21 @@ public class SkillTestServiceImpl {
     private final QuestionServiceImpl questionServiceImpl;
     private final SkillTestRepository skillTestRepository;
     private final ContestantServiceImpl contestantServiceImpl;
-    private final ResultService resultService;
+    private final ResultServiceImpl resultServiceImpl;
     private final SkillTestMapper testMapper;
 
 
-    public SkillTestServiceImpl(QuestionServiceImpl questionServiceImpl,
-                                SkillTestRepository skillTestRepository,
-                                ContestantServiceImpl contestantServiceImpl,
-                                ResultService resultService,
-                                SkillTestMapper testMapper
-                              ) {
+    public SkillTestServiceImpl(
+            QuestionServiceImpl questionServiceImpl,
+            SkillTestRepository skillTestRepository,
+            ContestantServiceImpl contestantServiceImpl,
+            ResultServiceImpl resultServiceImpl,
+            SkillTestMapper testMapper
+    ) {
         this.questionServiceImpl = questionServiceImpl;
         this.contestantServiceImpl = contestantServiceImpl;
         this.skillTestRepository = skillTestRepository;
-        this.resultService = resultService;
+        this.resultServiceImpl = resultServiceImpl;
         this.testMapper = testMapper;
     }
 

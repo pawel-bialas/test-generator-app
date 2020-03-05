@@ -27,7 +27,6 @@ public class ResultDto extends BaseItem {
     private Integer score;
     private SkillTestDto skillTest;
     private ContestantDto contestant;
-    private String status;
 
     @Builder
     public ResultDto(UUID id,
@@ -43,7 +42,6 @@ public class ResultDto extends BaseItem {
         this.score = score;
         this.skillTest = skillTest;
         this.contestant = contestant;
-        this.status = status;
     }
 
 

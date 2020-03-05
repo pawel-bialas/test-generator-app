@@ -1,6 +1,8 @@
 package com.github.pawelbialas.testgeneratorapp.entity.contestant.dto;
 
+import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerMapperImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
+import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionMapperImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultDto;
 import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultMapper;
@@ -28,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = {ContestantMapperImpl.class, SkillTestMapperImpl.class, ResultMapperImpl.class, DateMapper.class})
+@SpringBootTest(classes = {AnswerMapperImpl.class, QuestionMapperImpl.class, ContestantMapperImpl.class, SkillTestMapperImpl.class, ResultMapperImpl.class, DateMapper.class})
 class ContestantMapperTest {
 
 
@@ -112,13 +114,13 @@ class ContestantMapperTest {
 
     }
 
-    @Test
-    void objectToDto() {
-
-        //When
-
-        //Then
-
-
-    }
+//    @Test
+//    void objectToDto() {
+//
+//        //When
+//
+//        //Then
+//
+//
+//    }
 }

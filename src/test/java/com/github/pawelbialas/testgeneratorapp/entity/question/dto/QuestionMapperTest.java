@@ -1,5 +1,6 @@
 package com.github.pawelbialas.testgeneratorapp.entity.question.dto;
 
+import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerMapperImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
@@ -22,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = {QuestionMapperImpl.class, DateMapper.class})
+@SpringBootTest(classes = {AnswerMapperImpl.class, QuestionMapperImpl.class, DateMapper.class})
 class QuestionMapperTest {
 
 

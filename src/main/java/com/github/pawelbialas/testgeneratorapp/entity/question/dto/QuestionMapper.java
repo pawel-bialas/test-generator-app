@@ -9,7 +9,6 @@ import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring",
-//        disableSubMappingMethodsGeneration = true,
         uses = {DateMapper.class, AnswerMapper.class})
 public interface QuestionMapper {
 
