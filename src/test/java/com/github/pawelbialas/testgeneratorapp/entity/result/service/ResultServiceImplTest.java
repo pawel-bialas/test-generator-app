@@ -43,7 +43,7 @@ public class ResultServiceImplTest {
     SkillTest skillTest;
 
     @Before
-    public void setUp()  {
+    public void setUp() {
         question1 = Question.builder()
                 .answers(new ArrayList<>())
                 .contents("testQuestion1")
@@ -133,11 +133,12 @@ public class ResultServiceImplTest {
     }
 
     @Test
-    public void given_2TestsWithTheSameAnswers_Then_ShouldReturn2() {
+    public void given_2TestsWithTheSameAnswers_Then_ShouldReturn_2() {
         // Given
         SkillTest otherSkillTest = skillTest;
         // When
         Integer score = resultService.checkAnswers(skillTest, otherSkillTest);
+        System.out.println(score);
         // Then
         assertAll(
                 () -> assertThat(score).isEqualTo(2)
@@ -146,14 +147,49 @@ public class ResultServiceImplTest {
     }
 
     @Test
-    public void testNameToChange() {
+    public void given_2TestsWithDifferentAnswers_Then_ShouldReturn_1() {
         // Given
+        SkillTest otherSkillTest = skillTest;
 
-        SkillTest.builder()
+        otherSkillTest.setQuestions(new ArrayList<>());
 
-        // When
+        Answer otherAnswer1 = Answer.builder()
+                .id(UUID.randomUUID())
+                .version(1L)
+                .createdDate(Timestamp.from(Instant.now()))
+                .lastModifiedDate(Timestamp.from(Instant.now()))
+                .correct(false)
+                .answer("answer2")
+                .question(null)
+                .build();
 
+        Answer otherAnswer2 = Answer.builder()
+                .id(UUID.randomUUID())
+                .version(1L)
+                .createdDate(Timestamp.from(Instant.now()))
+                .lastModifiedDate(Timestamp.from(Instant.now()))
+                .correct(true)
+                .answer("answer2")
+                .question(null)
+                .build();
+
+        question1.setAnswers(new ArrayList<>());
+        question1.addAnswer(otherAnswer1);
+        question1.addAnswer(otherAnswer2);
+
+        ArrayList<Question> questions = new ArrayList<>();
+        questions.add(question2);
+        questions.add(question1);
+
+        otherSkillTest.setQuestions(questions);
+
+        //When
+        Integer score = resultService.checkAnswers(skillTest, otherSkillTest);
+        System.out.println(score);
         // Then
+        assertAll(
+                () -> assertThat(score).isEqualTo(1)
+        );
 
     }
 }
