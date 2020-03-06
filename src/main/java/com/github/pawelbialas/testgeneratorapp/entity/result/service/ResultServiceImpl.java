@@ -70,7 +70,7 @@ public class ResultServiceImpl implements ResultService {
     }
 
     //do zmiany zwrot
-    private Integer checkAnswers(SkillTest baseTest, SkillTest resultTest) {
+    public Integer checkAnswers(SkillTest baseTest, SkillTest resultTest) {
         try {
             List<Question> baseQuestions = baseTest.getQuestions();
             List<Question> resultQuestions = resultTest.getQuestions();
@@ -88,14 +88,14 @@ public class ResultServiceImpl implements ResultService {
         }
     }
 
-    private Integer calculateFinalScore(List<Question> baseQuestions, List<Question> resultQuestions) {
+    public Integer calculateFinalScore(List<Question> baseQuestions, List<Question> resultQuestions) {
         Integer score = 0;
 
         for (int i = 0; i < baseQuestions.size(); i++) {
             List<Answer> baseAnswers = baseQuestions.get(i).getAnswers();
             List<Answer> resultAnswers = resultQuestions.get(i).getAnswers();
             for (int j = 0; j < baseAnswers.size(); j++) {
-                if (baseAnswers.get(j).getCorrect().equals(resultAnswers.get(j).getCorrect())) {
+                if (baseAnswers.get(j).getCorrect().equals(true) && baseAnswers.get(j).getCorrect().equals(resultAnswers.get(j).getCorrect())) {
                     score++;
                 }
             }
@@ -103,7 +103,7 @@ public class ResultServiceImpl implements ResultService {
         return score;
     }
 
-    private boolean questionIntegrityValidator(List<Question> baseQuestions, List<Question> resultQuestions) {
+    public boolean questionIntegrityValidator(List<Question> baseQuestions, List<Question> resultQuestions) {
         boolean integrityValidator = true;
         if (baseQuestions.size() != resultQuestions.size()) {
             return integrityValidator = false;
@@ -121,7 +121,7 @@ public class ResultServiceImpl implements ResultService {
         return integrityValidator;
     }
 
-    private boolean answerIntegrityValidation(List<Answer> baseAnswers, List<Answer> resultAnswers) {
+    public boolean answerIntegrityValidation(List<Answer> baseAnswers, List<Answer> resultAnswers) {
         boolean integrityValidator = true;
         if (baseAnswers.size() != resultAnswers.size()) {
             return integrityValidator = false;

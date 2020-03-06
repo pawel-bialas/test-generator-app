@@ -70,6 +70,9 @@ class QuestionServiceImplTest {
         // When
 
         // Then
+        assertAll(
+                () -> assertThat(question1.getContents()).isEqualTo(question2.getContents())
 
+        );
     }
 }

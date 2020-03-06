@@ -1,30 +1,16 @@
 package com.github.pawelbialas.testgeneratorapp.entity.result.service;
 
-import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerMapperImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
-import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantMapperImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
-import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionMapperImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
-import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultMapper;
-import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultMapperImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
-import com.github.pawelbialas.testgeneratorapp.entity.result.repository.ResultRepository;
-import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMapperImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestStatus;
-import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
-import com.github.pawelbialas.testgeneratorapp.shared.DateMapper;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -36,21 +22,15 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
-@ExtendWith(MockitoExtension.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class ResultServiceImplTest {
 
-    @Mock
-    SkillTestRepository skillTestRepository;
-    @Mock
-    ResultMapper mapper;
-    @Mock
-    ResultRepository resultRepository;
-    @InjectMocks
+
+    @Autowired
     ResultServiceImpl resultService;
-
-
 
     Result result;
 
@@ -133,21 +113,47 @@ public class ResultServiceImplTest {
         skillTest.setQuestions(questions);
 
         assertAll(
+                () -> assertThat(resultService).isNotNull(),
                 () -> assertThat(skillTest.getQuestions().size()).isEqualTo(2),
                 () -> assertThat(skillTest.getQuestions().get(0)).isEqualTo(question2)
         );
     }
 
     @Test
-    public void testNameToChange() {
-        //Given
-
+    public void given_testWith2CorrectAnswers_Then_ShouldReturn2() {
 
         //When
-
+        Integer maxScore = resultService.calculateMaxScore(skillTest);
+        System.out.println(maxScore);
 
         //Then
-        
+        assertAll(
+                () -> assertThat(maxScore).isEqualTo(2)
+        );
+    }
+
+    @Test
+    public void given_2TestsWithTheSameAnswers_Then_ShouldReturn2() {
+        // Given
+        SkillTest otherSkillTest = skillTest;
+        // When
+        Integer score = resultService.checkAnswers(skillTest, otherSkillTest);
+        // Then
+        assertAll(
+                () -> assertThat(score).isEqualTo(2)
+        );
+
+    }
+
+    @Test
+    public void testNameToChange() {
+        // Given
+
+        SkillTest.builder()
+
+        // When
+
+        // Then
 
     }
 }
