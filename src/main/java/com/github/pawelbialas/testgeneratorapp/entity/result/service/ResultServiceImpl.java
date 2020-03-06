@@ -22,16 +22,15 @@ import java.util.UUID;
 public class ResultServiceImpl implements ResultService {
 
 
-    private final ResultRepository resultRepository;
-    private final SkillTestRepository skillTestRepository;
-    private final ResultMapper mapper;
+    @Autowired
+    private  ResultRepository resultRepository;
+    @Autowired
+    private  SkillTestRepository skillTestRepository;
+    @Autowired
+    private  ResultMapper mapper;
 
 
-    public ResultServiceImpl(ResultRepository resultRepository, SkillTestRepository skillTestRepository, ResultMapper mapper) {
-        this.resultRepository = resultRepository;
-        this.skillTestRepository = skillTestRepository;
-        this.mapper = mapper;
-    }
+
 
 
     public Double resolveTest(UUID candidateId, UUID baseTestId, SkillTest resultTest) {
