@@ -69,7 +69,7 @@ public class ResultServiceImpl implements ResultService {
         return maxScore;
     }
 
-    //do zmiany zwrot
+
      Integer checkAnswers(SkillTest baseTest, SkillTest resultTest) {
         try {
             List<Question> baseQuestions = baseTest.getQuestions();
