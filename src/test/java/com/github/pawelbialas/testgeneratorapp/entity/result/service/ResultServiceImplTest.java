@@ -13,8 +13,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -24,9 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -45,6 +42,8 @@ public class ResultServiceImplTest {
 
     Answer answer1;
     Answer answer2;
+    Answer answer3;
+    Answer answer4;
 
     SkillTest skillTest;
 
@@ -115,6 +114,26 @@ public class ResultServiceImplTest {
                 .lastModifiedDate(Timestamp.from(Instant.now()))
                 .correct(false)
                 .answer("answer2")
+                .question(null)
+                .build();
+
+        answer3 = Answer.builder()
+                .id(UUID.randomUUID())
+                .version(1L)
+                .createdDate(Timestamp.from(Instant.now()))
+                .lastModifiedDate(Timestamp.from(Instant.now()))
+                .correct(false)
+                .answer("answer3")
+                .question(null)
+                .build();
+
+        answer4 = Answer.builder()
+                .id(UUID.randomUUID())
+                .version(1L)
+                .createdDate(Timestamp.from(Instant.now()))
+                .lastModifiedDate(Timestamp.from(Instant.now()))
+                .correct(false)
+                .answer("answer4")
                 .question(null)
                 .build();
 
@@ -226,7 +245,8 @@ public class ResultServiceImplTest {
     }
 
     @Test
-    public void given_2TestsWithDifferentQuestionsContent_Then_ShouldReturn_ThrowAnException() {
+    public void given_2TestsWithDifferentQuestionsContent_Then_Should_ThrowAnException() {
+        // This test will prove questionIntegrityValidator
         // Given
         List<Question> questions = new ArrayList<>();
         questions.add(question4);
@@ -247,14 +267,37 @@ public class ResultServiceImplTest {
         //Then
         try {
             resultService.checkAnswers(skillTest, otherSkillTest);
-        } catch (ResponseStatusException e) {
+        } catch (Exception e) {
+            assertThat(e).isInstanceOf(ResponseStatusException.class);
             assertThat(e.getMessage()).isEqualTo("400 BAD_REQUEST \"message name to change\"");
-            assertThat(e.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
-        };
+        }
+    }
 
+    @Test
+    public void given_2TestsWithDifferentAnswerContent_Then_Should_ThrowAnException() {
+        // This test will prove answerIntegrityValidator
+        // Given
+
+        SkillTest otherSkillTest = skillTest;
+        Question otherQuestion = question1;
+
+        otherQuestion.setAnswers(new ArrayList<>());
+        otherQuestion.addAnswer(answer1);
+        otherQuestion.addAnswer(answer3);
+
+        otherSkillTest.setQuestions(new ArrayList<>());
+        ArrayList<Question> questions = new ArrayList<>();
+        questions.add(question2);
+        questions.add(otherQuestion);
+        otherSkillTest.setQuestions(questions);
         // Then
-
-
+        //Then
+        try {
+            resultService.checkAnswers(skillTest, otherSkillTest);
+        } catch (Exception e) {
+            assertThat(e).isInstanceOf(ResponseStatusException.class);
+            assertThat(e.getMessage()).isEqualTo("400 BAD_REQUEST \"message name to change\"");
+        }
 
     }
 }
