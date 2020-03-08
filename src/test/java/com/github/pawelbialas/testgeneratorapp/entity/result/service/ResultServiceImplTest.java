@@ -8,11 +8,13 @@ import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestStatus;
+import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -20,10 +22,13 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -32,6 +37,9 @@ public class ResultServiceImplTest {
 
     @Autowired
     ResultServiceImpl resultService;
+
+    @MockBean
+    SkillTestRepository repository;
 
     Result result;
 
@@ -182,15 +190,18 @@ public class ResultServiceImplTest {
     }
 
     @Test
-    public void given_2TestsWithTheSameAnswers_Then_ShouldReturn_2() {
+    public void given_2TestsWithTheSameAnswers_Then_ShouldReturn_100() {
         // Given
         SkillTest otherSkillTest = skillTest;
+        when(repository.findById(skillTest.getId())).thenReturn(Optional.of(skillTest));
         // When
-        Integer score = resultService.checkAnswers(skillTest, otherSkillTest);
+
+        Double score = resultService.resolveTest(UUID.randomUUID(), skillTest.getId(), otherSkillTest);
+//        Integer score = resultService.checkAnswers(skillTest, otherSkillTest);
         System.out.println(score);
         // Then
         assertAll(
-                () -> assertThat(score).isEqualTo(2)
+                () -> assertThat(score).isEqualTo(100)
         );
 
     }
@@ -234,12 +245,14 @@ public class ResultServiceImplTest {
 
         otherSkillTest.setQuestions(questions);
 
+        when(repository.findById(skillTest.getId())).thenReturn(Optional.of(skillTest));
+
         //When
-        Integer score = resultService.checkAnswers(skillTest, otherSkillTest);
+        Double score = resultService.resolveTest(UUID.randomUUID(), skillTest.getId(), otherSkillTest);
         System.out.println(score);
         // Then
         assertAll(
-                () -> assertThat(score).isEqualTo(1)
+                () -> assertThat(score).isEqualTo(50)
         );
 
     }
@@ -290,7 +303,9 @@ public class ResultServiceImplTest {
         questions.add(question2);
         questions.add(otherQuestion);
         otherSkillTest.setQuestions(questions);
-        // Then
+        //When
+
+
         //Then
         try {
             resultService.checkAnswers(skillTest, otherSkillTest);

@@ -33,7 +33,7 @@ public class ResultServiceImpl implements ResultService {
 
 
 
-    public Double resolveTest(UUID candidateId, UUID baseTestId, SkillTest resultTest) {
+    public Integer resolveTest(UUID candidateId, UUID baseTestId, SkillTest resultTest) {
         SkillTest baseTest = null;
         Integer maxScore = 0;
         Integer contestantScore = 0;
@@ -52,7 +52,8 @@ public class ResultServiceImpl implements ResultService {
                     corruptedData.getMessage()
             );
         }
-        return (double) (contestantScore / maxScore);
+
+        return 
     }
 
     public Integer calculateMaxScore(SkillTest baseTest) {
