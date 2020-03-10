@@ -1,20 +1,14 @@
 package com.github.pawelbialas.testgeneratorapp.entity.question.dto;
 
 import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerDto;
-import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
-import com.github.pawelbialas.testgeneratorapp.shared.BaseItem;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.BaseItem;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.github.pawelbialas.testgeneratorapp.shared;
+package com.github.pawelbialas.testgeneratorapp.shared.domain.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -7,15 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Version;
-import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 import java.util.UUID;

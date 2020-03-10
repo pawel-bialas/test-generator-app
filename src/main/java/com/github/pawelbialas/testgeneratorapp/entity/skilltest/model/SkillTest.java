@@ -3,7 +3,7 @@ package com.github.pawelbialas.testgeneratorapp.entity.skilltest.model;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
-import com.github.pawelbialas.testgeneratorapp.shared.BaseEntity;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.model.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;

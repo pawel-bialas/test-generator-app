@@ -196,7 +196,7 @@ public class ResultServiceImplTest {
         when(repository.findById(skillTest.getId())).thenReturn(Optional.of(skillTest));
         // When
 
-        Double score = resultService.resolveTest(UUID.randomUUID(), skillTest.getId(), otherSkillTest);
+        Integer score = resultService.resolveTest(UUID.randomUUID(), skillTest.getId(), otherSkillTest);
 //        Integer score = resultService.checkAnswers(skillTest, otherSkillTest);
         System.out.println(score);
         // Then
@@ -248,7 +248,7 @@ public class ResultServiceImplTest {
         when(repository.findById(skillTest.getId())).thenReturn(Optional.of(skillTest));
 
         //When
-        Double score = resultService.resolveTest(UUID.randomUUID(), skillTest.getId(), otherSkillTest);
+        Integer score = resultService.resolveTest(UUID.randomUUID(), skillTest.getId(), otherSkillTest);
         System.out.println(score);
         // Then
         assertAll(

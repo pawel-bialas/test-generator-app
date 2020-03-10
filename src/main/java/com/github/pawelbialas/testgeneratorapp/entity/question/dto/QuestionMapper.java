@@ -2,10 +2,7 @@ package com.github.pawelbialas.testgeneratorapp.entity.question.dto;
 
 import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
-import com.github.pawelbialas.testgeneratorapp.shared.CycleAvoidingMappingContext;
-import com.github.pawelbialas.testgeneratorapp.shared.DateMapper;
-import org.mapstruct.Context;
-import org.mapstruct.InheritInverseConfiguration;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.DateMapper;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring",

@@ -1,4 +1,4 @@
-package com.github.pawelbialas.testgeneratorapp.shared;
+package com.github.pawelbialas.testgeneratorapp.shared.domain.dto;
 
 import org.springframework.stereotype.Component;
 

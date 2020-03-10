@@ -1,6 +1,6 @@
 package com.github.pawelbialas.testgeneratorapp.entity.question.model;
 import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
-import com.github.pawelbialas.testgeneratorapp.shared.BaseEntity;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.model.BaseEntity;
 import lombok.*;
 
 

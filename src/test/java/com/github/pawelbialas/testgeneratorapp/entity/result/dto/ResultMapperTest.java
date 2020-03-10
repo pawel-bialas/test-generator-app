@@ -9,7 +9,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMapperImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestStatus;
-import com.github.pawelbialas.testgeneratorapp.shared.DateMapper;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.DateMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;

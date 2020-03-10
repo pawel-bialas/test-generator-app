@@ -1,12 +1,9 @@
 package com.github.pawelbialas.testgeneratorapp.entity.contestant.dto;
 
 import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultDto;
-import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto;
-import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
-import com.github.pawelbialas.testgeneratorapp.shared.BaseItem;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.BaseItem;
 import lombok.*;
-import org.mapstruct.factory.Mappers;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.github.pawelbialas.testgeneratorapp.shared;
+package com.github.pawelbialas.testgeneratorapp.shared.domain.dto;
 
 import org.mapstruct.BeforeMapping;
 import org.mapstruct.MappingTarget;

@@ -4,8 +4,6 @@ import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantD
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.repository.ContestantRepository;
-import com.github.pawelbialas.testgeneratorapp.shared.CycleAvoidingMappingContext;
-import org.hibernate.exception.DataException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -13,9 +11,6 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
-import javax.validation.constraints.NotNull;
-import java.util.Optional;
-import java.util.function.Function;
 
 @Service
 @Transactional

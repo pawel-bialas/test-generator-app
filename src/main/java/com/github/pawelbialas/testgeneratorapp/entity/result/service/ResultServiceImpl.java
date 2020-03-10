@@ -53,7 +53,7 @@ public class ResultServiceImpl implements ResultService {
             );
         }
 
-        return 
+        return 0;
     }
 
     public Integer calculateMaxScore(SkillTest baseTest) {

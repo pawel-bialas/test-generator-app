@@ -1,4 +1,4 @@
-package com.github.pawelbialas.testgeneratorapp.shared;
+package com.github.pawelbialas.testgeneratorapp.shared.domain.model;
 
 import lombok.Getter;
 import lombok.Setter;

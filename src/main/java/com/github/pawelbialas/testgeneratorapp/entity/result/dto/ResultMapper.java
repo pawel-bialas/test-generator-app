@@ -6,7 +6,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantM
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMapper;
-import com.github.pawelbialas.testgeneratorapp.shared.DateMapper;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.DateMapper;
 import org.mapstruct.Mapper;
 
 @Mapper( componentModel = "spring",

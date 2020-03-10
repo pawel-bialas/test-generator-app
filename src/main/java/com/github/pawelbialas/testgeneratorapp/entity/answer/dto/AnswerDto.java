@@ -1,7 +1,7 @@
 package com.github.pawelbialas.testgeneratorapp.entity.answer.dto;
 
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionDto;
-import com.github.pawelbialas.testgeneratorapp.shared.BaseItem;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.BaseItem;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

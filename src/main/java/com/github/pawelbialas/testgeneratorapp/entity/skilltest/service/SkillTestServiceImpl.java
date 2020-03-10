@@ -1,6 +1,7 @@
 package com.github.pawelbialas.testgeneratorapp.entity.skilltest.service;
 
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantDto;
+import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.service.ContestantServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionDto;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
@@ -9,7 +10,9 @@ import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionS
 import com.github.pawelbialas.testgeneratorapp.entity.result.service.ResultServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMapper;
+import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestStatus;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -42,8 +45,7 @@ public class SkillTestServiceImpl implements SkillTestService {
             SkillTestRepository skillTestRepository,
             ContestantServiceImpl contestantServiceImpl,
             ResultServiceImpl resultServiceImpl,
-            SkillTestMapper testMapper
-    ) {
+            SkillTestMapper testMapper) {
         this.questionServiceImpl = questionServiceImpl;
         this.contestantServiceImpl = contestantServiceImpl;
         this.skillTestRepository = skillTestRepository;
@@ -80,7 +82,11 @@ public class SkillTestServiceImpl implements SkillTestService {
         }
     }
 
-    public SkillTestDto createNewTest(String contestantNumber, MainTech mainTech, SkillLevel skillLevel, Boolean isRegularTest) {
+    public SkillTestDto createNewTest(String contestantNumber,
+                                      MainTech mainTech,
+                                      SkillLevel skillLevel,
+                                      Boolean isRegularTest,
+                                      Boolean addCodeBlocks) {
         try {
             if (contestantNumber == null || skillLevel == null || mainTech == null) {
                 throw new IllegalArgumentException("message name to change");
@@ -108,6 +114,7 @@ public class SkillTestServiceImpl implements SkillTestService {
     private SkillTestDto generateTest(ContestantDto contestant, MainTech mainTech, SkillLevel skillLevel, Boolean isRegularTest) {
         SkillTestDto result = SkillTestDto.builder()
                 .contestant(contestant)
+                .testStatus(String.valueOf(TestStatus.BASE))
                 .build();
 
         int[] codeQuestionPattern = {3, 5, 7, 9, 10};

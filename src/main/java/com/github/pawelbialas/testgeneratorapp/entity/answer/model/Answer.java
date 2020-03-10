@@ -1,7 +1,7 @@
 package com.github.pawelbialas.testgeneratorapp.entity.answer.model;
 
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
-import com.github.pawelbialas.testgeneratorapp.shared.BaseEntity;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.model.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
