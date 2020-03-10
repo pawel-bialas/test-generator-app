@@ -6,6 +6,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.result.repository.ResultRepository;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.result.SkillTestDataIntegrityException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -37,7 +38,6 @@ public class ResultServiceImpl implements ResultService {
         SkillTest baseTest = null;
         Integer maxScore = 0;
         Integer contestantScore = 0;
-        try {
 
             Optional<SkillTest> searchResult = skillTestRepository.findById(baseTestId);
 
@@ -45,14 +45,7 @@ public class ResultServiceImpl implements ResultService {
                 baseTest = searchResult.get();
                 maxScore = calculateMaxScore(baseTest);
                 contestantScore = checkAnswers(baseTest, resultTest);
-            } else throw new DataIntegrityViolationException("message name to change");
-        } catch (DataIntegrityViolationException corruptedData) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    corruptedData.getMessage()
-            );
-        }
-
+            } else throw new SkillTestDataIntegrityException("ResultServiceImpl message name to change");
         return 0;
     }
 
@@ -72,22 +65,14 @@ public class ResultServiceImpl implements ResultService {
 
 
      Integer checkAnswers(SkillTest baseTest, SkillTest resultTest) {
-        try {
             List<Question> baseQuestions = baseTest.getQuestions();
             List<Question> resultQuestions = resultTest.getQuestions();
             boolean integrity = questionIntegrityValidator(baseQuestions, resultQuestions);
             if (!integrity) {
-                throw new DataIntegrityViolationException("message name to change");
+                throw new SkillTestDataIntegrityException("ResultServiceImpl message name to change");
             }
             return calculateFinalScore(baseQuestions, resultQuestions);
-
-        } catch (DataIntegrityViolationException corruptedData) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    corruptedData.getMessage()
-            );
         }
-    }
 
      Integer calculateFinalScore(List<Question> baseQuestions, List<Question> resultQuestions) {
         Integer score = 0;

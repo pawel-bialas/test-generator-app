@@ -9,6 +9,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestStatus;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.result.SkillTestDataIntegrityException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -281,8 +282,8 @@ public class ResultServiceImplTest {
         try {
             resultService.checkAnswers(skillTest, otherSkillTest);
         } catch (Exception e) {
-            assertThat(e).isInstanceOf(ResponseStatusException.class);
-            assertThat(e.getMessage()).isEqualTo("400 BAD_REQUEST \"message name to change\"");
+            assertThat(e).isInstanceOf(SkillTestDataIntegrityException.class);
+            assertThat(e.getMessage()).isEqualTo("ResultServiceImpl message name to change");
         }
     }
 
@@ -310,8 +311,8 @@ public class ResultServiceImplTest {
         try {
             resultService.checkAnswers(skillTest, otherSkillTest);
         } catch (Exception e) {
-            assertThat(e).isInstanceOf(ResponseStatusException.class);
-            assertThat(e.getMessage()).isEqualTo("400 BAD_REQUEST \"message name to change\"");
+            assertThat(e).isInstanceOf(SkillTestDataIntegrityException.class);
+            assertThat(e.getMessage()).isEqualTo("ResultServiceImpl message name to change");
         }
 
     }
