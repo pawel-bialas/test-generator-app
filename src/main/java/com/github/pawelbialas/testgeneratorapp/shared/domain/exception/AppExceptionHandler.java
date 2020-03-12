@@ -1,6 +1,6 @@
 package com.github.pawelbialas.testgeneratorapp.shared.domain.exception;
 
-import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.result.SkillTestDataIntegrityException;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.result.ResultServiceException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +26,8 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
                 errorMessage, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(value = {SkillTestDataIntegrityException.class})
-    public ResponseEntity<Object> handleSkillTestDataIntegrityExceptionExceptionHandler(Exception exc, WebRequest request) {
+    @ExceptionHandler(value = {ResultServiceException.class})
+    public ResponseEntity<Object> badRequestExceptionsHandler(Exception exc, WebRequest request) {
 
         String errorDescription = exc.getLocalizedMessage();
         if (errorDescription == null) {

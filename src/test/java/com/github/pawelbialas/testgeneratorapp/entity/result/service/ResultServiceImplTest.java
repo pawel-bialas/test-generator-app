@@ -9,7 +9,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestStatus;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.result.SkillTestDataIntegrityException;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.result.ResultServiceException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -28,7 +27,6 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
@@ -282,7 +280,7 @@ public class ResultServiceImplTest {
         try {
             resultService.checkAnswers(skillTest, otherSkillTest);
         } catch (Exception e) {
-            assertThat(e).isInstanceOf(SkillTestDataIntegrityException.class);
+            assertThat(e).isInstanceOf(ResultServiceException.class);
             assertThat(e.getMessage()).isEqualTo("ResultServiceImpl message name to change");
         }
     }
@@ -311,7 +309,7 @@ public class ResultServiceImplTest {
         try {
             resultService.checkAnswers(skillTest, otherSkillTest);
         } catch (Exception e) {
-            assertThat(e).isInstanceOf(SkillTestDataIntegrityException.class);
+            assertThat(e).isInstanceOf(ResultServiceException.class);
             assertThat(e.getMessage()).isEqualTo("ResultServiceImpl message name to change");
         }
 

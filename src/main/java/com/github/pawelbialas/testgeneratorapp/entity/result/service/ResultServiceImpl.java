@@ -6,12 +6,9 @@ import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.result.repository.ResultRepository;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.result.SkillTestDataIntegrityException;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.result.ResultServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -23,15 +20,15 @@ import java.util.UUID;
 public class ResultServiceImpl implements ResultService {
 
 
-    @Autowired
-    private  ResultRepository resultRepository;
-    @Autowired
-    private  SkillTestRepository skillTestRepository;
-    @Autowired
-    private  ResultMapper mapper;
+    private final ResultRepository resultRepository;
+    private final SkillTestRepository skillTestRepository;
+    private final ResultMapper mapper;
 
-
-
+    public ResultServiceImpl(ResultRepository resultRepository, SkillTestRepository skillTestRepository, ResultMapper mapper) {
+        this.resultRepository = resultRepository;
+        this.skillTestRepository = skillTestRepository;
+        this.mapper = mapper;
+    }
 
 
     public Integer resolveTest(UUID candidateId, UUID baseTestId, SkillTest resultTest) {
@@ -45,7 +42,7 @@ public class ResultServiceImpl implements ResultService {
                 baseTest = searchResult.get();
                 maxScore = calculateMaxScore(baseTest);
                 contestantScore = checkAnswers(baseTest, resultTest);
-            } else throw new SkillTestDataIntegrityException("ResultServiceImpl message name to change");
+            } else throw new ResultServiceException("ResultServiceImpl message name to change");
         return 0;
     }
 
@@ -69,7 +66,7 @@ public class ResultServiceImpl implements ResultService {
             List<Question> resultQuestions = resultTest.getQuestions();
             boolean integrity = questionIntegrityValidator(baseQuestions, resultQuestions);
             if (!integrity) {
-                throw new SkillTestDataIntegrityException("ResultServiceImpl message name to change");
+                throw new ResultServiceException("ResultServiceImpl message name to change");
             }
             return calculateFinalScore(baseQuestions, resultQuestions);
         }
@@ -121,7 +118,6 @@ public class ResultServiceImpl implements ResultService {
             }
         }
         return integrityValidator;
-
     }
 
 }
