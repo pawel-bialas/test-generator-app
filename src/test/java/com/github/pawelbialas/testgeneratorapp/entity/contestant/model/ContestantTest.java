@@ -50,11 +50,11 @@ class ContestantTest {
                 .build();
 
         result = Result.builder()
-                .createdDate(Timestamp.valueOf(LocalDateTime.now()))
-                .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
+//                .createdDate(Timestamp.valueOf(LocalDateTime.now()))
+//                .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
                 .score(12)
-                .id(UUID.randomUUID())
-                .version(1L)
+//                .id(UUID.randomUUID())
+//                .version(1L)
                 .build();
 
         assertAll(

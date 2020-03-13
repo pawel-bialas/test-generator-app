@@ -54,11 +54,7 @@ class ContestantDtoTest {
                 .build();
 
         resultDto = ResultDto.builder()
-                .createdDate(OffsetDateTime.now())
-                .lastModifiedDate(OffsetDateTime.now())
                 .score(12)
-                .id(UUID.randomUUID())
-                .version(1L)
                 .build();
     }
 

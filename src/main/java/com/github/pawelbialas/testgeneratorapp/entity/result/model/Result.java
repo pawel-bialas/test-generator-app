@@ -1,9 +1,11 @@
 package com.github.pawelbialas.testgeneratorapp.entity.result.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.model.BaseEntity;
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -12,8 +14,9 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@Table(name = "results")
 @NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "results")
 @Entity
 public class Result extends BaseEntity {
 
@@ -32,6 +35,10 @@ public class Result extends BaseEntity {
         this.skillTest = skillTest;
         this.contestant = contestant;
     }
+
+//    @JsonPOJOBuilder(withPrefix = "")
+//    public static final class ResultBuilder {
+//    }
 
     @Override
     public String toString() {

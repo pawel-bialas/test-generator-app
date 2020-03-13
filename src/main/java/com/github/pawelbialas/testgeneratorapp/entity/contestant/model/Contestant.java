@@ -12,10 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Setter
 @Getter
-@Table(name = "contestants")
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "contestants")
 @Entity
 public class Contestant extends BaseEntity {
 

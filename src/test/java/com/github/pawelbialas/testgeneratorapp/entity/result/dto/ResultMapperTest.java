@@ -9,6 +9,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMapperImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestStatus;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.DateMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,7 +41,13 @@ class ResultMapperTest {
     @BeforeEach
     void setUp() {
 
-        result = Result.builder()
+//        result = Result.builder()
+//                .skillTest(null)
+//                .score(12)
+//                .contestant(null)
+//                .build();
+
+       result = Result.builder()
                 .id(UUID.randomUUID())
                 .createdDate(new Timestamp(System.currentTimeMillis()))
                 .lastModifiedDate(new Timestamp(System.currentTimeMillis()))
@@ -88,8 +95,12 @@ class ResultMapperTest {
     @Test
     void objectToDto() {
 
-        ResultDto resultDto = resultMapper.objectToDto(result);
+        ResultDto resultDto = resultMapper.objectToDto(result, new CycleAvoidingMappingContext());
 
+        assertAll(
+                () -> assertThat(resultDto.getId()).isEqualTo(result.getId())
+        );
+        System.out.println(result);
         System.out.println(resultDto);
 
 

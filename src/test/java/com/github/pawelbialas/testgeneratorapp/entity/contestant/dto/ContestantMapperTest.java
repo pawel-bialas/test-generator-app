@@ -12,6 +12,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMapperImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.DateMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -68,11 +69,7 @@ class ContestantMapperTest {
                 .build();
 
         result = Result.builder()
-                .createdDate(Timestamp.valueOf(LocalDateTime.now()))
-                .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
                 .score(12)
-                .id(UUID.randomUUID())
-                .version(1L)
                 .build();
 
 
@@ -93,11 +90,11 @@ class ContestantMapperTest {
         //When
         contestant.addTest(skillTest);
         contestant.addResult(result);
-        ContestantDto contestantDto = contestantMapper.objectToDto(contestant);
+        ContestantDto contestantDto = contestantMapper.objectToDto(contestant, new CycleAvoidingMappingContext());
         contestantDto.setSkillTests(new ArrayList<SkillTestDto>());
         contestantDto.addTest(skillTestMapper.objectToDto(contestant.getSkillTests().get(contestant.getSkillTests().size()-1)));
         contestantDto.setResults(new ArrayList<ResultDto>());
-        contestantDto.addResult(resultMapper.objectToDto(contestant.getResults().get(contestant.getResults().size()-1)));
+        contestantDto.addResult(resultMapper.objectToDto(contestant.getResults().get(contestant.getResults().size()-1), new CycleAvoidingMappingContext()));
 
         //Then
 

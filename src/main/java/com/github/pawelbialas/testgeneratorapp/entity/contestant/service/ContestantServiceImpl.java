@@ -4,6 +4,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantD
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.repository.ContestantRepository;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -30,7 +31,7 @@ public class ContestantServiceImpl implements ContestantService {
     public ContestantDto findContestantByNumber(String contestantNumber) {
         try {
             return contestantRepository.findByContestantNumber(contestantNumber)
-                    .map(contestant -> mapper.objectToDto(contestant))
+                    .map(contestant -> mapper.objectToDto(contestant, new CycleAvoidingMappingContext()))
                     .orElseThrow(EntityNotFoundException::new);
         } catch (EntityNotFoundException notFound) {
             throw new ResponseStatusException(
@@ -47,9 +48,9 @@ public class ContestantServiceImpl implements ContestantService {
 
     @Override
     public Contestant saveOrUpdate( ContestantDto contestantDto) {
-            return contestantRepository.findById(mapper.dtoToObject(contestantDto).getId())
-                    .map(val -> emf.createEntityManager().merge(mapper.dtoToObject(contestantDto)))
-                    .orElse(contestantRepository.save(mapper.dtoToObject(contestantDto)));
+            return contestantRepository.findById(mapper.dtoToObject(contestantDto, new CycleAvoidingMappingContext()).getId())
+                    .map(val -> emf.createEntityManager().merge(mapper.dtoToObject(contestantDto, new CycleAvoidingMappingContext())))
+                    .orElse(contestantRepository.save(mapper.dtoToObject(contestantDto, new CycleAvoidingMappingContext())));
     }
 
 

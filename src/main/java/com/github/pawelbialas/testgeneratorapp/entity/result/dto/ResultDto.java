@@ -1,18 +1,19 @@
 package com.github.pawelbialas.testgeneratorapp.entity.result.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantDto;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.BaseItem;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.Accessors;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class ResultDto extends BaseItem {
 
@@ -20,6 +21,10 @@ public class ResultDto extends BaseItem {
     private Integer score;
     private SkillTestDto skillTest;
     private ContestantDto contestant;
+
+//    @JsonPOJOBuilder(withPrefix = "")
+//    public static final class ResultDtoBuilder {
+//    }
 
     @Builder
     public ResultDto(UUID id,
