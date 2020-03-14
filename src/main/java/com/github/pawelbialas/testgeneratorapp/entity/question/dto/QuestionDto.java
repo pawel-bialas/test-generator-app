@@ -4,18 +4,18 @@ import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerDto;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.BaseItem;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Data
+
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class QuestionDto extends BaseItem {
 
@@ -57,11 +57,12 @@ public class QuestionDto extends BaseItem {
     @Override
     public String toString() {
         return "QuestionDto{" +
+                "id='" + this.getId() + '\'' +
                 "contents='" + contents + '\'' +
                 ", mainTech=" + mainTech +
                 ", specificTech='" + specificTech + '\'' +
                 ", skillLevel=" + skillLevel +
-                ", answers=" + answers +
+                ", answers=" + answers.size() +
                 '}';
     }
 }

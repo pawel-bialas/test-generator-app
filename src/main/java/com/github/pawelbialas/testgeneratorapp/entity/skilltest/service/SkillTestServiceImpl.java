@@ -12,6 +12,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestStatus;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -56,7 +57,7 @@ public class SkillTestServiceImpl implements SkillTestService {
     public SkillTestDto findTestByUUID(UUID testUUID) {
         try {
             return skillTestRepository.findById(testUUID)
-                    .map(skillTest -> testMapper.objectToDto(skillTest))
+                    .map(skillTest -> testMapper.objectToDto(skillTest, new CycleAvoidingMappingContext()))
                     .orElseThrow(EntityNotFoundException::new);
         } catch (EntityNotFoundException notFound) {
             throw new ResponseStatusException(
@@ -71,7 +72,7 @@ public class SkillTestServiceImpl implements SkillTestService {
             if (contestantServiceImpl.confirmContestant(contestantNumber)) {
                 return skillTestRepository.findByContestant_ContestantNumber(contestantNumber)
                         .stream()
-                        .map(skillTest -> testMapper.objectToDto(skillTest))
+                        .map(skillTest -> testMapper.objectToDto(skillTest, new CycleAvoidingMappingContext()))
                         .collect(Collectors.toList());
             } else throw new EntityNotFoundException("message name to change");
         } catch (EntityNotFoundException notFound) {
@@ -101,7 +102,7 @@ public class SkillTestServiceImpl implements SkillTestService {
                 contestantServiceImpl.saveOrUpdate(contestant);
             }
             SkillTestDto skillTest = generateTest(contestant, mainTech, skillLevel, isRegularTest);
-            skillTestRepository.save(testMapper.dtoToObject(skillTest));
+            skillTestRepository.save(testMapper.dtoToObject(skillTest, new CycleAvoidingMappingContext()));
             return skillTest;
         } catch (IllegalArgumentException illegalArgument) {
             throw new ResponseStatusException(

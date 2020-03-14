@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -56,4 +57,13 @@ public class ContestantDto extends BaseItem {
         resultDto.setContestant(null);
     }
 
+    @Override
+    public String toString() {
+        return "ContestantDto{" +
+                "id='" + this.getId() + '\'' +
+                "contestantNumber='" + contestantNumber + '\'' +
+                ", skillTests=" + skillTests.size() +
+                ", results=" + results.size() +
+                '}';
+    }
 }

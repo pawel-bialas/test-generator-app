@@ -10,6 +10,7 @@ import lombok.experimental.Accessors;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,10 +23,6 @@ public class ResultDto extends BaseItem {
     private SkillTestDto skillTest;
     private ContestantDto contestant;
 
-//    @JsonPOJOBuilder(withPrefix = "")
-//    public static final class ResultDtoBuilder {
-//    }
-
     @Builder
     public ResultDto(UUID id,
                      Long version,
@@ -33,8 +30,7 @@ public class ResultDto extends BaseItem {
                      OffsetDateTime lastModifiedDate,
                      Integer score,
                      SkillTestDto skillTest,
-                     ContestantDto contestant,
-                     String status
+                     ContestantDto contestant
     ) {
         super(id, version, createdDate, lastModifiedDate);
         this.score = score;
@@ -46,6 +42,7 @@ public class ResultDto extends BaseItem {
     @Override
     public String toString() {
         return "ResultDto{" +
+                "id='" + this.getId() + '\'' +
                 "score=" + score +
                 ", skillTest=" + skillTest+
                 ", contestant=" + contestant+

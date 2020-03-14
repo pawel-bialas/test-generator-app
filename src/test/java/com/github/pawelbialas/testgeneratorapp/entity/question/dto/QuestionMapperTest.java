@@ -1,10 +1,12 @@
 package com.github.pawelbialas.testgeneratorapp.entity.question.dto;
 
+import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerDto;
 import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerMapperImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.DateMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -79,13 +81,13 @@ class QuestionMapperTest {
     @Test
     void dtoToObject() {
         //When
-        QuestionDto questionDto = questionMapper.objectToDto(question);
+        QuestionDto questionDto = questionMapper.objectToDto(question, new CycleAvoidingMappingContext());
         assertAll(
                 () -> assertThat(questionDto.getAnswers().size()).isEqualTo(2),
                 () -> assertThat(questionDto.getId()).isEqualTo(question.getId()),
                 () -> assertThat(questionDto.getAnswers().get(0).getAnswer()).isEqualTo(answer1.getAnswer())
         );
-        Question result = questionMapper.dtoToObject(questionDto);
+        Question result = questionMapper.dtoToObject(questionDto, new CycleAvoidingMappingContext());
 
         assertAll(
                 () -> assertThat(result.getId()).isEqualTo(questionDto.getId()),
@@ -97,12 +99,15 @@ class QuestionMapperTest {
     @Test
     void objectToDto() {
         //When
-        QuestionDto questionDto = questionMapper.objectToDto(question);
+        QuestionDto questionDto = questionMapper.objectToDto(question, new CycleAvoidingMappingContext());
+        System.out.println(questionDto);
         //Then
         assertAll(
                 () -> assertThat(questionDto.getAnswers().size()).isEqualTo(2),
                 () -> assertThat(questionDto.getId()).isEqualTo(question.getId()),
-                () -> assertThat(questionDto.getAnswers().get(0).getAnswer()).isEqualTo(answer1.getAnswer())
+                () -> assertThat(questionDto.getAnswers().get(0).getAnswer()).isEqualTo(answer1.getAnswer()),
+                () -> assertThat(questionDto.getAnswers().get(0)).isInstanceOf(AnswerDto.class),
+                () -> assertThat(questionDto).isInstanceOf(QuestionDto.class)
         );
     }
 }

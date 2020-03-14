@@ -2,16 +2,16 @@ package com.github.pawelbialas.testgeneratorapp.entity.answer.dto;
 
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionDto;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.BaseItem;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
-@Data
+
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class AnswerDto extends BaseItem {
 
@@ -37,9 +37,10 @@ public class AnswerDto extends BaseItem {
     @Override
     public String toString() {
         return "AnswerDto{" +
+                "id='" + this.getId() + '\'' +
                 "answer='" + answer + '\'' +
                 ", correct=" + correct +
-                ", question_id=" + question +
+                ", question_id=" + question.getId() +
                 '}';
     }
 }

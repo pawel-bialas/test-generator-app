@@ -7,6 +7,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionMappe
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.DateMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -81,12 +82,12 @@ class AnswerMapperTest {
 
         //When
 
-        AnswerDto answerDto = answerMapper.objectToDto(testAnswer);
-        QuestionDto questionDto = questionMapper.objectToDto(testQuestion);
+        AnswerDto answerDto = answerMapper.objectToDto(testAnswer, new CycleAvoidingMappingContext());
+        QuestionDto questionDto = questionMapper.objectToDto(testQuestion, new CycleAvoidingMappingContext());
         questionDto.addAnswer(answerDto);
 
-        Answer mappedAnswer = answerMapper.dtoToObject(answerDto);
-        Question mappedQuestion = questionMapper.dtoToObject(questionDto);
+        Answer mappedAnswer = answerMapper.dtoToObject(answerDto, new CycleAvoidingMappingContext());
+        Question mappedQuestion = questionMapper.dtoToObject(questionDto, new CycleAvoidingMappingContext());
         mappedQuestion.addAnswer(mappedAnswer);
         //Then
 
@@ -103,10 +104,13 @@ class AnswerMapperTest {
     void objectToDto() {
 
         //When
-        AnswerDto answerDto = answerMapper.objectToDto(testAnswer);
-        QuestionDto questionDto = questionMapper.objectToDto(testQuestion);
+        AnswerDto answerDto = answerMapper.objectToDto(testAnswer, new CycleAvoidingMappingContext());
+        QuestionDto questionDto = questionMapper.objectToDto(testQuestion, new CycleAvoidingMappingContext());
 
         questionDto.addAnswer(answerDto);
+
+        System.out.println(answerDto);
+        System.out.println(questionDto);
 
         //Then
         assertAll(

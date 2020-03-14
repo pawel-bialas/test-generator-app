@@ -2,19 +2,18 @@ package com.github.pawelbialas.testgeneratorapp.entity.answer.model;
 
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.model.BaseEntity;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-@Setter
+
 @Getter
-@Table(name = "answers")
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "answers")
 @Entity
 public class Answer extends BaseEntity {
 
@@ -43,6 +42,7 @@ public class Answer extends BaseEntity {
     @Override
     public String toString() {
         return "Answer{" +
+                "id='" + this.getId() + '\'' +
                 "answer='" + answer + '\'' +
                 ", correct=" + correct +
                 ", question=" + question.getId() +

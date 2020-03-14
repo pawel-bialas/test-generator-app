@@ -10,10 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Setter
 @Getter
-@Table(name = "questions")
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "questions")
 @Entity
 public class Question extends BaseEntity {
 
@@ -50,6 +51,7 @@ public class Question extends BaseEntity {
     @Override
     public String toString() {
         return "Question{" +
+                "id='" + this.getId() + '\'' +
                 "contents='" + contents + '\'' +
                 ", mainTech=" + mainTech +
                 ", specificTech='" + specificTech + '\'' +

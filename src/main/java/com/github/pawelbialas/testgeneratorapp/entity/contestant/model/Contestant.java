@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@ToString
 @Getter
 @Setter
 @NoArgsConstructor
@@ -60,6 +61,7 @@ public class Contestant extends BaseEntity {
     @Override
     public String toString() {
         return "Contestant{" +
+                "id='" + this.getId() + '\'' +
                 "contestantNumber='" + contestantNumber + '\'' +
                 ", skillTests=" + skillTests.size() +
                 ", results=" + results.size() +

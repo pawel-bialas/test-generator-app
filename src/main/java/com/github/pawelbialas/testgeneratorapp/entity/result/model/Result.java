@@ -43,6 +43,7 @@ public class Result extends BaseEntity {
     @Override
     public String toString() {
         return "Result{" +
+                "id='" + this.getId() + '\'' +
                 "score=" + score +
                 ", skillTest=" + skillTest.getId() +
                 ", contestant=" + contestant.getId() +

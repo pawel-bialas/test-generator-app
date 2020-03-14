@@ -92,7 +92,7 @@ class ContestantMapperTest {
         contestant.addResult(result);
         ContestantDto contestantDto = contestantMapper.objectToDto(contestant, new CycleAvoidingMappingContext());
         contestantDto.setSkillTests(new ArrayList<SkillTestDto>());
-        contestantDto.addTest(skillTestMapper.objectToDto(contestant.getSkillTests().get(contestant.getSkillTests().size()-1)));
+        contestantDto.addTest(skillTestMapper.objectToDto(contestant.getSkillTests().get(contestant.getSkillTests().size()-1), new CycleAvoidingMappingContext()));
         contestantDto.setResults(new ArrayList<ResultDto>());
         contestantDto.addResult(resultMapper.objectToDto(contestant.getResults().get(contestant.getResults().size()-1), new CycleAvoidingMappingContext()));
 
@@ -102,7 +102,7 @@ class ContestantMapperTest {
                 () -> assertThat(contestantDto.getId()).isEqualTo(contestant.getId()),
                 () -> assertThat(contestantDto.getContestantNumber()).isEqualTo("1234"),
                 () -> assertThat(contestantDto.getSkillTests().size()).isEqualTo(1),
-                () -> assertThat(contestantDto.getSkillTests().get(0)).isEqualTo(skillTestMapper.objectToDto(skillTest))
+                () -> assertThat(contestantDto.getSkillTests().get(0)).isEqualTo(skillTestMapper.objectToDto(skillTest, new CycleAvoidingMappingContext()))
         );
 
 

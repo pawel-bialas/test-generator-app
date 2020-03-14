@@ -10,10 +10,12 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.*;
 
+
 @Getter
 @Setter
-@Table(name = "skill_tests")
 @NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "skill_tests")
 @Entity
 public class SkillTest extends BaseEntity {
 
@@ -40,9 +42,11 @@ public class SkillTest extends BaseEntity {
     @Override
     public String toString() {
         return "SkillTest{" +
+                "id='" + this.getId() + '\'' +
                 "questions=" + questions.size() +
                 ", contestant=" + contestant.getId() +
                 ", result=" + result.getId() +
+                ", testStatus=" + testStatus +
                 '}';
     }
 }

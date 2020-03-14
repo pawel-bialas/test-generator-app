@@ -4,10 +4,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantD
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionDto;
 import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultDto;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.BaseItem;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -15,8 +12,10 @@ import java.util.List;
 import java.util.UUID;
 
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class SkillTestDto extends BaseItem {
 
@@ -42,4 +41,14 @@ public class SkillTestDto extends BaseItem {
         this.testStatus = testStatus;
     }
 
+    @Override
+    public String toString() {
+        return "SkillTestDto{" +
+                "id='" + this.getId() + '\'' +
+                "questions=" + questions.size() +
+                ", contestant=" + contestant.getId() +
+                ", result=" + result.getId() +
+                ", testStatus='" + testStatus + '\'' +
+                '}';
+    }
 }
