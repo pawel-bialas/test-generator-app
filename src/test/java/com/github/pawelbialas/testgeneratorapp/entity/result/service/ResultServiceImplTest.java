@@ -195,7 +195,7 @@ public class ResultServiceImplTest {
         when(repository.findById(skillTest.getId())).thenReturn(Optional.of(skillTest));
         // When
 
-        Integer score = resultService.resolveTest(UUID.randomUUID(), skillTest.getId(), otherSkillTest);
+        Float score = resultService.resolveTest(UUID.randomUUID(), skillTest.getId(), otherSkillTest);
 //        Integer score = resultService.checkAnswers(skillTest, otherSkillTest);
         System.out.println(score);
         // Then
@@ -206,7 +206,7 @@ public class ResultServiceImplTest {
     }
 
     @Test
-    public void given_2TestsWithDifferentAnswers_Then_ShouldReturn_1() {
+    public void given_2TestsWithDifferentAnswers_Then_ShouldReturn_50() {
         // Given
         SkillTest otherSkillTest = skillTest;
 
@@ -247,7 +247,7 @@ public class ResultServiceImplTest {
         when(repository.findById(skillTest.getId())).thenReturn(Optional.of(skillTest));
 
         //When
-        Integer score = resultService.resolveTest(UUID.randomUUID(), skillTest.getId(), otherSkillTest);
+        Float score = resultService.resolveTest(UUID.randomUUID(), skillTest.getId(), otherSkillTest);
         System.out.println(score);
         // Then
         assertAll(

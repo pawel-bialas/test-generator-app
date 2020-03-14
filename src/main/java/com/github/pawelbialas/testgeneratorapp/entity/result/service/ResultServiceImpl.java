@@ -31,7 +31,7 @@ public class ResultServiceImpl implements ResultService {
     }
 
 
-    public Integer resolveTest(UUID candidateId, UUID baseTestId, SkillTest resultTest) {
+    public Float resolveTest(UUID candidateId, UUID baseTestId, SkillTest resultTest) {
         SkillTest baseTest = null;
         Integer maxScore = 0;
         Integer contestantScore = 0;
@@ -43,7 +43,8 @@ public class ResultServiceImpl implements ResultService {
                 maxScore = calculateMaxScore(baseTest);
                 contestantScore = checkAnswers(baseTest, resultTest);
             } else throw new ResultServiceException("ResultServiceImpl message name to change");
-        return 0;
+
+        return ((float) contestantScore / (float) maxScore) * 100;
     }
 
     public Integer calculateMaxScore(SkillTest baseTest) {

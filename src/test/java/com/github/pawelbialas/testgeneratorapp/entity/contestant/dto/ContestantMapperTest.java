@@ -12,6 +12,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMapperImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
+import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestStatus;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.DateMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -61,15 +62,24 @@ class ContestantMapperTest {
                 .build();
 
         skillTest = SkillTest.builder()
+                .testStatus(TestStatus.BASE)
                 .questions(new ArrayList<Question>())
                 .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                 .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
                 .version(1L)
                 .id(UUID.randomUUID())
+                .result(new Result())
+                .contestant(new Contestant())
                 .build();
 
         result = Result.builder()
+                .contestant(new Contestant())
                 .score(12)
+                .skillTest(new SkillTest())
+                .version(1L)
+                .createdDate(Timestamp.valueOf(LocalDateTime.now()))
+                .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
+                .id(UUID.randomUUID())
                 .build();
 
 
@@ -102,7 +112,7 @@ class ContestantMapperTest {
                 () -> assertThat(contestantDto.getId()).isEqualTo(contestant.getId()),
                 () -> assertThat(contestantDto.getContestantNumber()).isEqualTo("1234"),
                 () -> assertThat(contestantDto.getSkillTests().size()).isEqualTo(1),
-                () -> assertThat(contestantDto.getSkillTests().get(0)).isEqualTo(skillTestMapper.objectToDto(skillTest, new CycleAvoidingMappingContext()))
+                () -> assertThat(contestantDto.getSkillTests().get(0).getId()).isEqualTo(skillTestMapper.objectToDto(skillTest, new CycleAvoidingMappingContext()).getId())
         );
 
 
@@ -110,13 +120,5 @@ class ContestantMapperTest {
 
     }
 
-//    @Test
-//    void objectToDto() {
-//
-//        //When
-//
-//        //Then
-//
-//
-//    }
+
 }
