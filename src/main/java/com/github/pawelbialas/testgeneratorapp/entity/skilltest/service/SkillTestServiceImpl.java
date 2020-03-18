@@ -1,7 +1,6 @@
 package com.github.pawelbialas.testgeneratorapp.entity.skilltest.service;
 
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantDto;
-import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.service.ContestantServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionDto;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
@@ -13,13 +12,11 @@ import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMap
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestStatus;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.Skilltest.SkillTestNotFound;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.Skilltest.SkillTestServiceBadRequest;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -55,32 +52,18 @@ public class SkillTestServiceImpl implements SkillTestService {
     }
 
     public SkillTestDto findTestByUUID(UUID testUUID) {
-        try {
-            return skillTestRepository.findById(testUUID)
-                    .map(skillTest -> testMapper.objectToDto(skillTest, new CycleAvoidingMappingContext()))
-                    .orElseThrow(EntityNotFoundException::new);
-        } catch (EntityNotFoundException notFound) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    notFound.getMessage()
-            );
-        }
+        return skillTestRepository.findById(testUUID)
+                .map(skillTest -> testMapper.objectToDto(skillTest, new CycleAvoidingMappingContext()))
+                .orElseThrow(() -> new SkillTestNotFound("SkillTestService: no test with given Id"));
     }
 
     public List<SkillTestDto> findTestByContestantNumber(String contestantNumber) {
-        try {
-            if (contestantServiceImpl.confirmContestant(contestantNumber)) {
-                return skillTestRepository.findByContestant_ContestantNumber(contestantNumber)
-                        .stream()
-                        .map(skillTest -> testMapper.objectToDto(skillTest, new CycleAvoidingMappingContext()))
-                        .collect(Collectors.toList());
-            } else throw new EntityNotFoundException("message name to change");
-        } catch (EntityNotFoundException notFound) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    notFound.getMessage()
-            );
-        }
+
+        return skillTestRepository.findByContestant_ContestantNumber(contestantNumber)
+                .stream()
+                .map(skillTest -> testMapper.objectToDto(skillTest, new CycleAvoidingMappingContext()))
+                .collect(Collectors.toList());
+
     }
 
     public SkillTestDto createNewTest(String contestantNumber,
@@ -88,31 +71,24 @@ public class SkillTestServiceImpl implements SkillTestService {
                                       SkillLevel skillLevel,
                                       Boolean isRegularTest,
                                       Boolean addCodeBlocks) {
-        try {
-            if (contestantNumber == null || skillLevel == null || mainTech == null) {
-                throw new IllegalArgumentException("message name to change");
-            }
-            ContestantDto contestant = contestantServiceImpl.findContestantByNumber(contestantNumber);
-            if (contestant == null) {
-                contestant = ContestantDto.builder()
-                        .contestantNumber(contestantNumber)
-                        .results(new ArrayList<>())
-                        .skillTests(new ArrayList<>())
-                        .build();
-                contestantServiceImpl.saveOrUpdate(contestant);
-            }
-            SkillTestDto skillTest = generateTest(contestant, mainTech, skillLevel, isRegularTest);
-            skillTestRepository.save(testMapper.dtoToObject(skillTest, new CycleAvoidingMappingContext()));
-            return skillTest;
-        } catch (IllegalArgumentException illegalArgument) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    illegalArgument.getMessage()
-            );
+        if (contestantNumber == null || skillLevel == null || mainTech == null) {
+            throw new SkillTestServiceBadRequest("SkillTestService: contestantNumber, SkillLevel or MainTech can't be null");
         }
+        ContestantDto contestant = contestantServiceImpl.findContestantByNumber(contestantNumber);
+        if (contestant == null) {
+            contestant = ContestantDto.builder()
+                    .contestantNumber(contestantNumber)
+                    .results(new ArrayList<>())
+                    .skillTests(new ArrayList<>())
+                    .build();
+            contestantServiceImpl.saveOrUpdate(contestant);
+        }
+        SkillTestDto skillTest = generateTest(contestant, mainTech, skillLevel, isRegularTest, addCodeBlocks);
+        skillTestRepository.save(testMapper.dtoToObject(skillTest, new CycleAvoidingMappingContext()));
+        return skillTest;
     }
 
-    private SkillTestDto generateTest(ContestantDto contestant, MainTech mainTech, SkillLevel skillLevel, Boolean isRegularTest) {
+    private SkillTestDto generateTest(ContestantDto contestant, MainTech mainTech, SkillLevel skillLevel, Boolean isRegularTest, Boolean addCodeBlocks) {
         SkillTestDto result = SkillTestDto.builder()
                 .contestant(contestant)
                 .testStatus(String.valueOf(TestStatus.BASE))

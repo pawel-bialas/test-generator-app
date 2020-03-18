@@ -8,12 +8,14 @@ import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.entity.question.repository.QuestionRepository;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.answer.AnswerNotAcceptable;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.question.QuestionBadRequest;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.question.QuestionInternalServerError;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.question.QuestionNotFound;
 import com.opencsv.CSVReader;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityManagerFactory;
 import javax.transaction.Transactional;
@@ -117,83 +119,63 @@ public class QuestionServiceImpl implements QuestionService {
 
                 }
             } catch (IOException ioException) {
-                throw new ResponseStatusException(
-                        HttpStatus.BAD_REQUEST,
-                        ioException.getMessage()
-                );
+                throw new QuestionInternalServerError("Error while reading the file. Please try again later.");
             }
         } catch (FileNotFoundException fileNotFound) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    fileNotFound.getMessage()
-            );
+            throw new QuestionNotFound("Error while reading the file. The file was not found.");
         }
     }
 
     private SkillLevel convertSkillLevel(String skillString) {
-        try {
-            SkillLevel result = null;
+
+            SkillLevel outcome = null;
             if (!skillString.isBlank()) {
                 switch (skillString) {
                     case "Entry":
-                        result = SkillLevel.ENTRY;
+                        outcome = SkillLevel.ENTRY;
                         break;
                     case "Junior":
-                        result = SkillLevel.JUNIOR;
+                        outcome = SkillLevel.JUNIOR;
                         break;
                     case "Mid":
-                        result = SkillLevel.MID;
+                        outcome = SkillLevel.MID;
                         break;
                     case "Senior":
-                        result = SkillLevel.SENIOR;
+                        outcome = SkillLevel.SENIOR;
                         break;
                     case "Expert":
-                        result = SkillLevel.EXPERT;
+                        outcome = SkillLevel.EXPERT;
                         break;
                 }
-            } else throw new IllegalArgumentException("message name to change");
-            return result;
-        } catch (IllegalArgumentException illegalArgument) {
-            throw new ResponseStatusException(
-                    HttpStatus.PARTIAL_CONTENT,
-                    illegalArgument.getMessage()
-            );
-        }
-
+            } else throw new QuestionBadRequest("Missing value for the property of SkillLevel");
+            return outcome;
     }
 
 
     private MainTech convertMainTech(String techString) {
-        try {
-            MainTech result = null;
+            MainTech outcome = null;
             if (!techString.isBlank()) {
                 switch (techString) {
                     case "Java":
-                        result = MainTech.JAVA;
+                        outcome = MainTech.JAVA;
                         break;
                     case "PHP":
-                        result = MainTech.PHP;
+                        outcome = MainTech.PHP;
                         break;
-                    case "ANGULAR":
-                        result = MainTech.ANGULAR;
+                    case "Angular":
+                        outcome = MainTech.ANGULAR;
                         break;
                     default:
-                        result = MainTech.UNASSIGNED;
+                        outcome = MainTech.UNASSIGNED;
                 }
-            } else throw new IllegalArgumentException("message name to change");
-            return result;
-        } catch (IllegalArgumentException illegalArgument) {
-            throw new ResponseStatusException(
-                    HttpStatus.PARTIAL_CONTENT,
-                    illegalArgument.getMessage()
-            );
-        }
+            } else throw new QuestionBadRequest("Missing value for the property of MainTech");
+            return outcome;
     }
 
 
     private List<Answer> convertAnswers(ArrayList<String> answers) {
         try {
-            List<Answer> result = new ArrayList<>();
+            List<Answer> outcome = new ArrayList<>();
             List<Integer> correct = new ArrayList<>();
             if (answers.get(4).length() != 1) {
                 String[] split = answers.get(4).split(",");
@@ -210,14 +192,11 @@ public class QuestionServiceImpl implements QuestionService {
                 if (correct.contains(i + 1)) {
                     answer.setCorrect(true);
                 } else answer.setCorrect(false);
-                result.add(answer);
+                outcome.add(answer);
             }
-            return result;
+            return outcome;
         } catch (NumberFormatException badData) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_ACCEPTABLE,
-                    badData.getMessage()
-            );
+            throw new AnswerNotAcceptable("Bad format of the document. Check answer lines containing characters instead of numbers");
         }
     }
 

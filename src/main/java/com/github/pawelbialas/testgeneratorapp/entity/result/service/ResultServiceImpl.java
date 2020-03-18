@@ -6,8 +6,8 @@ import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.result.repository.ResultRepository;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.result.ResultServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.result.ResultBadRequest;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.Skilltest.SkillTestNotFound;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -42,7 +42,7 @@ public class ResultServiceImpl implements ResultService {
                 baseTest = searchResult.get();
                 maxScore = calculateMaxScore(baseTest);
                 contestantScore = checkAnswers(baseTest, resultTest);
-            } else throw new ResultServiceException("ResultServiceImpl message name to change");
+            } else throw new SkillTestNotFound("ResultService: Base test not found. Matching the result is impossible");
 
         return ((float) contestantScore / (float) maxScore) * 100;
     }
@@ -62,17 +62,17 @@ public class ResultServiceImpl implements ResultService {
     }
 
 
-     Integer checkAnswers(SkillTest baseTest, SkillTest resultTest) {
+     private Integer checkAnswers(SkillTest baseTest, SkillTest resultTest) {
             List<Question> baseQuestions = baseTest.getQuestions();
             List<Question> resultQuestions = resultTest.getQuestions();
             boolean integrity = questionIntegrityValidator(baseQuestions, resultQuestions);
             if (!integrity) {
-                throw new ResultServiceException("ResultServiceImpl message name to change");
+                throw new ResultBadRequest("ResultService: test integrity error");
             }
             return calculateFinalScore(baseQuestions, resultQuestions);
         }
 
-     Integer calculateFinalScore(List<Question> baseQuestions, List<Question> resultQuestions) {
+     private Integer calculateFinalScore(List<Question> baseQuestions, List<Question> resultQuestions) {
         Integer score = 0;
 
         for (int i = 0; i < baseQuestions.size(); i++) {
@@ -89,7 +89,7 @@ public class ResultServiceImpl implements ResultService {
         return score;
     }
 
-     boolean questionIntegrityValidator(List<Question> baseQuestions, List<Question> resultQuestions) {
+     private boolean questionIntegrityValidator(List<Question> baseQuestions, List<Question> resultQuestions) {
         boolean integrityValidator = true;
         if (baseQuestions.size() != resultQuestions.size()) {
             return integrityValidator = false;
@@ -107,7 +107,7 @@ public class ResultServiceImpl implements ResultService {
         return integrityValidator;
     }
 
-     boolean answerIntegrityValidation(List<Answer> baseAnswers, List<Answer> resultAnswers) {
+     private boolean answerIntegrityValidation(List<Answer> baseAnswers, List<Answer> resultAnswers) {
         boolean integrityValidator = true;
         if (baseAnswers.size() != resultAnswers.size()) {
             return integrityValidator = false;

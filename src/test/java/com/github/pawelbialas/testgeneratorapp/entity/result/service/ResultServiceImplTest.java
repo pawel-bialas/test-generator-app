@@ -9,7 +9,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestStatus;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.result.ResultServiceException;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.result.ResultBadRequest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -175,18 +175,6 @@ public class ResultServiceImplTest {
         );
     }
 
-    @Test
-    public void given_testWith2CorrectAnswers_Then_ShouldReturn2() {
-
-        //When
-        Integer maxScore = resultService.calculateMaxScore(skillTest);
-        System.out.println(maxScore);
-
-        //Then
-        assertAll(
-                () -> assertThat(maxScore).isEqualTo(2)
-        );
-    }
 
     @Test
     public void given_2TestsWithTheSameAnswers_Then_ShouldReturn_100() {
@@ -276,11 +264,13 @@ public class ResultServiceImplTest {
                 .build();
 
         otherSkillTest.setQuestions(questions);
+        //When
+        when(repository.findById(skillTest.getId())).thenReturn(Optional.of(skillTest));
         //Then
         try {
-            resultService.checkAnswers(skillTest, otherSkillTest);
+            resultService.resolveTest(UUID.randomUUID(), skillTest.getId(), otherSkillTest);
         } catch (Exception e) {
-            assertThat(e).isInstanceOf(ResultServiceException.class);
+            assertThat(e).isInstanceOf(ResultBadRequest.class);
             assertThat(e.getMessage()).isEqualTo("ResultServiceImpl message name to change");
         }
     }
@@ -303,13 +293,13 @@ public class ResultServiceImplTest {
         questions.add(otherQuestion);
         otherSkillTest.setQuestions(questions);
         //When
-
+        when(repository.findById(skillTest.getId())).thenReturn(Optional.of(skillTest));
 
         //Then
         try {
-            resultService.checkAnswers(skillTest, otherSkillTest);
+            resultService.resolveTest(UUID.randomUUID(), skillTest.getId(), otherSkillTest);
         } catch (Exception e) {
-            assertThat(e).isInstanceOf(ResultServiceException.class);
+            assertThat(e).isInstanceOf(ResultBadRequest.class);
             assertThat(e.getMessage()).isEqualTo("ResultServiceImpl message name to change");
         }
 

@@ -5,6 +5,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantM
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.repository.ContestantRepository;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.contestant.ContestantServiceNotFound;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -29,16 +30,10 @@ public class ContestantServiceImpl implements ContestantService {
 
     @Override
     public ContestantDto findContestantByNumber(String contestantNumber) {
-        try {
             return contestantRepository.findByContestantNumber(contestantNumber)
                     .map(contestant -> mapper.objectToDto(contestant, new CycleAvoidingMappingContext()))
-                    .orElseThrow(EntityNotFoundException::new);
-        } catch (EntityNotFoundException notFound) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    notFound.getMessage()
-            );
-        }
+                    .orElseThrow(() -> new ContestantServiceNotFound("There is no contestant with a given Id"));
+
     }
 
     @Override
