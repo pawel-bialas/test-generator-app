@@ -1,13 +1,13 @@
 package com.github.pawelbialas.testgeneratorapp.shared.domain.exception;
 
-import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.Skilltest.SkillTestServiceBadRequest;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.answer.AnswerNotAcceptable;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.contestant.ContestantServiceNotFound;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.question.QuestionBadRequest;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.question.QuestionInternalServerError;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.question.QuestionNotFound;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.result.ResultBadRequest;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.Skilltest.SkillTestNotFound;
+import com.github.pawelbialas.testgeneratorapp.entity.skilltest.exception.SkillTestServiceBadRequest;
+import com.github.pawelbialas.testgeneratorapp.entity.answer.exception.AnswerNotAcceptable;
+import com.github.pawelbialas.testgeneratorapp.entity.contestant.exception.ContestantServiceNotFound;
+import com.github.pawelbialas.testgeneratorapp.entity.question.exception.QuestionBadRequest;
+import com.github.pawelbialas.testgeneratorapp.entity.question.exception.QuestionInternalServerError;
+import com.github.pawelbialas.testgeneratorapp.entity.question.exception.QuestionNotFound;
+import com.github.pawelbialas.testgeneratorapp.entity.result.exception.ResultBadRequest;
+import com.github.pawelbialas.testgeneratorapp.entity.skilltest.exception.SkillTestNotFound;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

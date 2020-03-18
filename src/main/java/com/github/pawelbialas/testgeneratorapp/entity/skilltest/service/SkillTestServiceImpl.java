@@ -12,8 +12,8 @@ import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMap
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestStatus;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.Skilltest.SkillTestNotFound;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.Skilltest.SkillTestServiceBadRequest;
+import com.github.pawelbialas.testgeneratorapp.entity.skilltest.exception.SkillTestNotFound;
+import com.github.pawelbialas.testgeneratorapp.entity.skilltest.exception.SkillTestServiceBadRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

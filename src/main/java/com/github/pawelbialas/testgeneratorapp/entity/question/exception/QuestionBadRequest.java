@@ -1,4 +1,4 @@
-package com.github.pawelbialas.testgeneratorapp.shared.domain.exception.question;
+package com.github.pawelbialas.testgeneratorapp.entity.question.exception;
 
 public class QuestionBadRequest extends RuntimeException {
 

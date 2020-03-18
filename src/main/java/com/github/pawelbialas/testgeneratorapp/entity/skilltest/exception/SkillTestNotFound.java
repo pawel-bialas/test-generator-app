@@ -1,4 +1,4 @@
-package com.github.pawelbialas.testgeneratorapp.shared.domain.exception.Skilltest;
+package com.github.pawelbialas.testgeneratorapp.entity.skilltest.exception;
 
 public class SkillTestNotFound extends RuntimeException {
 

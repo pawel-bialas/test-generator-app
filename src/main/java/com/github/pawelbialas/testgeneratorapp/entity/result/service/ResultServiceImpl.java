@@ -6,8 +6,8 @@ import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.result.repository.ResultRepository;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.result.ResultBadRequest;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.Skilltest.SkillTestNotFound;
+import com.github.pawelbialas.testgeneratorapp.entity.result.exception.ResultBadRequest;
+import com.github.pawelbialas.testgeneratorapp.entity.skilltest.exception.SkillTestNotFound;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

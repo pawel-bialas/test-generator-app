@@ -1,4 +1,4 @@
-package com.github.pawelbialas.testgeneratorapp.shared.domain.exception.result;
+package com.github.pawelbialas.testgeneratorapp.entity.result.exception;
 
 public class ResultBadRequest extends RuntimeException {
 

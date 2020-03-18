@@ -5,13 +5,10 @@ import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantM
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.repository.ContestantRepository;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.contestant.ContestantServiceNotFound;
-import org.springframework.http.HttpStatus;
+import com.github.pawelbialas.testgeneratorapp.entity.contestant.exception.ContestantServiceNotFound;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 @Service
