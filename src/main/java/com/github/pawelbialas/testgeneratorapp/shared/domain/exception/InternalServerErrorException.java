@@ -1,8 +1,8 @@
-package com.github.pawelbialas.testgeneratorapp.entity.question.exception;
+package com.github.pawelbialas.testgeneratorapp.shared.domain.exception;
 
-public class QuestionInternalServerError extends RuntimeException {
+public class InternalServerErrorException extends RuntimeException {
 
-    public QuestionInternalServerError (String message) {
+    public InternalServerErrorException(String message) {
         super(message);
     }
 }

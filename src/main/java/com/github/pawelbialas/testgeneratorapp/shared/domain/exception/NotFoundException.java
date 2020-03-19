@@ -1,8 +1,8 @@
-package com.github.pawelbialas.testgeneratorapp.entity.contestant.exception;
+package com.github.pawelbialas.testgeneratorapp.shared.domain.exception;
 
-public class ContestantServiceNotFound extends RuntimeException {
+public class NotFoundException extends RuntimeException {
 
-    public ContestantServiceNotFound(String message) {
+    public NotFoundException(String message) {
         super(message);
     }
 }

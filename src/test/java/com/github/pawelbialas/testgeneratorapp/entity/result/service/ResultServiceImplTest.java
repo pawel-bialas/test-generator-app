@@ -9,7 +9,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestStatus;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
-import com.github.pawelbialas.testgeneratorapp.entity.result.exception.ResultBadRequest;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.BadRequestException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -270,8 +270,8 @@ public class ResultServiceImplTest {
         try {
             resultService.resolveTest(UUID.randomUUID(), skillTest.getId(), otherSkillTest);
         } catch (Exception e) {
-            assertThat(e).isInstanceOf(ResultBadRequest.class);
-            assertThat(e.getMessage()).isEqualTo("ResultServiceImpl message name to change");
+            assertThat(e).isInstanceOf(BadRequestException.class);
+            assertThat(e.getMessage()).isEqualTo("ResultService: test integrity error");
         }
     }
 
@@ -299,8 +299,8 @@ public class ResultServiceImplTest {
         try {
             resultService.resolveTest(UUID.randomUUID(), skillTest.getId(), otherSkillTest);
         } catch (Exception e) {
-            assertThat(e).isInstanceOf(ResultBadRequest.class);
-            assertThat(e.getMessage()).isEqualTo("ResultServiceImpl message name to change");
+            assertThat(e).isInstanceOf(BadRequestException.class);
+            assertThat(e.getMessage()).isEqualTo("ResultService: test integrity error");
         }
 
     }

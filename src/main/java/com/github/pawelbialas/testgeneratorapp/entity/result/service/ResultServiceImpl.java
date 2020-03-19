@@ -6,8 +6,8 @@ import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.result.repository.ResultRepository;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
-import com.github.pawelbialas.testgeneratorapp.entity.result.exception.ResultBadRequest;
-import com.github.pawelbialas.testgeneratorapp.entity.skilltest.exception.SkillTestNotFound;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.BadRequestException;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -42,7 +42,7 @@ public class ResultServiceImpl implements ResultService {
                 baseTest = searchResult.get();
                 maxScore = calculateMaxScore(baseTest);
                 contestantScore = checkAnswers(baseTest, resultTest);
-            } else throw new SkillTestNotFound("ResultService: Base test not found. Matching the result is impossible");
+            } else throw new NotFoundException("ResultService: Base test not found. Matching the result is impossible");
 
         return ((float) contestantScore / (float) maxScore) * 100;
     }
@@ -67,7 +67,7 @@ public class ResultServiceImpl implements ResultService {
             List<Question> resultQuestions = resultTest.getQuestions();
             boolean integrity = questionIntegrityValidator(baseQuestions, resultQuestions);
             if (!integrity) {
-                throw new ResultBadRequest("ResultService: test integrity error");
+                throw new BadRequestException("ResultService: test integrity error");
             }
             return calculateFinalScore(baseQuestions, resultQuestions);
         }

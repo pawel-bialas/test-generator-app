@@ -1,8 +1,8 @@
-package com.github.pawelbialas.testgeneratorapp.entity.question.exception;
+package com.github.pawelbialas.testgeneratorapp.shared.domain.exception;
 
-public class QuestionBadRequest extends RuntimeException {
+public class BadRequestException extends RuntimeException {
 
-    public QuestionBadRequest(String message) {
+    public BadRequestException(String message) {
         super(message);
     }
 }

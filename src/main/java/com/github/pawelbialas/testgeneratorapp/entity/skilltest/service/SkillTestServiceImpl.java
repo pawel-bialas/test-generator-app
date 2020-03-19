@@ -12,8 +12,8 @@ import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMap
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestStatus;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
-import com.github.pawelbialas.testgeneratorapp.entity.skilltest.exception.SkillTestNotFound;
-import com.github.pawelbialas.testgeneratorapp.entity.skilltest.exception.SkillTestServiceBadRequest;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.BadRequestException;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -54,7 +54,7 @@ public class SkillTestServiceImpl implements SkillTestService {
     public SkillTestDto findTestByUUID(UUID testUUID) {
         return skillTestRepository.findById(testUUID)
                 .map(skillTest -> testMapper.objectToDto(skillTest, new CycleAvoidingMappingContext()))
-                .orElseThrow(() -> new SkillTestNotFound("SkillTestService: no test with given Id"));
+                .orElseThrow(() -> new NotFoundException("SkillTestService: no test with given Id"));
     }
 
     public List<SkillTestDto> findTestByContestantNumber(String contestantNumber) {
@@ -72,7 +72,7 @@ public class SkillTestServiceImpl implements SkillTestService {
                                       Boolean isRegularTest,
                                       Boolean addCodeBlocks) {
         if (contestantNumber == null || skillLevel == null || mainTech == null) {
-            throw new SkillTestServiceBadRequest("SkillTestService: contestantNumber, SkillLevel or MainTech can't be null");
+            throw new BadRequestException("SkillTestService: contestantNumber, SkillLevel or MainTech can't be null");
         }
         ContestantDto contestant = contestantServiceImpl.findContestantByNumber(contestantNumber);
         if (contestant == null) {

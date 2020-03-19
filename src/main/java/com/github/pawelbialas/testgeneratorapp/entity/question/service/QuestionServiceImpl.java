@@ -8,10 +8,9 @@ import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.entity.question.repository.QuestionRepository;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
-import com.github.pawelbialas.testgeneratorapp.entity.answer.exception.AnswerNotAcceptable;
-import com.github.pawelbialas.testgeneratorapp.entity.question.exception.QuestionBadRequest;
-import com.github.pawelbialas.testgeneratorapp.entity.question.exception.QuestionInternalServerError;
-import com.github.pawelbialas.testgeneratorapp.entity.question.exception.QuestionNotFound;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.NotAcceptableException;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.BadRequestException;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.InternalServerErrorException;
 import com.opencsv.CSVReader;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
@@ -119,10 +118,10 @@ public class QuestionServiceImpl implements QuestionService {
 
                 }
             } catch (IOException ioException) {
-                throw new QuestionInternalServerError("Error while reading the file. Please try again later.");
+                throw new InternalServerErrorException("Error while reading the file. Please try again later.");
             }
         } catch (FileNotFoundException fileNotFound) {
-            throw new QuestionNotFound("Error while reading the file. The file was not found.");
+            throw new InternalServerErrorException("Error while reading the file. The file was not found.");
         }
     }
 
@@ -147,7 +146,7 @@ public class QuestionServiceImpl implements QuestionService {
                         outcome = SkillLevel.EXPERT;
                         break;
                 }
-            } else throw new QuestionBadRequest("Missing value for the property of SkillLevel");
+            } else throw new BadRequestException("Missing value for the property of SkillLevel");
             return outcome;
     }
 
@@ -168,7 +167,7 @@ public class QuestionServiceImpl implements QuestionService {
                     default:
                         outcome = MainTech.UNASSIGNED;
                 }
-            } else throw new QuestionBadRequest("Missing value for the property of MainTech");
+            } else throw new BadRequestException("Missing value for the property of MainTech");
             return outcome;
     }
 
@@ -196,7 +195,7 @@ public class QuestionServiceImpl implements QuestionService {
             }
             return outcome;
         } catch (NumberFormatException badData) {
-            throw new AnswerNotAcceptable("Bad format of the document. Check answer lines containing characters instead of numbers");
+            throw new NotAcceptableException("Bad format of the document. Check answer lines containing characters instead of numbers");
         }
     }
 
