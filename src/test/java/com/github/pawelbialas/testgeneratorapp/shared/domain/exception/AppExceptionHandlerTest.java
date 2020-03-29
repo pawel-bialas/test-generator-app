@@ -3,6 +3,7 @@ package com.github.pawelbialas.testgeneratorapp.shared.domain.exception;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.Objects;
 
@@ -12,13 +13,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 class AppExceptionHandlerTest {
 
 
+    WebRequest request;
+
     AppExceptionHandler handler = new AppExceptionHandler();
 
     @Test
     void badRequestStatusExceptionHandlerTest() {
 
         //Given
-        ResponseEntity<Object> responseEntity = handler.statusExceptionHandler(new BadRequestException("test"));
+        ResponseEntity<Object> responseEntity = handler.statusExceptionHandler(new BadRequestException("test"), request);
         //Then
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -29,7 +32,7 @@ class AppExceptionHandlerTest {
     @Test
     public void notFoundStatusExceptionHandlerTest() {
         //Given
-        ResponseEntity<Object> responseEntity = handler.statusExceptionHandler(new NotFoundException("test123"));
+        ResponseEntity<Object> responseEntity = handler.statusExceptionHandler(new NotFoundException("test123"), request);
         //Then
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
@@ -41,7 +44,7 @@ class AppExceptionHandlerTest {
     @Test
     public void notAcceptableStatusExceptionHandlerTest() {
         //Given
-        ResponseEntity<Object> responseEntity = handler.statusExceptionHandler(new NotAcceptableException("test456456"));
+        ResponseEntity<Object> responseEntity = handler.statusExceptionHandler(new NotAcceptableException("test456456"), request);
         //Then
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_ACCEPTABLE);

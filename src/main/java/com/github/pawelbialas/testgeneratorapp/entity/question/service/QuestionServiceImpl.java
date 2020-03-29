@@ -125,7 +125,7 @@ public class QuestionServiceImpl implements QuestionService {
         }
     }
 
-    private SkillLevel convertSkillLevel(String skillString) {
+    public SkillLevel convertSkillLevel(String skillString) {
 
             SkillLevel outcome = null;
             if (!skillString.isBlank()) {
@@ -146,12 +146,12 @@ public class QuestionServiceImpl implements QuestionService {
                         outcome = SkillLevel.EXPERT;
                         break;
                 }
-            } else throw new BadRequestException("Missing value for the property of SkillLevel");
+            } else throw new NotAcceptableException("Missing value for the property of SkillLevel");
             return outcome;
     }
 
 
-    private MainTech convertMainTech(String techString) {
+    public MainTech convertMainTech(String techString) {
             MainTech outcome = null;
             if (!techString.isBlank()) {
                 switch (techString) {
@@ -167,7 +167,7 @@ public class QuestionServiceImpl implements QuestionService {
                     default:
                         outcome = MainTech.UNASSIGNED;
                 }
-            } else throw new BadRequestException("Missing value for the property of MainTech");
+            } else throw new NotAcceptableException("Missing value for the property of MainTech");
             return outcome;
     }
 

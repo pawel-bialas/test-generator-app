@@ -1,5 +1,6 @@
 package com.github.pawelbialas.testgeneratorapp.shared.domain.exception;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,8 @@ import java.util.Date;
 @ControllerAdvice
 public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private final String errorClassPath= "class com.github.pawelbialas.testgeneratorapp.shared.domain.exception.";
+
+    private final String errorClassPath = "class com.github.pawelbialas.testgeneratorapp.shared.domain.exception.";
 //
 //    @ExceptionHandler(value = {Exception.class, InternalServerErrorException.class})
 //    public ResponseEntity<Object> handleBaseExceptionHandler(Exception exc, WebRequest request) {
@@ -52,7 +54,8 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 //    }
 
     @ExceptionHandler(value = {Exception.class})
-    public ResponseEntity<Object> statusExceptionHandler(Exception exc) {
+    public ResponseEntity<Object> statusExceptionHandler(Exception exc, WebRequest request) {
+
 
         String errorDescription = exc.getLocalizedMessage();
         if (errorDescription == null) {

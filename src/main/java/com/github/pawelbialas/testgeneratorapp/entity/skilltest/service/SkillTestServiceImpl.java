@@ -9,6 +9,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionS
 import com.github.pawelbialas.testgeneratorapp.entity.result.service.ResultServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMapper;
+import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestParameter;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestStatus;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
@@ -28,8 +29,10 @@ import java.util.stream.Collectors;
 @Transactional
 public class SkillTestServiceImpl implements SkillTestService {
 
-    @Value("${regular.test.size}")
+    @Value("${param.regular.test.size}")
     private Integer regularTestSize;
+    @Value("${param.short.test.size}")
+    private Integer shortTestSize;
 
     private final QuestionServiceImpl questionServiceImpl;
     private final SkillTestRepository skillTestRepository;
@@ -66,13 +69,9 @@ public class SkillTestServiceImpl implements SkillTestService {
 
     }
 
-    public SkillTestDto createNewTest(String contestantNumber,
-                                      MainTech mainTech,
-                                      SkillLevel skillLevel,
-                                      Boolean isRegularTest,
-                                      Boolean addCodeBlocks) {
-        if (contestantNumber == null || skillLevel == null || mainTech == null) {
-            throw new BadRequestException("SkillTestService: contestantNumber, SkillLevel or MainTech can't be null");
+    public SkillTestDto createNewTest(String contestantNumber, List<TestParameter> testParams) {
+        if (contestantNumber == null || !testParametersValidator(testParams)) {
+            throw new BadRequestException("SkillTestService: ContestantNumber, SkillLevel or MainTech can't be null");
         }
         ContestantDto contestant = contestantServiceImpl.findContestantByNumber(contestantNumber);
         if (contestant == null) {
@@ -83,32 +82,41 @@ public class SkillTestServiceImpl implements SkillTestService {
                     .build();
             contestantServiceImpl.saveOrUpdate(contestant);
         }
-        SkillTestDto skillTest = generateTest(contestant, mainTech, skillLevel, isRegularTest, addCodeBlocks);
+        SkillTestDto skillTest = generateTest(contestant, testParams);
         skillTestRepository.save(testMapper.dtoToObject(skillTest, new CycleAvoidingMappingContext()));
         return skillTest;
     }
 
-    private SkillTestDto generateTest(ContestantDto contestant, MainTech mainTech, SkillLevel skillLevel, Boolean isRegularTest, Boolean addCodeBlocks) {
+    private SkillTestDto generateTest(ContestantDto contestant, List<TestParameter> testParams) {
         SkillTestDto result = SkillTestDto.builder()
                 .contestant(contestant)
                 .testStatus(String.valueOf(TestStatus.BASE))
                 .build();
+               
 
-        int[] codeQuestionPattern = {3, 5, 7, 9, 10};
-
-        HashSet<QuestionDto> questions = new HashSet<>(questionServiceImpl.findAllByMainTechAndSkillLevel(mainTech, skillLevel));
-
-        questions.stream()
-                .filter(question -> !question.getSpecificTech().equals("Code"))
-                .limit(regularTestSize - 5)
-                .forEachOrdered(result.getQuestions()::add);
-
-        List<QuestionDto> codeQuestions = questionServiceImpl.findAllByMainTechAndSkillLevelAndSpecificTech(mainTech, "Code", skillLevel);
-        for (int i = 0; i < 5; i++) {
-            result.getQuestions().add(codeQuestionPattern[i], codeQuestions.get(i));
-        }
-        return result;
     }
+
+//    private SkillTestDto generateTest(ContestantDto contestant, MainTech mainTech, SkillLevel skillLevel, Boolean isRegularTest, Boolean addCodeBlocks) {
+//        SkillTestDto result = SkillTestDto.builder()
+//                .contestant(contestant)
+//                .testStatus(String.valueOf(TestStatus.BASE))
+//                .build();
+//
+//        int[] codeQuestionPattern = {3, 5, 7, 9, 10};
+//
+//        HashSet<QuestionDto> questions = new HashSet<>(questionServiceImpl.findAllByMainTechAndSkillLevel(mainTech, skillLevel));
+//
+//        questions.stream()
+//                .filter(question -> !question.getSpecificTech().equals("Code"))
+//                .limit(regularTestSize - 5)
+//                .forEachOrdered(result.getQuestions()::add);
+//
+//        List<QuestionDto> codeQuestions = questionServiceImpl.findAllByMainTechAndSkillLevelAndSpecificTech(mainTech, "Code", skillLevel);
+//        for (int i = 0; i < 5; i++) {
+//            result.getQuestions().add(codeQuestionPattern[i], codeQuestions.get(i));
+//        }
+//        return result;
+//    }
 
 
     private SkillLevel defineOtherSkillLevels(SkillLevel skillLevel) {
@@ -121,6 +129,16 @@ public class SkillTestServiceImpl implements SkillTestService {
             case MID:
                 result = SkillLevel.SENIOR;
                 break;
+        }
+        return result;
+    }
+
+    private Boolean testParametersValidator(List<TestParameter> testParams) {
+        Boolean result = true;
+        for (TestParameter testParam : testParams) {
+            if ((testParam.getMainTechParam() == null) || (testParam.getSpecificTechParam() == null) || (testParam.getQty() == null)) {
+                result = false;
+            }
         }
         return result;
     }
