@@ -12,7 +12,7 @@ import lombok.Setter;
 public class TestParameter {
 
     private String mainTechParam;
+    private String skillLevelParam;
     private String specificTechParam;
     private Integer qty;
-    private Boolean codeAssignments;
 }

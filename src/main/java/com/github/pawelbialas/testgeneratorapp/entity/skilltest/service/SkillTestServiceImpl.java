@@ -19,10 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -88,13 +85,30 @@ public class SkillTestServiceImpl implements SkillTestService {
     }
 
     private SkillTestDto generateTest(ContestantDto contestant, List<TestParameter> testParams) {
-        SkillTestDto result = SkillTestDto.builder()
+        ArrayList<QuestionDto> questionDtos = new ArrayList<>();
+
+        for (TestParameter param : testParams) {
+            MainTech mainTech = questionServiceImpl.convertMainTech(param.getMainTechParam());
+            String specificTech = param.getSpecificTechParam();
+            Integer qty = param.getQty();
+            SkillLevel skillLevel = questionServiceImpl.convertSkillLevel(param.getSkillLevelParam());
+
+            questionServiceImpl.findAllByMainTechAndSkillLevelAndSpecificTech(mainTech, specificTech, skillLevel).stream()
+                    .limit(qty)
+                    .forEachOrdered(questionDtos::add); 
+
+        }
+
+        Collections.shuffle(questionDtos);
+
+        return SkillTestDto.builder()
                 .contestant(contestant)
                 .testStatus(String.valueOf(TestStatus.BASE))
+                .questions(questionDtos)
                 .build();
-               
 
     }
+
 
 //    private SkillTestDto generateTest(ContestantDto contestant, MainTech mainTech, SkillLevel skillLevel, Boolean isRegularTest, Boolean addCodeBlocks) {
 //        SkillTestDto result = SkillTestDto.builder()
@@ -136,7 +150,7 @@ public class SkillTestServiceImpl implements SkillTestService {
     private Boolean testParametersValidator(List<TestParameter> testParams) {
         Boolean result = true;
         for (TestParameter testParam : testParams) {
-            if ((testParam.getMainTechParam() == null) || (testParam.getSpecificTechParam() == null) || (testParam.getQty() == null)) {
+            if ((testParam.getMainTechParam() == null) || (testParam.getSpecificTechParam() == null) || (testParam.getSkillLevelParam() == null) || (testParam.getQty() == null)) {
                 result = false;
             }
         }
