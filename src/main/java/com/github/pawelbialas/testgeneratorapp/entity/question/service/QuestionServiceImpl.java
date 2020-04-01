@@ -32,7 +32,7 @@ public class QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
     private final EntityManagerFactory emf;
     private final QuestionMapper mapper;
-    
+
     public QuestionServiceImpl(QuestionRepository questionRepository, EntityManagerFactory emf, QuestionMapper mapper) {
         this.questionRepository = questionRepository;
         this.emf = emf;

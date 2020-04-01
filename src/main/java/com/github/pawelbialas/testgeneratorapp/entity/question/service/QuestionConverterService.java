@@ -43,7 +43,6 @@ public class QuestionConverterService {
     }
 
     public void readQuestionsFromCsv(String fileLocation) {
-//        fileLocation = csvTestPath;
         try {
             CSVReader reader = new CSVReader(new FileReader(fileLocation), ',');
             try {
@@ -65,6 +64,7 @@ public class QuestionConverterService {
                         answer.setQuestion(question);
                         question.getAnswers().add(answer);
                     }
+                    System.out.println(question);
                     questionRepository.save(question);
 
                 }

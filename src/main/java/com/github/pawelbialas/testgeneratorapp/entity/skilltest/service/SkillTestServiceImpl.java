@@ -5,6 +5,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.contestant.service.Contest
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionDto;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
+import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionConverterService;
 import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.result.service.ResultServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto;
@@ -36,6 +37,7 @@ public class SkillTestServiceImpl implements SkillTestService {
     private final ContestantServiceImpl contestantServiceImpl;
     private final ResultServiceImpl resultServiceImpl;
     private final SkillTestMapper testMapper;
+    private final QuestionConverterService questionConverterService;
 
 
     public SkillTestServiceImpl(
@@ -43,12 +45,14 @@ public class SkillTestServiceImpl implements SkillTestService {
             SkillTestRepository skillTestRepository,
             ContestantServiceImpl contestantServiceImpl,
             ResultServiceImpl resultServiceImpl,
-            SkillTestMapper testMapper) {
+            SkillTestMapper testMapper,
+            QuestionConverterService questionConverterService) {
         this.questionServiceImpl = questionServiceImpl;
         this.contestantServiceImpl = contestantServiceImpl;
         this.skillTestRepository = skillTestRepository;
         this.resultServiceImpl = resultServiceImpl;
         this.testMapper = testMapper;
+        this.questionConverterService = questionConverterService;
     }
 
     public SkillTestDto findTestByUUID(UUID testUUID) {
@@ -88,10 +92,10 @@ public class SkillTestServiceImpl implements SkillTestService {
         ArrayList<QuestionDto> questionDtos = new ArrayList<>();
 
         for (TestParameter param : testParams) {
-            MainTech mainTech = questionServiceImpl.convertMainTech(param.getMainTechParam());
+            MainTech mainTech = questionConverterService.convertMainTech(param.getMainTechParam());
             String specificTech = param.getSpecificTechParam();
             Integer qty = param.getQty();
-            SkillLevel skillLevel = questionServiceImpl.convertSkillLevel(param.getSkillLevelParam());
+            SkillLevel skillLevel = questionConverterService.convertSkillLevel(param.getSkillLevelParam());
 
             questionServiceImpl.findAllByMainTechAndSkillLevelAndSpecificTech(mainTech, specificTech, skillLevel).stream()
                     .limit(qty)
