@@ -149,9 +149,12 @@ public class SkillTestServiceImpl implements SkillTestService {
 
     private Boolean testParametersValidator(List<TestParameter> testParams) {
         Boolean result = true;
-        for (TestParameter testParam : testParams) {
+        if (testParams == null || testParams.size() == 0) {
+            result = false;
+        } else for (TestParameter testParam : testParams) {
             if ((testParam.getMainTechParam() == null) || (testParam.getSpecificTechParam() == null) || (testParam.getSkillLevelParam() == null) || (testParam.getQty() == null)) {
                 result = false;
+                break;
             }
         }
         return result;

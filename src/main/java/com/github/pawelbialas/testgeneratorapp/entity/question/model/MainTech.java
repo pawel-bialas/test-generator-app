@@ -4,12 +4,19 @@ public enum MainTech {
 
     JAVA("JAVA"),
     _NET("_NET"),
+    JAVASCRIPT("JAVASCRIPT"),
     PHP("PHP"),
     ANGULAR("ANGULAR"),
     REACT("REACT"),
     FRONT_END("FRONT_END"),
     SQL("SQL"),
-    UNASSIGNED("UNASSIGNED")
+    UNASSIGNED("UNASSIGNED"),
+    DEVOPS("DEVOPS"),
+    DOCKER("DOCKER"),
+    SPLUNK("SPLUNK"),
+    GO("SQL"),
+    BLOCKCHAIN("BLOCKCHAIN")
+
     ;
 
 
