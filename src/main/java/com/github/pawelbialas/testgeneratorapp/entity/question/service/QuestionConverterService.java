@@ -1,7 +1,6 @@
 package com.github.pawelbialas.testgeneratorapp.entity.question.service;
 
 import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
-import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionDto;
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
@@ -10,8 +9,6 @@ import com.github.pawelbialas.testgeneratorapp.entity.question.repository.Questi
 import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.InternalServerErrorException;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.NotAcceptableException;
 import com.opencsv.CSVReader;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
