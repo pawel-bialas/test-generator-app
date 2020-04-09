@@ -1,14 +1,12 @@
 package com.github.pawelbialas.testgeneratorapp.entity.skilltest.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class TestParameter {
 
     private String mainTechParam;

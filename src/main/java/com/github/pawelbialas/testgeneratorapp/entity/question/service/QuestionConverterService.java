@@ -28,11 +28,6 @@ public class QuestionConverterService {
     private final EntityManagerFactory emf;
     private final QuestionMapper mapper;
 
-    @Value("${csv.location.prod}")
-    private String csvProdPath;
-    @Value("${csv.location.test}")
-    private String csvTestPath;
-
     public QuestionConverterService(QuestionRepository questionRepository, EntityManagerFactory emf, QuestionMapper mapper) {
         this.questionRepository = questionRepository;
         this.emf = emf;

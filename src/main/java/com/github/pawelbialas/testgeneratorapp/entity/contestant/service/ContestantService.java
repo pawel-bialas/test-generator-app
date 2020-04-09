@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface ContestantService {
 
-    ContestantDto findContestantByNumber (String contestantNumber);
+    Optional<ContestantDto> findContestantByNumber (String contestantNumber);
 
     Boolean confirmContestant(String contestantNumber);
 

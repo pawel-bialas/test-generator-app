@@ -7,6 +7,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionConverterService;
 import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionServiceImpl;
+import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultDto;
 import com.github.pawelbialas.testgeneratorapp.entity.result.service.ResultServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMapper;
@@ -74,17 +75,21 @@ public class SkillTestServiceImpl implements SkillTestService {
         if (contestantNumber == null || !testParametersValidator(testParams)) {
             throw new BadRequestException("SkillTestService: ContestantNumber, SkillLevel or MainTech can't be null");
         }
-        ContestantDto contestant = contestantServiceImpl.findContestantByNumber(contestantNumber);
-        if (contestant == null) {
-            contestant = ContestantDto.builder()
+        SkillTestDto skillTest;
+        Optional<ContestantDto> searchResult = contestantServiceImpl.findContestantByNumber(contestantNumber);
+        if (searchResult.isEmpty()) {
+            ContestantDto contestantDto = ContestantDto.builder()
                     .contestantNumber(contestantNumber)
                     .results(new ArrayList<>())
                     .skillTests(new ArrayList<>())
                     .build();
-            contestantServiceImpl.saveOrUpdate(contestant);
+            contestantServiceImpl.saveOrUpdate(contestantDto);
+            skillTest = generateTest(contestantDto, testParams);
+        } else {
+            skillTest = generateTest(searchResult.get(), testParams);
         }
-        SkillTestDto skillTest = generateTest(contestant, testParams);
         skillTestRepository.save(testMapper.dtoToObject(skillTest, new CycleAvoidingMappingContext()));
+
         return skillTest;
     }
 
@@ -97,9 +102,13 @@ public class SkillTestServiceImpl implements SkillTestService {
             Integer qty = param.getQty();
             SkillLevel skillLevel = questionConverterService.convertSkillLevel(param.getSkillLevelParam());
 
-            questionServiceImpl.findAllByMainTechAndSkillLevelAndSpecificTech(mainTech, specificTech, skillLevel).stream()
+            List<QuestionDto> searchResult = questionServiceImpl.findAllByMainTechAndSkillLevelAndSpecificTech(mainTech, specificTech, skillLevel);
+
+            Collections.shuffle(searchResult);
+
+            searchResult.stream()
                     .limit(qty)
-                    .forEachOrdered(questionDtos::add); 
+                    .forEachOrdered(questionDtos::add);
 
         }
 
