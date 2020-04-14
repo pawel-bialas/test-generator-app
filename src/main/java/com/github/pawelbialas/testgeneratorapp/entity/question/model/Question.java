@@ -19,7 +19,6 @@ import java.util.UUID;
 public class Question extends BaseEntity {
 
     private java.lang.String contents;
-    @Enumerated
     private String mainTech;
     private java.lang.String specificTech;
     @Enumerated

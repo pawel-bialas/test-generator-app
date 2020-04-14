@@ -44,7 +44,7 @@ class AnswerMapperTest {
         testQuestion = Question.builder()
                 .answers(new ArrayList<Answer>())
                 .contents("testQuestionContent")
-                .mainTech(String.JAVA)
+                .mainTech("Java")
                 .specificTech("JPA")
                 .skillLevel(SkillLevel.ENTRY)
                 .version(1L)

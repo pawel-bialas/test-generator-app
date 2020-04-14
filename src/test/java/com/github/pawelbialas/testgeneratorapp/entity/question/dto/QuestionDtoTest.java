@@ -35,7 +35,7 @@ class QuestionDtoTest {
                 .version(1L)
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
-                .mainTech(String.JAVA)
+                .mainTech("Java")
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Java")
                 .build();

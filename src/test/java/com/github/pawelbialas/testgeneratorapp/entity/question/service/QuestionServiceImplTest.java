@@ -40,7 +40,7 @@ class QuestionServiceImplTest {
                 .id(UUID.randomUUID())
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
-                .mainTech(String.JAVA)
+                .mainTech("Java")
                 .createdDate(Timestamp.from(Instant.now()))
                 .lastModifiedDate(Timestamp.from(Instant.now()))
                 .build();
@@ -52,7 +52,7 @@ class QuestionServiceImplTest {
                 .id(UUID.randomUUID())
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
-                .mainTech(String.JAVA)
+                .mainTech("Java")
                 .createdDate(Timestamp.from(Instant.now()))
                 .lastModifiedDate(Timestamp.from(Instant.now()))
                 .build();

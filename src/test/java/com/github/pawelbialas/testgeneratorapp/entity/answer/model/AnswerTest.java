@@ -38,7 +38,7 @@ class AnswerTest {
                 .build();
 
          question = Question.builder()
-                 .mainTech(String.JAVA)
+                 .mainTech("Java")
                  .specificTech("Core")
                  .skillLevel(SkillLevel.ENTRY)
                  .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))

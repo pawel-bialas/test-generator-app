@@ -62,7 +62,7 @@ public class ResultServiceImplTest {
                 .id(UUID.randomUUID())
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
-                .mainTech(String.JAVA)
+                .mainTech("Java")
                 .createdDate(Timestamp.from(Instant.now()))
                 .lastModifiedDate(Timestamp.from(Instant.now()))
                 .build();
@@ -74,7 +74,7 @@ public class ResultServiceImplTest {
                 .id(UUID.randomUUID())
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
-                .mainTech(String.JAVA)
+                .mainTech("Java")
                 .createdDate(Timestamp.from(Instant.now()))
                 .lastModifiedDate(Timestamp.from(Instant.now()))
                 .build();
@@ -86,7 +86,7 @@ public class ResultServiceImplTest {
                 .id(UUID.randomUUID())
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
-                .mainTech(String.JAVA)
+                .mainTech("Java")
                 .createdDate(Timestamp.from(Instant.now()))
                 .lastModifiedDate(Timestamp.from(Instant.now()))
                 .build();
@@ -98,7 +98,7 @@ public class ResultServiceImplTest {
                 .id(UUID.randomUUID())
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
-                .mainTech(String.JAVA)
+                .mainTech("Java")
                 .createdDate(Timestamp.from(Instant.now()))
                 .lastModifiedDate(Timestamp.from(Instant.now()))
                 .build();

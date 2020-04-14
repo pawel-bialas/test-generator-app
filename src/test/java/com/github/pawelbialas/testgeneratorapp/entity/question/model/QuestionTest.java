@@ -35,7 +35,7 @@ class QuestionTest {
                 .version(1L)
                 .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                 .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
-                .mainTech(String.JAVA)
+                .mainTech("Java")
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Java")
                 .build();
