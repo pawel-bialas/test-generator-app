@@ -3,7 +3,6 @@ package com.github.pawelbialas.testgeneratorapp.entity.question.dto;
 import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerDto;
 import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerMapperImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
-import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
@@ -45,7 +44,7 @@ class QuestionMapperTest {
                 .version(1L)
                 .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                 .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
-                .mainTech(MainTech.JAVA)
+                .mainTech(String.JAVA)
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Java")
                 .build();

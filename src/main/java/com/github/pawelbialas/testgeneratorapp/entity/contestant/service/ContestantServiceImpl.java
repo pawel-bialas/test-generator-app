@@ -41,11 +41,6 @@ public class ContestantServiceImpl implements ContestantService {
     @Override
     public Contestant saveOrUpdate(ContestantDto contestantDto) {
         return contestantRepository.save(mapper.dtoToObject(contestantDto, new CycleAvoidingMappingContext()));
-
-
-//        return contestantRepository.findById(contestantDto.getId())
-//                .map(val -> emf.createEntityManager().merge(mapper.dtoToObject(contestantDto, new CycleAvoidingMappingContext())))
-//                .orElse(contestantRepository.save(mapper.dtoToObject(contestantDto, new CycleAvoidingMappingContext())));
     }
 
 

@@ -2,7 +2,6 @@ package com.github.pawelbialas.testgeneratorapp.entity.result.service;
 
 import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
-import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
@@ -63,7 +62,7 @@ public class ResultServiceImplTest {
                 .id(UUID.randomUUID())
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
-                .mainTech(MainTech.JAVA)
+                .mainTech(String.JAVA)
                 .createdDate(Timestamp.from(Instant.now()))
                 .lastModifiedDate(Timestamp.from(Instant.now()))
                 .build();
@@ -75,7 +74,7 @@ public class ResultServiceImplTest {
                 .id(UUID.randomUUID())
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
-                .mainTech(MainTech.JAVA)
+                .mainTech(String.JAVA)
                 .createdDate(Timestamp.from(Instant.now()))
                 .lastModifiedDate(Timestamp.from(Instant.now()))
                 .build();
@@ -87,7 +86,7 @@ public class ResultServiceImplTest {
                 .id(UUID.randomUUID())
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
-                .mainTech(MainTech.JAVA)
+                .mainTech(String.JAVA)
                 .createdDate(Timestamp.from(Instant.now()))
                 .lastModifiedDate(Timestamp.from(Instant.now()))
                 .build();
@@ -99,7 +98,7 @@ public class ResultServiceImplTest {
                 .id(UUID.randomUUID())
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
-                .mainTech(MainTech.JAVA)
+                .mainTech(String.JAVA)
                 .createdDate(Timestamp.from(Instant.now()))
                 .lastModifiedDate(Timestamp.from(Instant.now()))
                 .build();

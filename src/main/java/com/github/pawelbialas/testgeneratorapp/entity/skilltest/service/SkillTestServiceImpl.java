@@ -3,11 +3,9 @@ package com.github.pawelbialas.testgeneratorapp.entity.skilltest.service;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantDto;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.service.ContestantServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionDto;
-import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionConverterService;
 import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionServiceImpl;
-import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultDto;
 import com.github.pawelbialas.testgeneratorapp.entity.result.service.ResultServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMapper;
@@ -62,7 +60,7 @@ public class SkillTestServiceImpl implements SkillTestService {
                 .orElseThrow(() -> new NotFoundException("SkillTestService: no test with given Id"));
     }
 
-    public List<SkillTestDto> findTestByContestantNumber(String contestantNumber) {
+    public List<SkillTestDto> findTestByContestantNumber(java.lang.String contestantNumber) {
 
         return skillTestRepository.findByContestant_ContestantNumber(contestantNumber)
                 .stream()
@@ -71,7 +69,7 @@ public class SkillTestServiceImpl implements SkillTestService {
 
     }
 
-    public SkillTestDto createNewTest(String contestantNumber, List<TestParameter> testParams) {
+    public SkillTestDto createNewTest(java.lang.String contestantNumber, List<TestParameter> testParams) {
         if (contestantNumber == null || !testParametersValidator(testParams)) {
             throw new BadRequestException("SkillTestService: ContestantNumber, SkillLevel or MainTech can't be null");
         }
@@ -97,8 +95,8 @@ public class SkillTestServiceImpl implements SkillTestService {
         ArrayList<QuestionDto> questionDtos = new ArrayList<>();
 
         for (TestParameter param : testParams) {
-            MainTech mainTech = questionConverterService.convertMainTech(param.getMainTechParam());
-            String specificTech = param.getSpecificTechParam();
+            String mainTech = param.getMainTechParam();
+            java.lang.String specificTech = param.getSpecificTechParam();
             Integer qty = param.getQty();
             SkillLevel skillLevel = questionConverterService.convertSkillLevel(param.getSkillLevelParam());
 
@@ -116,7 +114,7 @@ public class SkillTestServiceImpl implements SkillTestService {
 
         return SkillTestDto.builder()
                 .contestant(contestant)
-                .testStatus(String.valueOf(TestStatus.BASE))
+                .testStatus(java.lang.String.valueOf(TestStatus.BASE))
                 .questions(questionDtos)
                 .build();
 

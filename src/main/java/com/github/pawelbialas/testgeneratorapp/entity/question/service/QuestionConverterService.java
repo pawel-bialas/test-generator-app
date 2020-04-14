@@ -2,14 +2,12 @@ package com.github.pawelbialas.testgeneratorapp.entity.question.service;
 
 import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionMapper;
-import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.entity.question.repository.QuestionRepository;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.InternalServerErrorException;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.NotAcceptableException;
 import com.opencsv.CSVReader;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManagerFactory;
@@ -34,18 +32,18 @@ public class QuestionConverterService {
         this.mapper = mapper;
     }
 
-    public void readQuestionsFromCsv(String fileLocation) {
+    public void readQuestionsFromCsv(java.lang.String fileLocation) {
         try {
             CSVReader reader = new CSVReader(new FileReader(fileLocation), ',');
             try {
-                String[] nextLine;
+                java.lang.String[] nextLine;
                 while ((nextLine = reader.readNext()) != null) {
                     Question question = new Question();
-                    question.setMainTech(convertMainTech(nextLine[1]));
+                    question.setMainTech(nextLine[1]);
                     question.setSpecificTech(nextLine[2]);
                     question.setSkillLevel(convertSkillLevel(nextLine[3]));
                     question.setContents(nextLine[4]);
-                    ArrayList<String> rawAnswers = new ArrayList<>();
+                    ArrayList<java.lang.String> rawAnswers = new ArrayList<>();
                     rawAnswers.add(nextLine[5]);
                     rawAnswers.add(nextLine[6]);
                     rawAnswers.add(nextLine[7]);
@@ -69,7 +67,7 @@ public class QuestionConverterService {
     }
 
 
-    public SkillLevel convertSkillLevel(String skillString) {
+    public SkillLevel convertSkillLevel(java.lang.String skillString) {
 
         SkillLevel outcome = null;
         if (!skillString.isBlank()) {
@@ -95,57 +93,13 @@ public class QuestionConverterService {
     }
 
 
-    public MainTech convertMainTech(String techString) {
-        MainTech outcome = null;
-        if (!techString.isBlank()) {
-            switch (techString) {
-                case "Java":
-                    outcome = MainTech.JAVA;
-                    break;
-                case "PHP":
-                    outcome = MainTech.PHP;
-                    break;
-                case "Angular":
-                    outcome = MainTech.ANGULAR;
-                    break;
-                case ".NET":
-                    outcome = MainTech._NET;
-                    break;
-                case "DevOps":
-                    outcome = MainTech.DEVOPS;
-                    break;
-                case "Docker":
-                    outcome = MainTech.DOCKER;
-                    break;
-                case "Splunk":
-                    outcome = MainTech.SPLUNK;
-                    break;
-                case "SQL":
-                    outcome = MainTech.SQL;
-                    break;
-                case "JavaScript":
-                    outcome = MainTech.JAVASCRIPT;
-                    break;
-                case "Go":
-                    outcome = MainTech.GO;
-                    break;
-                case "Blockchain":
-                    outcome = MainTech.BLOCKCHAIN;
-                    break;
-                default:
-                    outcome = MainTech.UNASSIGNED;
-            }
-        } else throw new NotAcceptableException("Missing value for the property of MainTech");
-        return outcome;
-    }
 
-
-    private List<Answer> convertAnswers(ArrayList<String> answers) {
+    private List<Answer> convertAnswers(ArrayList<java.lang.String> answers) {
         try {
             List<Answer> outcome = new ArrayList<>();
             List<Integer> correct = new ArrayList<>();
             if (answers.get(4).length() != 1) {
-                String[] split = answers.get(4).split(",");
+                java.lang.String[] split = answers.get(4).split(",");
                 for (int i = 0; i < split.length; i++) {
                     int answerNumber = Integer.parseInt(split[i]);
                     correct.add(answerNumber);

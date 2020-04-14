@@ -18,10 +18,10 @@ import java.util.UUID;
 @Entity
 public class Question extends BaseEntity {
 
-    private String contents;
+    private java.lang.String contents;
     @Enumerated
-    private MainTech mainTech;
-    private String specificTech;
+    private String mainTech;
+    private java.lang.String specificTech;
     @Enumerated
     private SkillLevel skillLevel;
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -29,7 +29,7 @@ public class Question extends BaseEntity {
 
     @Builder
     public Question(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,
-                    String contents, MainTech mainTech, String specificTech, ArrayList<Answer> answers, SkillLevel skillLevel) {
+                    java.lang.String contents, String mainTech, java.lang.String specificTech, ArrayList<Answer> answers, SkillLevel skillLevel) {
         super(id, version, createdDate, lastModifiedDate);
         this.contents = contents;
         this.mainTech = mainTech;
@@ -49,7 +49,7 @@ public class Question extends BaseEntity {
     }
 
     @Override
-    public String toString() {
+    public java.lang.String toString() {
         return "Question{" +
                 "id='" + this.getId() + '\'' +
                 "contents='" + contents + '\'' +

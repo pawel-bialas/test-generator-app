@@ -2,7 +2,6 @@ package com.github.pawelbialas.testgeneratorapp.entity.question.service;
 
 import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerMapperImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionMapperImpl;
-import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.entity.question.repository.QuestionRepository;
@@ -41,7 +40,7 @@ class QuestionServiceImplTest {
                 .id(UUID.randomUUID())
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
-                .mainTech(MainTech.JAVA)
+                .mainTech(String.JAVA)
                 .createdDate(Timestamp.from(Instant.now()))
                 .lastModifiedDate(Timestamp.from(Instant.now()))
                 .build();
@@ -53,7 +52,7 @@ class QuestionServiceImplTest {
                 .id(UUID.randomUUID())
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
-                .mainTech(MainTech.JAVA)
+                .mainTech(String.JAVA)
                 .createdDate(Timestamp.from(Instant.now()))
                 .lastModifiedDate(Timestamp.from(Instant.now()))
                 .build();

@@ -1,9 +1,6 @@
 package com.github.pawelbialas.testgeneratorapp.entity.question.dto;
 
 import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerDto;
-import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
-import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
-import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,8 +8,6 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -40,7 +35,7 @@ class QuestionDtoTest {
                 .version(1L)
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
-                .mainTech(MainTech.JAVA)
+                .mainTech(String.JAVA)
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Java")
                 .build();

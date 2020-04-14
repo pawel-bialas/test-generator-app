@@ -1,7 +1,6 @@
 package com.github.pawelbialas.testgeneratorapp.entity.question.dto;
 
 import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerDto;
-import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.BaseItem;
 import lombok.*;
@@ -19,9 +18,9 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = true)
 public class QuestionDto extends BaseItem {
 
-    private String contents;
-    private MainTech mainTech;
-    private String specificTech;
+    private java.lang.String contents;
+    private String mainTech;
+    private java.lang.String specificTech;
     private SkillLevel skillLevel;
     private List<AnswerDto> answers = new ArrayList<>();
 
@@ -30,9 +29,9 @@ public class QuestionDto extends BaseItem {
                         Long version,
                         OffsetDateTime createdDate,
                         OffsetDateTime lastModifiedDate,
-                        String contents,
-                        MainTech mainTech,
-                        String specificTech,
+                        java.lang.String contents,
+                        String mainTech,
+                        java.lang.String specificTech,
                         ArrayList<AnswerDto> answers,
                         SkillLevel skillLevel) {
         super(id, version, createdDate, lastModifiedDate);
@@ -55,7 +54,7 @@ public class QuestionDto extends BaseItem {
 
 
     @Override
-    public String toString() {
+    public java.lang.String toString() {
         return "QuestionDto{" +
                 "id='" + this.getId() + '\'' +
                 "contents='" + contents + '\'' +

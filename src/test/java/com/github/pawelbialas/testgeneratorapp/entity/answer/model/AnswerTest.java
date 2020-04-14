@@ -1,6 +1,5 @@
 package com.github.pawelbialas.testgeneratorapp.entity.answer.model;
 
-import com.github.pawelbialas.testgeneratorapp.entity.question.model.MainTech;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,7 +38,7 @@ class AnswerTest {
                 .build();
 
          question = Question.builder()
-                 .mainTech(MainTech.JAVA)
+                 .mainTech(String.JAVA)
                  .specificTech("Core")
                  .skillLevel(SkillLevel.ENTRY)
                  .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))

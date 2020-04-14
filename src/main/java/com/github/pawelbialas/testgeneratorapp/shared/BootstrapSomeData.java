@@ -39,18 +39,34 @@ public class BootstrapSomeData implements ApplicationListener<ContextRefreshedEv
 
         ArrayList<TestParameter> params = new ArrayList<>();
 
-        TestParameter parameter = TestParameter.builder()
+        TestParameter parameter1 = TestParameter.builder()
                 .mainTechParam("Java")
-                .qty(4)
+                .qty(2)
                 .skillLevelParam("Junior")
                 .specificTechParam("Core")
                 .build();
 
-        params.add(parameter);
+        TestParameter parameter2 = TestParameter.builder()
+                .mainTechParam("Java")
+                .qty(3)
+                .skillLevelParam("Senior")
+                .specificTechParam("Core")
+                .build();
+
+        params.add(parameter1);
+        params.add(parameter2);
 
         SkillTestDto newTest = skillTestService.createNewTest("123", params);
 
         System.out.println(newTest.getQuestions());
+        System.out.println("this tes has: " + newTest.getQuestions().size());
+
+
+        SkillTestDto newTest1 = skillTestService.createNewTest("456", params);
+
+        System.out.println(newTest1.getQuestions());
+        System.out.println("this tes has: " + newTest1.getQuestions().size());
+
 
 
     }
