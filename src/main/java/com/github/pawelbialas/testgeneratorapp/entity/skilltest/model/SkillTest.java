@@ -24,7 +24,7 @@ public class SkillTest extends BaseEntity {
     private List<Question> questions = new ArrayList<>();
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Contestant contestant;
-    @OneToOne(mappedBy = "skillTest", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    @OneToOne(mappedBy = "skillTest", cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
     private Result result;
     @Enumerated
     private TestStatus testStatus;

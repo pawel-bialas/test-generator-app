@@ -19,7 +19,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Table(name = "contestants")
 @Entity
-public class Contestant extends BaseEntity {
+public class    Contestant extends BaseEntity {
 
     @Column(updatable = false, nullable = false)
     private String contestantNumber;
@@ -39,22 +39,22 @@ public class Contestant extends BaseEntity {
     }
 
     public void addTest (SkillTest skillTest) {
-        skillTests.add(skillTest);
+        this.getSkillTests().add(skillTest);
         skillTest.setContestant(this);
     }
 
     public void removeTest (SkillTest skillTest) {
-        skillTests.remove(skillTest);
+        this.getSkillTests().remove(skillTest);
         skillTest.setContestant(null);
     }
 
     public void addResult (Result result) {
-        results.add(result);
+        this.getResults().add(result);
         result.setContestant(this);
     }
 
     public void removeResult (Result result) {
-        results.remove(result);
+        this.getResults().remove(result);
         result.setContestant(null);
     }
 

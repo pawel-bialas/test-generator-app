@@ -38,12 +38,12 @@ public class Question extends BaseEntity {
     }
 
     public void addAnswer(Answer answer) {
-        answers.add(answer);
+        this.getAnswers().add(answer);
         answer.setQuestion(this);
     }
 
     public void removeAnswer (Answer answer) {
-        answers.remove(answer);
+        this.getAnswers().remove(answer);
         answer.setQuestion(null);
     }
 

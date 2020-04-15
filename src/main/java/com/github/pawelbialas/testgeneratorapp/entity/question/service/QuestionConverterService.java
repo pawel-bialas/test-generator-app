@@ -32,6 +32,7 @@ public class QuestionConverterService {
         this.mapper = mapper;
     }
 
+    @Transactional
     public void readQuestionsFromCsv(java.lang.String fileLocation) {
         try {
             CSVReader reader = new CSVReader(new FileReader(fileLocation), ',');

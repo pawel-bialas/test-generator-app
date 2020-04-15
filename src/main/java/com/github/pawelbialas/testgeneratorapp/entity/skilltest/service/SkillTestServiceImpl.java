@@ -23,7 +23,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
 public class SkillTestServiceImpl implements SkillTestService {
 
     @Value("${param.regular.test.size}")

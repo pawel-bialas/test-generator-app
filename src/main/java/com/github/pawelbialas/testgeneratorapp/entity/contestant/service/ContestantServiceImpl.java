@@ -12,7 +12,6 @@ import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class ContestantServiceImpl implements ContestantService {
 
     private final ContestantRepository contestantRepository;
@@ -40,7 +39,9 @@ public class ContestantServiceImpl implements ContestantService {
 
     @Override
     public Contestant saveOrUpdate(ContestantDto contestantDto) {
-        return contestantRepository.save(mapper.dtoToObject(contestantDto, new CycleAvoidingMappingContext()));
+        return contestantRepository.findByContestantNumber(contestantDto.getContestantNumber())
+                .map(val -> emf.createEntityManager().merge(mapper.dtoToObject(contestantDto, new CycleAvoidingMappingContext())))
+                .orElse(contestantRepository.save(mapper.dtoToObject(contestantDto, new CycleAvoidingMappingContext())));
     }
 
 
