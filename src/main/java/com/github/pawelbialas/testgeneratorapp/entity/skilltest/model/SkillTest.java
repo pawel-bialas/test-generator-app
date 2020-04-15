@@ -20,7 +20,7 @@ import java.util.*;
 public class SkillTest extends BaseEntity {
 
 
-    @OneToMany
+    @ManyToMany
     private List<Question> questions = new ArrayList<>();
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Contestant contestant;

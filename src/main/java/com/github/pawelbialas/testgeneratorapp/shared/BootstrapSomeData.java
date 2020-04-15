@@ -58,15 +58,27 @@ public class BootstrapSomeData implements ApplicationListener<ContextRefreshedEv
 
         SkillTestDto newTest = skillTestService.createNewTest("123", params);
 
+        System.out.println("=======================");
         System.out.println(newTest.getQuestions());
-        System.out.println("this tes has: " + newTest.getQuestions().size());
-
+        System.out.println("=======================");
+        System.out.println("this tes has1: " + newTest.getQuestions().size());
+        System.out.println("=======================");
 
         SkillTestDto newTest1 = skillTestService.createNewTest("456", params);
 
+        System.out.println("=======================");
         System.out.println(newTest1.getQuestions());
-        System.out.println("this tes has: " + newTest1.getQuestions().size());
+        System.out.println("=======================");
+        System.out.println("this tes has2: " + newTest1.getQuestions().size());
+        System.out.println("=======================");
 
+        SkillTestDto newTest2 = skillTestService.createNewTest("789", params);
+
+        System.out.println("=======================");
+        System.out.println(newTest2.getQuestions());
+        System.out.println("=======================");
+        System.out.println("this tes has3: " + newTest2.getQuestions().size());
+        System.out.println("=======================");
 
 
     }
