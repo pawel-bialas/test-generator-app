@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManagerFactory;
 import javax.transaction.Transactional;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ContestantServiceImpl implements ContestantService {
@@ -32,6 +33,11 @@ public class ContestantServiceImpl implements ContestantService {
 
     }
 
+    public Optional<ContestantDto> findById (UUID id) {
+        return contestantRepository.findById(id)
+                .map(contestant -> mapper.objectToDto(contestant, new CycleAvoidingMappingContext()));
+    }
+
     @Override
     public Boolean confirmContestant(String contestantNumber) {
         return contestantRepository.findByContestantNumber(contestantNumber).isPresent();
@@ -43,6 +49,8 @@ public class ContestantServiceImpl implements ContestantService {
                 .map(val -> emf.createEntityManager().merge(mapper.dtoToObject(contestantDto, new CycleAvoidingMappingContext())))
                 .orElse(contestantRepository.save(mapper.dtoToObject(contestantDto, new CycleAvoidingMappingContext())));
     }
+
+
 
 
 }

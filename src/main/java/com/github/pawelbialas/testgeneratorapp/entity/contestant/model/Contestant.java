@@ -19,7 +19,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Table(name = "contestants")
 @Entity
-public class    Contestant extends BaseEntity {
+public class Contestant extends BaseEntity {
 
     @Column(updatable = false, nullable = false)
     private String contestantNumber;

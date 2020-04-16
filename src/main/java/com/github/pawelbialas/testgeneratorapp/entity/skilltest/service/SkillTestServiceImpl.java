@@ -1,6 +1,7 @@
 package com.github.pawelbialas.testgeneratorapp.entity.skilltest.service;
 
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantDto;
+import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.service.ContestantServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionDto;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
@@ -9,6 +10,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionS
 import com.github.pawelbialas.testgeneratorapp.entity.result.service.ResultServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMapper;
+import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestParameter;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestStatus;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
@@ -68,26 +70,14 @@ public class SkillTestServiceImpl implements SkillTestService {
 
     }
 
-    public SkillTestDto createNewTest(java.lang.String contestantNumber, List<TestParameter> testParams) {
+    @Transactional
+    public SkillTestDto createNewTest(String contestantNumber, List<TestParameter> testParams) {
         if (contestantNumber == null || !testParametersValidator(testParams)) {
             throw new BadRequestException("SkillTestService: ContestantNumber, SkillLevel or MainTech can't be null");
         }
-        SkillTestDto skillTest;
-        Optional<ContestantDto> searchResult = contestantServiceImpl.findContestantByNumber(contestantNumber);
-        if (searchResult.isEmpty()) {
-            ContestantDto contestantDto = ContestantDto.builder()
-                    .contestantNumber(contestantNumber)
-                    .results(new ArrayList<>())
-                    .skillTests(new ArrayList<>())
-                    .build();
-            contestantServiceImpl.saveOrUpdate(contestantDto);
-            skillTest = generateTest(contestantDto, testParams);
-        } else {
-            skillTest = generateTest(searchResult.get(), testParams);
-        }
-        skillTestRepository.save(testMapper.dtoToObject(skillTest, new CycleAvoidingMappingContext()));
-
-        return skillTest;
+        ContestantDto contestantDto = verifyContestantNumber(contestantNumber);
+        SkillTest skillTest = skillTestRepository.save(testMapper.dtoToObject(generateTest(contestantDto, testParams), new CycleAvoidingMappingContext()));
+        return testMapper.objectToDto(skillTest, new CycleAvoidingMappingContext());
     }
 
     private SkillTestDto generateTest(ContestantDto contestant, List<TestParameter> testParams) {
@@ -117,6 +107,30 @@ public class SkillTestServiceImpl implements SkillTestService {
                 .questions(questionDtos)
                 .build();
 
+    }
+
+
+    private ContestantDto verifyContestantNumber(String contestantNumber) {
+        Boolean confirmation = contestantServiceImpl.confirmContestant(contestantNumber);
+        ContestantDto contestantDto = null;
+        if (!confirmation) {
+             contestantDto = ContestantDto.builder()
+                    .contestantNumber(contestantNumber)
+                    .results(new ArrayList<>())
+                    .skillTests(new ArrayList<>())
+                    .build();
+            UUID newId = contestantServiceImpl.saveOrUpdate(contestantDto).getId();
+            Optional<ContestantDto> byId = contestantServiceImpl.findById(newId);
+            if (byId.isPresent()) {
+                 contestantDto = byId.get();
+            }
+        } else {
+            Optional<ContestantDto> queryResult = contestantServiceImpl.findContestantByNumber(contestantNumber);
+            if (queryResult.isPresent()) {
+                contestantDto = queryResult.get();
+            }
+        }
+        return contestantDto;
     }
 
 
