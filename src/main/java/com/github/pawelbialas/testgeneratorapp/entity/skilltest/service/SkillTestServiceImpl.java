@@ -58,7 +58,8 @@ public class SkillTestServiceImpl implements SkillTestService {
                 .orElseThrow(() -> new NotFoundException("SkillTestService: no test with given Id"));
     }
 
-    public List<SkillTestDto> findTestByContestantNumber(java.lang.String contestantNumber) {
+    @Override
+    public List<SkillTestDto> findTestByContestantNumber(String contestantNumber) {
 
         return skillTestRepository.findByContestant_ContestantNumber(contestantNumber)
                 .stream()
@@ -67,6 +68,7 @@ public class SkillTestServiceImpl implements SkillTestService {
 
     }
 
+    @Override
     @Transactional
     public SkillTestDto createNewTest(String contestantNumber, List<TestParameter> testParams) {
         if (contestantNumber == null || !testParametersValidator(testParams)) {
