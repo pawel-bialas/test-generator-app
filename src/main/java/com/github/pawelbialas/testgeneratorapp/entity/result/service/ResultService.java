@@ -4,10 +4,15 @@ import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultDto;
 import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface ResultService {
 
+
+    Optional<ResultDto> findById (UUID uuid);
+
+    List<ResultDto> findAll();
 
     List<ResultDto> findAllByContestantIdOrContestantNumber(UUID contestantId, String contestantNumber);
 }

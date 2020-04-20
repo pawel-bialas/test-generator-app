@@ -1,12 +1,12 @@
 package com.github.pawelbialas.testgeneratorapp.entity.skilltest.service;
 
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantDto;
+import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.service.ContestantServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionDto;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionConverterService;
 import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionServiceImpl;
-import com.github.pawelbialas.testgeneratorapp.entity.result.service.ResultServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
@@ -16,10 +16,11 @@ import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.Skill
 import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
 import com.github.pawelbialas.testgeneratorapp.shared.exception.BadRequestException;
 import com.github.pawelbialas.testgeneratorapp.shared.exception.InternalServerErrorException;
-import com.github.pawelbialas.testgeneratorapp.shared.exception.NotFoundException;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManagerFactory;
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -37,6 +38,8 @@ public class SkillTestServiceImpl implements SkillTestService {
     private final ContestantServiceImpl contestantServiceImpl;
     private final SkillTestMapper testMapper;
     private final QuestionConverterService questionConverterService;
+    private final ContestantMapper contestantMapper;
+    private final EntityManagerFactory emf;
 
 
     public SkillTestServiceImpl(
@@ -44,22 +47,42 @@ public class SkillTestServiceImpl implements SkillTestService {
             SkillTestRepository skillTestRepository,
             ContestantServiceImpl contestantServiceImpl,
             SkillTestMapper testMapper,
-            QuestionConverterService questionConverterService) {
+            QuestionConverterService questionConverterService,
+            ContestantMapper contestantMapper,
+            EntityManagerFactory emf) {
         this.questionServiceImpl = questionServiceImpl;
         this.contestantServiceImpl = contestantServiceImpl;
         this.skillTestRepository = skillTestRepository;
         this.testMapper = testMapper;
         this.questionConverterService = questionConverterService;
+        this.contestantMapper = contestantMapper;
+        this.emf = emf;
     }
 
-    public SkillTestDto findTestByUUID(UUID testUUID) {
+
+    @Override
+    public SkillTest saveOrUpdate(@NotNull SkillTestDto skillTestDto) {
+        return skillTestRepository.findById(skillTestDto.getId())
+                .map(val -> emf.createEntityManager().merge(testMapper.dtoToObject(skillTestDto, new CycleAvoidingMappingContext())))
+                .orElse(skillTestRepository.save(testMapper.dtoToObject(skillTestDto, new CycleAvoidingMappingContext())));
+    }
+
+    public Optional<SkillTestDto> findTestByUUID(UUID testUUID) {
         return skillTestRepository.findById(testUUID)
-                .map(skillTest -> testMapper.objectToDto(skillTest, new CycleAvoidingMappingContext()))
-                .orElseThrow(() -> new NotFoundException("SkillTestService: no test with given Id"));
+                .map(skillTest -> testMapper.objectToDto(skillTest, new CycleAvoidingMappingContext()));
+
     }
 
     @Override
-    public List<SkillTestDto> findTestByContestantNumber(String contestantNumber) {
+    public List<SkillTestDto> findAllByContestant(ContestantDto contestant) {
+        return skillTestRepository.findAllByContestant(contestantMapper.dtoToObject(contestant, new CycleAvoidingMappingContext()))
+                .stream()
+                .map(val -> testMapper.objectToDto(val, new CycleAvoidingMappingContext()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SkillTestDto> findAllByContestantNumber(String contestantNumber) {
 
         return skillTestRepository.findByContestant_ContestantNumber(contestantNumber)
                 .stream()

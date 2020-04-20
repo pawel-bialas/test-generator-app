@@ -1,10 +1,12 @@
 package com.github.pawelbialas.testgeneratorapp.entity.result.service;
 
 import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerDto;
+import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantDto;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.service.ContestantServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionDto;
 import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultDto;
 import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultMapper;
+import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 import com.github.pawelbialas.testgeneratorapp.entity.result.repository.ResultRepository;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.service.SkillTestServiceImpl;
@@ -14,6 +16,7 @@ import com.github.pawelbialas.testgeneratorapp.shared.exception.NotFoundExceptio
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -36,6 +39,20 @@ public class ResultServiceImpl implements ResultService {
         this.contestantService = contestantService;
     }
 
+
+    @Override
+    public Optional<ResultDto> findById(UUID uuid) {
+        return Optional.of(mapper.objectToDto(repository.getOne(uuid), new CycleAvoidingMappingContext()));
+
+    }
+
+    @Override
+    public List<ResultDto> findAll() {
+        return repository.findAll().stream()
+                .map(val -> mapper.objectToDto(val, new CycleAvoidingMappingContext()))
+                .collect(Collectors.toList());
+    }
+
     @Override
     public List<ResultDto> findAllByContestantIdOrContestantNumber(UUID contestantId, String contestantNumber) {
         return repository.findAllByContestant_IdOrContestant_ContestantNumber(contestantId, contestantNumber).stream()
@@ -44,19 +61,25 @@ public class ResultServiceImpl implements ResultService {
     }
 
     public Float resolveTest(UUID contestantUUID, UUID baseTestId, SkillTestDto resultTest) {
+        if (contestantUUID == null || baseTestId == null || resultTest == null) {
+            throw new NotFoundException("ResultService: Missing data. Matching the result is impossible");
+        }
         Integer maxScore = 0;
         Integer contestantScore = 0;
 
-        SkillTestDto baseTest = skillTestService.findTestByUUID(baseTestId);
+        Optional<SkillTestDto> baseTest = skillTestService.findTestByUUID(baseTestId);
+        if (baseTest.isEmpty()) {
+            throw new NotFoundException("ResultService: BaseTest not found");
+        }
 
-        if (baseTest != null) {
-            maxScore = calculateMaxScore(baseTest);
-            contestantScore = checkAnswers(baseTest, resultTest);
-        } else throw new NotFoundException("ResultService: Base test not found. Matching the result is impossible");
+        Optional<ContestantDto> contestant = contestantService.findById(contestantUUID);
+        if (contestant.isEmpty()) {
+            throw new NotFoundException("ResultService: Contestant not found");
+        }
+        maxScore = calculateMaxScore(baseTest.get());
+        contestantScore = checkAnswers(baseTest.get(), resultTest);
 
-
-
-
+        //TODO return type to change -> needed repository to store
         return ((float) contestantScore / (float) maxScore) * 100;
     }
 
