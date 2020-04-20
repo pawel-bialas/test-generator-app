@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 @Getter
@@ -18,19 +19,19 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "contestants")
 @Entity
-public class UUID extends BaseEntity {
+public class Contestant extends BaseEntity {
 
     @Column(updatable = false, nullable = false)
     private String contestantNumber;
     @OneToMany(mappedBy = "contestant", cascade = CascadeType.ALL)
     private List<SkillTest> skillTests = new ArrayList<>();
-    @OneToMany(mappedBy = "contestantId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "contestant", cascade = CascadeType.ALL)
     private List<Result> results = new ArrayList<>();
 
 
     @Builder
-    public UUID(java.util.UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,
-                String contestantNumber, ArrayList<SkillTest> skillTests, ArrayList<Result> results) {
+    public Contestant(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,
+                      String contestantNumber, ArrayList<SkillTest> skillTests, ArrayList<Result> results) {
         super(id, version, createdDate, lastModifiedDate);
         this.contestantNumber = contestantNumber;
         this.skillTests = skillTests;

@@ -21,7 +21,7 @@ import java.util.UUID;
 public class Result extends BaseEntity {
 
     @Column(nullable = false)
-    private Integer score;
+    private Float score;
     @OneToOne (fetch = FetchType.LAZY)
     private SkillTest skillTest;
     @ManyToOne (fetch = FetchType.LAZY)
@@ -29,7 +29,7 @@ public class Result extends BaseEntity {
 
     @Builder
     public Result (UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,
-                   Integer score, SkillTest skillTest, Contestant contestant) {
+                   Float score, SkillTest skillTest, Contestant contestant) {
         super(id, version, createdDate, lastModifiedDate);
         this.score = score;
         this.skillTest = skillTest;
