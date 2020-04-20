@@ -1,6 +1,5 @@
-package com.github.pawelbialas.testgeneratorapp.shared.domain.exception;
+package com.github.pawelbialas.testgeneratorapp.shared.exception;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

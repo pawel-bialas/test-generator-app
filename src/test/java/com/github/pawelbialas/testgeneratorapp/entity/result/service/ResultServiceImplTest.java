@@ -8,7 +8,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestStatus;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.BadRequestException;
+import com.github.pawelbialas.testgeneratorapp.shared.exception.BadRequestException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -5,8 +5,8 @@ import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionMappe
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.entity.question.repository.QuestionRepository;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.InternalServerErrorException;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.NotAcceptableException;
+import com.github.pawelbialas.testgeneratorapp.shared.exception.InternalServerErrorException;
+import com.github.pawelbialas.testgeneratorapp.shared.exception.NotAcceptableException;
 import com.opencsv.CSVReader;
 import org.springframework.stereotype.Service;
 

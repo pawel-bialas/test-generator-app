@@ -1,4 +1,4 @@
-package com.github.pawelbialas.testgeneratorapp.shared.domain.exception;
+package com.github.pawelbialas.testgeneratorapp.shared.exception;
 
 public class NotFoundException extends RuntimeException {
 

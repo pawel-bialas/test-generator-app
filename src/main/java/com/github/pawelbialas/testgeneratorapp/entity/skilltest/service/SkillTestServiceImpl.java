@@ -1,7 +1,6 @@
 package com.github.pawelbialas.testgeneratorapp.entity.skilltest.service;
 
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantDto;
-import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.service.ContestantServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionDto;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
@@ -15,8 +14,9 @@ import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestParame
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestStatus;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.BadRequestException;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.exception.NotFoundException;
+import com.github.pawelbialas.testgeneratorapp.shared.exception.BadRequestException;
+import com.github.pawelbialas.testgeneratorapp.shared.exception.InternalServerErrorException;
+import com.github.pawelbialas.testgeneratorapp.shared.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -76,6 +76,9 @@ public class SkillTestServiceImpl implements SkillTestService {
             throw new BadRequestException("SkillTestService: ContestantNumber, SkillLevel or MainTech can't be null");
         }
         ContestantDto contestantDto = verifyContestantNumber(contestantNumber);
+        if (contestantDto == null) {
+            throw new InternalServerErrorException("Something went wrong ... Server side problem");
+        }
         SkillTest skillTest = skillTestRepository.save(testMapper.dtoToObject(generateTest(contestantDto, testParams), new CycleAvoidingMappingContext()));
         return testMapper.objectToDto(skillTest, new CycleAvoidingMappingContext());
     }

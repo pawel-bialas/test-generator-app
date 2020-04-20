@@ -1,5 +1,6 @@
 package com.github.pawelbialas.testgeneratorapp.shared.domain.exception;
 
+import com.github.pawelbialas.testgeneratorapp.shared.exception.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
