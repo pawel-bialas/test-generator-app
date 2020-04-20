@@ -35,7 +35,6 @@ public class SkillTestServiceImpl implements SkillTestService {
     private final QuestionServiceImpl questionServiceImpl;
     private final SkillTestRepository skillTestRepository;
     private final ContestantServiceImpl contestantServiceImpl;
-    private final ResultServiceImpl resultServiceImpl;
     private final SkillTestMapper testMapper;
     private final QuestionConverterService questionConverterService;
 
@@ -44,13 +43,11 @@ public class SkillTestServiceImpl implements SkillTestService {
             QuestionServiceImpl questionServiceImpl,
             SkillTestRepository skillTestRepository,
             ContestantServiceImpl contestantServiceImpl,
-            ResultServiceImpl resultServiceImpl,
             SkillTestMapper testMapper,
             QuestionConverterService questionConverterService) {
         this.questionServiceImpl = questionServiceImpl;
         this.contestantServiceImpl = contestantServiceImpl;
         this.skillTestRepository = skillTestRepository;
-        this.resultServiceImpl = resultServiceImpl;
         this.testMapper = testMapper;
         this.questionConverterService = questionConverterService;
     }

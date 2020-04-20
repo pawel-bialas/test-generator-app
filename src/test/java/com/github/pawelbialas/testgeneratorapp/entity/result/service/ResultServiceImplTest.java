@@ -1,13 +1,15 @@
 package com.github.pawelbialas.testgeneratorapp.entity.result.service;
 
-import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
-import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
-import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
+import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerDto;
+import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantDto;
+import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionDto;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
+import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultDto;
 import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
-import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
-import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestStatus;
+import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto;
+import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
 import com.github.pawelbialas.testgeneratorapp.shared.exception.BadRequestException;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,8 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.sql.Timestamp;
-import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,27 +36,29 @@ public class ResultServiceImplTest {
 
     @Autowired
     ResultServiceImpl resultService;
+    @Autowired
+    SkillTestMapper testMapper;
 
     @MockBean
     SkillTestRepository repository;
 
     Result result;
 
-    Question question1;
-    Question question2;
-    Question question3;
-    Question question4;
+    QuestionDto question1;
+    QuestionDto question2;
+    QuestionDto question3;
+    QuestionDto question4;
 
-    Answer answer1;
-    Answer answer2;
-    Answer answer3;
-    Answer answer4;
+    AnswerDto answer1;
+    AnswerDto answer2;
+    AnswerDto answer3;
+    AnswerDto answer4;
 
-    SkillTest skillTest;
+    SkillTestDto skillTest;
 
     @Before
     public void setUp() {
-        question1 = Question.builder()
+        question1 = QuestionDto.builder()
                 .answers(new ArrayList<>())
                 .contents("testQuestion1")
                 .version(1L)
@@ -63,11 +66,11 @@ public class ResultServiceImplTest {
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
                 .mainTech("Java")
-                .createdDate(Timestamp.from(Instant.now()))
-                .lastModifiedDate(Timestamp.from(Instant.now()))
+                .createdDate(OffsetDateTime.now())
+                .lastModifiedDate(OffsetDateTime.now())
                 .build();
 
-        question2 = Question.builder()
+        question2 = QuestionDto.builder()
                 .answers(new ArrayList<>())
                 .contents("testQuestion1")
                 .version(1L)
@@ -75,11 +78,11 @@ public class ResultServiceImplTest {
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
                 .mainTech("Java")
-                .createdDate(Timestamp.from(Instant.now()))
-                .lastModifiedDate(Timestamp.from(Instant.now()))
+                .createdDate(OffsetDateTime.now())
+                .lastModifiedDate(OffsetDateTime.now())
                 .build();
 
-         question3 = Question.builder()
+        question3 = QuestionDto.builder()
                 .answers(new ArrayList<>())
                 .contents("testQuestion2")
                 .version(1L)
@@ -87,11 +90,11 @@ public class ResultServiceImplTest {
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
                 .mainTech("Java")
-                .createdDate(Timestamp.from(Instant.now()))
-                .lastModifiedDate(Timestamp.from(Instant.now()))
+                .createdDate(OffsetDateTime.now())
+                .lastModifiedDate(OffsetDateTime.now())
                 .build();
 
-         question4 = Question.builder()
+        question4 = QuestionDto.builder()
                 .answers(new ArrayList<>())
                 .contents("testQuestion2")
                 .version(1L)
@@ -99,45 +102,45 @@ public class ResultServiceImplTest {
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
                 .mainTech("Java")
-                .createdDate(Timestamp.from(Instant.now()))
-                .lastModifiedDate(Timestamp.from(Instant.now()))
+                .createdDate(OffsetDateTime.now())
+                .lastModifiedDate(OffsetDateTime.now())
                 .build();
 
-        answer1 = Answer.builder()
+        answer1 = AnswerDto.builder()
                 .id(UUID.randomUUID())
                 .version(1L)
-                .createdDate(Timestamp.from(Instant.now()))
-                .lastModifiedDate(Timestamp.from(Instant.now()))
+                .createdDate(OffsetDateTime.now())
+                .lastModifiedDate(OffsetDateTime.now())
                 .correct(true)
                 .answer("answer1")
                 .question(null)
                 .build();
 
-        answer2 = Answer.builder()
+        answer2 = AnswerDto.builder()
                 .id(UUID.randomUUID())
                 .version(1L)
-                .createdDate(Timestamp.from(Instant.now()))
-                .lastModifiedDate(Timestamp.from(Instant.now()))
+                .createdDate(OffsetDateTime.now())
+                .lastModifiedDate(OffsetDateTime.now())
                 .correct(false)
                 .answer("answer2")
                 .question(null)
                 .build();
 
-        answer3 = Answer.builder()
+        answer3 = AnswerDto.builder()
                 .id(UUID.randomUUID())
                 .version(1L)
-                .createdDate(Timestamp.from(Instant.now()))
-                .lastModifiedDate(Timestamp.from(Instant.now()))
+                .createdDate(OffsetDateTime.now())
+                .lastModifiedDate(OffsetDateTime.now())
                 .correct(false)
                 .answer("answer3")
                 .question(null)
                 .build();
 
-        answer4 = Answer.builder()
+        answer4 = AnswerDto.builder()
                 .id(UUID.randomUUID())
                 .version(1L)
-                .createdDate(Timestamp.from(Instant.now()))
-                .lastModifiedDate(Timestamp.from(Instant.now()))
+                .createdDate(OffsetDateTime.now())
+                .lastModifiedDate(OffsetDateTime.now())
                 .correct(false)
                 .answer("answer4")
                 .question(null)
@@ -149,18 +152,18 @@ public class ResultServiceImplTest {
         question2.addAnswer(answer1);
         question2.addAnswer(answer2);
 
-        skillTest = SkillTest.builder()
+        skillTest = SkillTestDto.builder()
                 .id(UUID.randomUUID())
                 .version(1L)
-                .createdDate(Timestamp.from(Instant.now()))
-                .lastModifiedDate(Timestamp.from(Instant.now()))
-                .contestant(new Contestant())
-                .result(new Result())
+                .createdDate(OffsetDateTime.now())
+                .lastModifiedDate(OffsetDateTime.now())
+                .contestant(new ContestantDto())
+                .result(new ResultDto())
                 .questions(new ArrayList<>())
-                .testStatus(TestStatus.BASE)
+                .testStatus("BASE")
                 .build();
 
-        List<Question> questions = skillTest.getQuestions();
+        List<QuestionDto> questions = skillTest.getQuestions();
 
         questions.add(question2);
         questions.add(question1);
@@ -178,8 +181,8 @@ public class ResultServiceImplTest {
     @Test
     public void given_2TestsWithTheSameAnswers_Then_ShouldReturn_100() {
         // Given
-        SkillTest otherSkillTest = skillTest;
-        when(repository.findById(skillTest.getId())).thenReturn(Optional.of(skillTest));
+        SkillTestDto otherSkillTest = skillTest;
+        when(repository.findById(skillTest.getId())).thenReturn(Optional.of(testMapper.dtoToObject(skillTest, new CycleAvoidingMappingContext())));
         // When
 
         Float score = resultService.resolveTest(UUID.randomUUID(), skillTest.getId(), otherSkillTest);
@@ -195,25 +198,25 @@ public class ResultServiceImplTest {
     @Test
     public void given_2TestsWithDifferentAnswers_Then_ShouldReturn_50() {
         // Given
-        SkillTest otherSkillTest = skillTest;
+        SkillTestDto otherSkillTest = skillTest;
 
         otherSkillTest.setQuestions(new ArrayList<>());
 
-        Answer otherAnswer1 = Answer.builder()
+        AnswerDto otherAnswer1 = AnswerDto.builder()
                 .id(UUID.randomUUID())
                 .version(1L)
-                .createdDate(Timestamp.from(Instant.now()))
-                .lastModifiedDate(Timestamp.from(Instant.now()))
+                .createdDate(OffsetDateTime.now())
+                .lastModifiedDate(OffsetDateTime.now())
                 .correct(false)
                 .answer("answer2")
                 .question(null)
                 .build();
 
-        Answer otherAnswer2 = Answer.builder()
+        AnswerDto otherAnswer2 = AnswerDto.builder()
                 .id(UUID.randomUUID())
                 .version(1L)
-                .createdDate(Timestamp.from(Instant.now()))
-                .lastModifiedDate(Timestamp.from(Instant.now()))
+                .createdDate(OffsetDateTime.now())
+                .lastModifiedDate(OffsetDateTime.now())
                 .correct(true)
                 .answer("answer2")
                 .question(null)
@@ -225,13 +228,13 @@ public class ResultServiceImplTest {
         question1.addAnswer(otherAnswer1);
         question1.addAnswer(otherAnswer2);
 
-        ArrayList<Question> questions = new ArrayList<>();
+        ArrayList<QuestionDto> questions = new ArrayList<>();
         questions.add(question2);
         questions.add(question1);
 
         otherSkillTest.setQuestions(questions);
 
-        when(repository.findById(skillTest.getId())).thenReturn(Optional.of(skillTest));
+        when(repository.findById(skillTest.getId())).thenReturn(Optional.of(testMapper.dtoToObject(skillTest, new CycleAvoidingMappingContext())));
 
         //When
         Float score = resultService.resolveTest(UUID.randomUUID(), skillTest.getId(), otherSkillTest);
@@ -247,24 +250,24 @@ public class ResultServiceImplTest {
     public void given_2TestsWithDifferentQuestionsContent_Then_Should_ThrowAnException() {
         // This test will prove questionIntegrityValidator
         // Given
-        List<Question> questions = new ArrayList<>();
+        List<QuestionDto> questions = new ArrayList<>();
         questions.add(question4);
         questions.add(question3);
 
-        SkillTest otherSkillTest = SkillTest.builder()
+        SkillTestDto otherSkillTest = SkillTestDto.builder()
                 .id(UUID.randomUUID())
                 .version(1L)
-                .createdDate(Timestamp.from(Instant.now()))
-                .lastModifiedDate(Timestamp.from(Instant.now()))
-                .contestant(new Contestant())
-                .result(new Result())
+                .createdDate(OffsetDateTime.now())
+                .lastModifiedDate(OffsetDateTime.now())
+                .contestant(new ContestantDto())
+                .result(new ResultDto())
                 .questions(new ArrayList<>())
-                .testStatus(TestStatus.BASE)
+                .testStatus("BASE")
                 .build();
 
         otherSkillTest.setQuestions(questions);
         //When
-        when(repository.findById(skillTest.getId())).thenReturn(Optional.of(skillTest));
+        when(repository.findById(skillTest.getId())).thenReturn(Optional.of(testMapper.dtoToObject(skillTest, new CycleAvoidingMappingContext())));
         //Then
         try {
             resultService.resolveTest(UUID.randomUUID(), skillTest.getId(), otherSkillTest);
@@ -279,20 +282,20 @@ public class ResultServiceImplTest {
         // This test will prove answerIntegrityValidator
         // Given
 
-        SkillTest otherSkillTest = skillTest;
-        Question otherQuestion = question1;
+        SkillTestDto otherSkillTest = skillTest;
+        QuestionDto otherQuestion = question1;
 
         otherQuestion.setAnswers(new ArrayList<>());
         otherQuestion.addAnswer(answer1);
         otherQuestion.addAnswer(answer3);
 
         otherSkillTest.setQuestions(new ArrayList<>());
-        ArrayList<Question> questions = new ArrayList<>();
+        ArrayList<QuestionDto> questions = new ArrayList<>();
         questions.add(question2);
         questions.add(otherQuestion);
         otherSkillTest.setQuestions(questions);
         //When
-        when(repository.findById(skillTest.getId())).thenReturn(Optional.of(skillTest));
+        when(repository.findById(skillTest.getId())).thenReturn(Optional.of(testMapper.dtoToObject(skillTest, new CycleAvoidingMappingContext())));
 
         //Then
         try {

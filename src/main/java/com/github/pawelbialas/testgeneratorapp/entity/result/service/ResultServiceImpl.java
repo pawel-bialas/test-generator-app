@@ -1,22 +1,17 @@
 package com.github.pawelbialas.testgeneratorapp.entity.result.service;
 
 import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerDto;
-import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.service.ContestantServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionDto;
-import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.result.repository.ResultRepository;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto;
-import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
-import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.service.SkillTestServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.shared.exception.BadRequestException;
 import com.github.pawelbialas.testgeneratorapp.shared.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service

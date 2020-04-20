@@ -14,7 +14,7 @@ import java.util.Date;
 public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 
 
-    private final String errorClassPath = "class com.github.pawelbialas.testgeneratorapp.shared.domain.exception.";
+    private final String errorClassPath = "class com.github.pawelbialas.testgeneratorapp.shared.exception.";
 //
 //    @ExceptionHandler(value = {Exception.class, InternalServerErrorException.class})
 //    public ResponseEntity<Object> handleBaseExceptionHandler(Exception exc, WebRequest request) {
@@ -63,7 +63,7 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorMessage errorMessage = new ErrorMessage(new Date(), errorDescription);
 
         Class<? extends Exception> inputClass = exc.getClass();
-        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        HttpStatus status = null;
 
         switch (inputClass.toString()) {
             case errorClassPath + "BadRequestException":
@@ -78,6 +78,8 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
             case errorClassPath + "NotFoundException":
                 status = HttpStatus.NOT_FOUND;
                 break;
+            default:
+                status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
         return new ResponseEntity<>(
                 errorMessage, new HttpHeaders(), status);
