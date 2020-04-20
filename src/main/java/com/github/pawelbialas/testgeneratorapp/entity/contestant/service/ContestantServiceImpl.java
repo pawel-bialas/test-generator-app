@@ -8,8 +8,10 @@ import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMa
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManagerFactory;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ContestantServiceImpl implements ContestantService {
@@ -29,6 +31,13 @@ public class ContestantServiceImpl implements ContestantService {
         return repository.findByContestantNumber(contestantDto.getContestantNumber())
                 .map(val -> emf.createEntityManager().merge(mapper.dtoToObject(contestantDto, new CycleAvoidingMappingContext())))
                 .orElse(repository.save(mapper.dtoToObject(contestantDto, new CycleAvoidingMappingContext())));
+    }
+
+    @Override
+    public List<ContestantDto> findAll() {
+        return repository.findAll().stream()
+                .map(val -> mapper.objectToDto(val, new CycleAvoidingMappingContext()))
+                .collect(Collectors.toList());
     }
 
     @Override

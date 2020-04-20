@@ -3,36 +3,45 @@ package com.github.pawelbialas.testgeneratorapp.entity.result.service;
 import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerDto;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.service.ContestantServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionDto;
+import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultDto;
 import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.result.repository.ResultRepository;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.service.SkillTestServiceImpl;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
 import com.github.pawelbialas.testgeneratorapp.shared.exception.BadRequestException;
 import com.github.pawelbialas.testgeneratorapp.shared.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ResultServiceImpl implements ResultService {
 
 
-    private final ResultRepository resultRepository;
+    private final ResultRepository repository;
     private final SkillTestServiceImpl skillTestService;
     private final ResultMapper mapper;
     private final ContestantServiceImpl contestantService;
 
-    public ResultServiceImpl(ResultRepository resultRepository,
+    public ResultServiceImpl(ResultRepository repository,
                              SkillTestServiceImpl skillTestService,
                              ResultMapper mapper,
                              ContestantServiceImpl contestantService) {
-        this.resultRepository = resultRepository;
+        this.repository = repository;
         this.skillTestService = skillTestService;
         this.mapper = mapper;
         this.contestantService = contestantService;
     }
 
+    @Override
+    public List<ResultDto> findAllByContestantIdOrContestantNumber(UUID contestantId, String contestantNumber) {
+        return repository.findAllByContestant_IdOrContestant_ContestantNumber(contestantId, contestantNumber).stream()
+                .map(val -> mapper.objectToDto(val, new CycleAvoidingMappingContext()))
+                .collect(Collectors.toList());
+    }
 
     public Float resolveTest(UUID contestantUUID, UUID baseTestId, SkillTestDto resultTest) {
         Integer maxScore = 0;
@@ -123,5 +132,6 @@ public class ResultServiceImpl implements ResultService {
         }
         return integrityValidator;
     }
+
 
 }
