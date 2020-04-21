@@ -19,7 +19,7 @@ import java.util.UUID;
 public class ResultDto extends BaseItem {
 
 
-    private Integer score;
+    private Float score;
     private SkillTestDto skillTest;
     private ContestantDto contestant;
 
@@ -28,7 +28,7 @@ public class ResultDto extends BaseItem {
                      Long version,
                      OffsetDateTime createdDate,
                      OffsetDateTime lastModifiedDate,
-                     Integer score,
+                     Float score,
                      SkillTestDto skillTest,
                      ContestantDto contestant
     ) {

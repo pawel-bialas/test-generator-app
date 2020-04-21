@@ -20,11 +20,11 @@ import java.util.*;
 public class SkillTest extends BaseEntity {
 
 
-    @ManyToMany
+    @ManyToMany (fetch = FetchType.EAGER)
     private List<Question> questions = new ArrayList<>();
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Contestant contestant;
-    @OneToOne(mappedBy = "skillTest", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "skillTest")
     private Result result;
     @Enumerated
     private TestStatus testStatus;

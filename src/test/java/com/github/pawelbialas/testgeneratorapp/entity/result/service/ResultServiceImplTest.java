@@ -190,7 +190,7 @@ public class ResultServiceImplTest {
         System.out.println(score);
         // Then
         assertAll(
-                () -> assertThat(score).isEqualTo(100)
+                () -> assertThat(score).isEqualTo(100F)
         );
 
     }
@@ -241,7 +241,7 @@ public class ResultServiceImplTest {
         System.out.println(score);
         // Then
         assertAll(
-                () -> assertThat(score).isEqualTo(50)
+                () -> assertThat(score).isEqualTo(50F)
         );
 
     }

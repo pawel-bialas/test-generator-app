@@ -33,7 +33,7 @@ public class BootstrapSomeData implements ApplicationListener<ContextRefreshedEv
     @Override
     @Transactional
     public void onApplicationEvent(@NotNull ContextRefreshedEvent contextRefreshedEvent) {
-//
+
 //        questionConverterService.readQuestionsFromCsv(csvProdPath);
 //
 //

@@ -5,10 +5,13 @@ import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestan
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface ContestantService {
 
     List<ContestantDto> findAll ();
+
+    Optional<ContestantDto> findById(UUID uuid);
 
     Optional<ContestantDto> findContestantByNumber (String contestantNumber);
 

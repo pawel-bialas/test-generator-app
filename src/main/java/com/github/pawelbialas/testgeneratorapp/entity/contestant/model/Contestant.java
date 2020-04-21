@@ -5,6 +5,8 @@ import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.model.BaseEntity;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -23,9 +25,11 @@ public class Contestant extends BaseEntity {
 
     @Column(updatable = false, nullable = false)
     private String contestantNumber;
-    @OneToMany(mappedBy = "contestant", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(mappedBy = "contestant", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<SkillTest> skillTests = new ArrayList<>();
-    @OneToMany(mappedBy = "contestant", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(mappedBy = "contestant", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Result> results = new ArrayList<>();
 
 

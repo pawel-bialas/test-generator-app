@@ -41,11 +41,6 @@ class ResultMapperTest {
     @BeforeEach
     void setUp() {
 
-//        result = Result.builder()
-//                .skillTest(null)
-//                .score(12)
-//                .contestant(null)
-//                .build();
 
        result = Result.builder()
                 .id(UUID.randomUUID())

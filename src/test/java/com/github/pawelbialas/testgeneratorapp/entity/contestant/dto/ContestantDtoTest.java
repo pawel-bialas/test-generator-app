@@ -54,7 +54,7 @@ class ContestantDtoTest {
                 .build();
 
         resultDto = ResultDto.builder()
-                .score(12)
+                .score(12F)
                 .build();
     }
 

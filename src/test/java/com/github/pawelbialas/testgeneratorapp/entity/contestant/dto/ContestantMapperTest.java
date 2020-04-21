@@ -90,7 +90,7 @@ class ContestantMapperTest {
                 () -> assertThat(contestant.getContestantNumber()).isEqualTo("1234"),
                 () -> assertThat(contestant.getResults().get(0)).isEqualTo(result),
                 () -> assertThat(contestant.getSkillTests().get(0)).isEqualTo(skillTest),
-                () -> assertThat(contestant.getResults().get(0).getScore()).isEqualTo(12)
+                () -> assertThat(contestant.getResults().get(0).getScore()).isEqualTo(12F)
         );
 
     }
