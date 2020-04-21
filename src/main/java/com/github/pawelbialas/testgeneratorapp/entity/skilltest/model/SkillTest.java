@@ -20,7 +20,7 @@ import java.util.*;
 public class SkillTest extends BaseEntity {
 
 
-    @ManyToMany (fetch = FetchType.EAGER)
+    @ManyToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Question> questions = new ArrayList<>();
     @ManyToOne
     private Contestant contestant;

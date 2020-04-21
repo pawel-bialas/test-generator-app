@@ -12,7 +12,9 @@ import java.util.UUID;
 
 public interface SkillTestService {
 
-    SkillTest saveOrUpdate(@NotNull SkillTestDto skillTestDto);
+    SkillTestDto saveOrUpdate(@NotNull SkillTestDto skillTestDto);
+
+    List<SkillTestDto> findAll ();
 
     List<SkillTestDto> findAllByContestant(ContestantDto contestant);
 

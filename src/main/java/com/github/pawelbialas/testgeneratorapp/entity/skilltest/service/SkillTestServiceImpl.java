@@ -17,7 +17,6 @@ import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMa
 import com.github.pawelbialas.testgeneratorapp.shared.exception.BadRequestException;
 import com.github.pawelbialas.testgeneratorapp.shared.exception.InternalServerErrorException;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManagerFactory;
@@ -28,18 +27,12 @@ import java.util.stream.Collectors;
 @Service
 public class SkillTestServiceImpl implements SkillTestService {
 
-    @Value("${param.regular.test.size}")
-    private Integer regularTestSize;
-    @Value("${param.short.test.size}")
-    private Integer shortTestSize;
-
     private final QuestionServiceImpl questionServiceImpl;
     private final SkillTestRepository skillTestRepository;
     private final ContestantServiceImpl contestantServiceImpl;
     private final SkillTestMapper testMapper;
     private final QuestionConverterService questionConverterService;
     private final ContestantMapper contestantMapper;
-    private final EntityManagerFactory emf;
 
 
     public SkillTestServiceImpl(
@@ -48,23 +41,27 @@ public class SkillTestServiceImpl implements SkillTestService {
             ContestantServiceImpl contestantServiceImpl,
             SkillTestMapper testMapper,
             QuestionConverterService questionConverterService,
-            ContestantMapper contestantMapper,
-            EntityManagerFactory emf) {
+            ContestantMapper contestantMapper) {
         this.questionServiceImpl = questionServiceImpl;
         this.contestantServiceImpl = contestantServiceImpl;
         this.skillTestRepository = skillTestRepository;
         this.testMapper = testMapper;
         this.questionConverterService = questionConverterService;
         this.contestantMapper = contestantMapper;
-        this.emf = emf;
     }
 
 
     @Override
-    public SkillTest saveOrUpdate(@NotNull SkillTestDto skillTestDto) {
-        return skillTestRepository.findById(skillTestDto.getId())
-                .map(val -> emf.createEntityManager().merge(testMapper.dtoToObject(skillTestDto, new CycleAvoidingMappingContext())))
-                .orElse(skillTestRepository.save(testMapper.dtoToObject(skillTestDto, new CycleAvoidingMappingContext())));
+    public SkillTestDto saveOrUpdate(@NotNull SkillTestDto skillTestDto) {
+        SkillTest save = skillTestRepository.save(testMapper.dtoToObject(skillTestDto, new CycleAvoidingMappingContext()));
+        return testMapper.objectToDto(save, new CycleAvoidingMappingContext());
+    }
+
+    @Override
+    public List<SkillTestDto> findAll() {
+        return skillTestRepository.findAll().stream()
+                .map(val -> testMapper.objectToDto(val, new CycleAvoidingMappingContext()))
+                .collect(Collectors.toList());
     }
 
     public Optional<SkillTestDto> findTestByUUID(UUID testUUID) {

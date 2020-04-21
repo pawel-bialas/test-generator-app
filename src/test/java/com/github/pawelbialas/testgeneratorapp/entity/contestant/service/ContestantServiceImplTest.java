@@ -42,7 +42,6 @@ class ContestantServiceImplTest {
                 .contestantNumber("1234")
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
-                .id(UUID.randomUUID())
                 .version(1L)
                 .results(new ArrayList<>())
                 .skillTests(new ArrayList<>())
@@ -53,7 +52,6 @@ class ContestantServiceImplTest {
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
                 .version(1L)
-                .id(UUID.randomUUID())
                 .build();
 
         resultDto = ResultDto.builder()

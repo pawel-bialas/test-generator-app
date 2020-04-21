@@ -53,7 +53,6 @@ class QuestionServiceImplTest {
                 .answers(new ArrayList<>())
                 .contents("testQuestion1")
                 .version(1L)
-                .id(UUID.randomUUID())
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
                 .mainTech("Java")
@@ -65,7 +64,6 @@ class QuestionServiceImplTest {
                 .answers(new ArrayList<>())
                 .contents("testQuestion1")
                 .version(1L)
-                .id(UUID.randomUUID())
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
                 .mainTech("Java")
@@ -100,8 +98,8 @@ class QuestionServiceImplTest {
                 () -> assertThat(searchResult.isPresent()),
                 () -> assertThat(searchResult.get().getId()).isEqualTo(savedQuestion1.getId()),
                 () -> assertThat(all.size()).isEqualTo(2),
-                () -> assertThat(all.get(0)).isEqualTo(savedQuestion1),
-                () -> assertThat(all.get(1)).isEqualTo(savedQuestion2)
+                () -> assertThat(all.get(0).getId()).isEqualTo(savedQuestion1.getId()),
+                () -> assertThat(all.get(1).getId()).isEqualTo(savedQuestion2.getId())
         );
     }
 }

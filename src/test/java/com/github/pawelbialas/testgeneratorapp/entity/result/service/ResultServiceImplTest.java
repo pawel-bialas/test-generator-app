@@ -306,4 +306,14 @@ public class ResultServiceImplTest {
         }
 
     }
+
+    @Test
+    public void callingSaveOrUpdateMultipleTimesShouldAlwaysReturnSingleEntity() {
+        // Given
+
+        // When
+
+        // Then
+
+    }
 }
