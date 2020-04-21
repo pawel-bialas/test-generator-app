@@ -52,7 +52,7 @@ class ContestantTest {
         result = Result.builder()
 //                .createdDate(Timestamp.valueOf(LocalDateTime.now()))
 //                .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
-                .score(12)
+                .score(12F)
 //                .id(UUID.randomUUID())
 //                .version(1L)
                 .build();

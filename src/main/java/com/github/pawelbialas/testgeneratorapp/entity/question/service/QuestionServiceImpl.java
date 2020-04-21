@@ -12,26 +12,30 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManagerFactory;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionRepository questionRepository;
-    private final EntityManagerFactory emf;
     private final QuestionMapper mapper;
 
     public QuestionServiceImpl(QuestionRepository questionRepository, EntityManagerFactory emf, QuestionMapper mapper) {
         this.questionRepository = questionRepository;
-        this.emf = emf;
         this.mapper = mapper;
     }
 
     @Override
     public Question saveOrUpdate(@NotNull QuestionDto questionDto) {
-        return questionRepository.findById(questionDto.getId())
-                .map(val -> emf.createEntityManager().merge(mapper.dtoToObject(questionDto, new CycleAvoidingMappingContext())))
-                .orElse(questionRepository.save(mapper.dtoToObject(questionDto, new CycleAvoidingMappingContext())));
+
+        return questionRepository.save(mapper.dtoToObject(questionDto, new CycleAvoidingMappingContext()));
+    }
+
+    @Override
+    public Optional<QuestionDto> findById(UUID uuid) {
+        return questionRepository.findById(uuid).map(val -> mapper.objectToDto(val, new CycleAvoidingMappingContext()));
     }
 
     @Override
@@ -40,6 +44,8 @@ public class QuestionServiceImpl implements QuestionService {
                 .map(question -> mapper.objectToDto(question, new CycleAvoidingMappingContext()))
                 .collect(Collectors.toList());
     }
+
+
 
     @Override
     public List<QuestionDto> findAllByMainTech(String mainTech) {

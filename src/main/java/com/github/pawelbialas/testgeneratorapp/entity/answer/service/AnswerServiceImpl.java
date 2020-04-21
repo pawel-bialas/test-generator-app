@@ -46,6 +46,11 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
+    public Optional<AnswerDto> findById(UUID uuid) {
+        return repository.findById(uuid).map(val -> mapper.objectToDto(val, new CycleAvoidingMappingContext()));
+    }
+
+    @Override
     public Optional<AnswerDto> findByAnswer(String answer) {
         return repository.findByAnswer(answer)
                 .map(val -> mapper.objectToDto(val, new CycleAvoidingMappingContext()));

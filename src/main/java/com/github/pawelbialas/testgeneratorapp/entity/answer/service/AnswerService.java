@@ -13,6 +13,8 @@ public interface AnswerService {
 
     List<AnswerDto> findAll();
 
+    Optional<AnswerDto> findById (UUID uuid);
+
     Optional<AnswerDto> findByAnswer(String answer);
 
     List<AnswerDto> findAllByQuestionId (UUID uuid);

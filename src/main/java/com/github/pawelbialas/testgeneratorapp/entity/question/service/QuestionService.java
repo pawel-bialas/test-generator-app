@@ -6,10 +6,14 @@ import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public interface QuestionService {
 
     Question saveOrUpdate(@NotNull QuestionDto questionDto);
+
+    Optional<QuestionDto> findById(UUID uuid);
 
     List<QuestionDto> findAll ();
 

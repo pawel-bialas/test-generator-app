@@ -51,7 +51,7 @@ class ResultMapperTest {
                 .id(UUID.randomUUID())
                 .createdDate(new Timestamp(System.currentTimeMillis()))
                 .lastModifiedDate(new Timestamp(System.currentTimeMillis()))
-                .score(12)
+                .score(12F)
                 .version(1L)
                 .contestant(null)
                 .skillTest(null)

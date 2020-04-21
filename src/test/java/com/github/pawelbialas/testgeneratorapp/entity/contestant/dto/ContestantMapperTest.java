@@ -74,7 +74,7 @@ class ContestantMapperTest {
 
         result = Result.builder()
                 .contestant(new Contestant())
-                .score(12)
+                .score(12F)
                 .skillTest(new SkillTest())
                 .version(1L)
                 .createdDate(Timestamp.valueOf(LocalDateTime.now()))
