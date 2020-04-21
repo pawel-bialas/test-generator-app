@@ -65,7 +65,7 @@ class ContestantServiceImplTest {
         // Given
         contestantDto.addTest(skillTestDto);
         contestantDto.addResult(resultDto);
-        Contestant save = contestantService.saveOrUpdate(contestantDto);
+        Contestant save = contestantMapper.dtoToObject(contestantService.saveOrUpdate(contestantDto), new CycleAvoidingMappingContext());
         // When
         contestantService.saveOrUpdate(contestantMapper.objectToDto(save, new CycleAvoidingMappingContext()));
         contestantService.saveOrUpdate(contestantMapper.objectToDto(save, new CycleAvoidingMappingContext()));

@@ -17,5 +17,5 @@ public interface ContestantService {
 
     Boolean confirmContestant(String contestantNumber);
 
-    Contestant saveOrUpdate(ContestantDto contestantDto);
+    ContestantDto saveOrUpdate(ContestantDto contestantDto);
 }

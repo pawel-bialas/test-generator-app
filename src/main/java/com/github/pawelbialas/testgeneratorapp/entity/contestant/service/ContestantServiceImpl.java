@@ -27,10 +27,9 @@ public class ContestantServiceImpl implements ContestantService {
     }
 
     @Override
-    public Contestant saveOrUpdate(ContestantDto contestantDto) {
-        return repository.findByContestantNumber(contestantDto.getContestantNumber())
-                .map(val -> emf.createEntityManager().merge(mapper.dtoToObject(contestantDto, new CycleAvoidingMappingContext())))
-                .orElse(repository.save(mapper.dtoToObject(contestantDto, new CycleAvoidingMappingContext())));
+    public ContestantDto saveOrUpdate(ContestantDto contestantDto) {
+        Contestant save = repository.save(mapper.dtoToObject(contestantDto, new CycleAvoidingMappingContext()));
+        return mapper.objectToDto(save, new CycleAvoidingMappingContext());
     }
 
     @Override

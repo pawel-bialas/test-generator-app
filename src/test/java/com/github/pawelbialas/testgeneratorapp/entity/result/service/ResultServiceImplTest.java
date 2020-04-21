@@ -2,6 +2,9 @@ package com.github.pawelbialas.testgeneratorapp.entity.result.service;
 
 import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerDto;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantDto;
+import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantMapper;
+import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
+import com.github.pawelbialas.testgeneratorapp.entity.contestant.repository.ContestantRepository;
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionDto;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultDto;
@@ -38,9 +41,12 @@ public class ResultServiceImplTest {
     ResultServiceImpl resultService;
     @Autowired
     SkillTestMapper testMapper;
-
+    @Autowired
+    ContestantMapper contestantMapper;
     @MockBean
-    SkillTestRepository repository;
+    SkillTestRepository skillTestRepository;
+    @MockBean
+    ContestantRepository contestantRepository;
 
     Result result;
 
@@ -53,6 +59,8 @@ public class ResultServiceImplTest {
     AnswerDto answer2;
     AnswerDto answer3;
     AnswerDto answer4;
+
+    ContestantDto contestantDto;
 
     SkillTestDto skillTest;
 
@@ -146,6 +154,16 @@ public class ResultServiceImplTest {
                 .question(null)
                 .build();
 
+        contestantDto = ContestantDto.builder()
+                .contestantNumber("1234")
+                .createdDate(OffsetDateTime.now())
+                .lastModifiedDate(OffsetDateTime.now())
+                .id(UUID.randomUUID())
+                .version(1L)
+                .results(new ArrayList<>())
+                .skillTests(new ArrayList<>())
+                .build();
+
         question1.addAnswer(answer1);
         question1.addAnswer(answer2);
 
@@ -178,15 +196,20 @@ public class ResultServiceImplTest {
     }
 
 
+
+
     @Test
     public void given_2TestsWithTheSameAnswers_Then_ShouldReturn_100() {
         // Given
         SkillTestDto otherSkillTest = skillTest;
-        when(repository.findById(skillTest.getId())).thenReturn(Optional.of(testMapper.dtoToObject(skillTest, new CycleAvoidingMappingContext())));
+
+        when(contestantRepository.findById(contestantDto.getId())).thenReturn(Optional.of(contestantMapper.dtoToObject(contestantDto, new CycleAvoidingMappingContext())));
+
+        when(skillTestRepository.findById(skillTest.getId())).thenReturn(Optional.of(testMapper.dtoToObject(skillTest, new CycleAvoidingMappingContext())));
         // When
 
-        Float score = resultService.resolveTest(UUID.randomUUID(), skillTest.getId(), otherSkillTest);
-//        Integer score = resultService.checkAnswers(skillTest, otherSkillTest);
+        Float score = resultService.resolveTest(contestantDto.getId(), skillTest.getId(), otherSkillTest);
+
         System.out.println(score);
         // Then
         assertAll(
@@ -234,10 +257,10 @@ public class ResultServiceImplTest {
 
         otherSkillTest.setQuestions(questions);
 
-        when(repository.findById(skillTest.getId())).thenReturn(Optional.of(testMapper.dtoToObject(skillTest, new CycleAvoidingMappingContext())));
-
+        when(skillTestRepository.findById(skillTest.getId())).thenReturn(Optional.of(testMapper.dtoToObject(skillTest, new CycleAvoidingMappingContext())));
+        when(contestantRepository.findById(contestantDto.getId())).thenReturn(Optional.of(contestantMapper.dtoToObject(contestantDto, new CycleAvoidingMappingContext())));
         //When
-        Float score = resultService.resolveTest(UUID.randomUUID(), skillTest.getId(), otherSkillTest);
+        Float score = resultService.resolveTest(contestantDto.getId(), skillTest.getId(), otherSkillTest);
         System.out.println(score);
         // Then
         assertAll(
@@ -267,10 +290,11 @@ public class ResultServiceImplTest {
 
         otherSkillTest.setQuestions(questions);
         //When
-        when(repository.findById(skillTest.getId())).thenReturn(Optional.of(testMapper.dtoToObject(skillTest, new CycleAvoidingMappingContext())));
+        when(contestantRepository.findById(contestantDto.getId())).thenReturn(Optional.of(contestantMapper.dtoToObject(contestantDto, new CycleAvoidingMappingContext())));
+        when(skillTestRepository.findById(skillTest.getId())).thenReturn(Optional.of(testMapper.dtoToObject(skillTest, new CycleAvoidingMappingContext())));
         //Then
         try {
-            resultService.resolveTest(UUID.randomUUID(), skillTest.getId(), otherSkillTest);
+            resultService.resolveTest(contestantDto.getId(), skillTest.getId(), otherSkillTest);
         } catch (Exception e) {
             assertThat(e).isInstanceOf(BadRequestException.class);
             assertThat(e.getMessage()).isEqualTo("ResultService: test integrity error");
@@ -295,11 +319,12 @@ public class ResultServiceImplTest {
         questions.add(otherQuestion);
         otherSkillTest.setQuestions(questions);
         //When
-        when(repository.findById(skillTest.getId())).thenReturn(Optional.of(testMapper.dtoToObject(skillTest, new CycleAvoidingMappingContext())));
+        when(contestantRepository.findById(contestantDto.getId())).thenReturn(Optional.of(contestantMapper.dtoToObject(contestantDto, new CycleAvoidingMappingContext())));
+        when(skillTestRepository.findById(skillTest.getId())).thenReturn(Optional.of(testMapper.dtoToObject(skillTest, new CycleAvoidingMappingContext())));
 
         //Then
         try {
-            resultService.resolveTest(UUID.randomUUID(), skillTest.getId(), otherSkillTest);
+            resultService.resolveTest(contestantDto.getId(), skillTest.getId(), otherSkillTest);
         } catch (Exception e) {
             assertThat(e).isInstanceOf(BadRequestException.class);
             assertThat(e.getMessage()).isEqualTo("ResultService: test integrity error");
