@@ -1,14 +1,15 @@
-package com.github.pawelbialas.testgeneratorapp.entity.question.service;
+package com.github.pawelbialas.testgeneratorapp.entity.answer.service;
 
-import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerMapperImpl;
+import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerDto;
+import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerMapper;
+import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
+import com.github.pawelbialas.testgeneratorapp.entity.answer.repository.AnswerRepository;
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionDto;
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionMapper;
-import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionMapperImpl;
-import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.entity.question.repository.QuestionRepository;
+import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.DateMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -16,39 +17,39 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.persistence.EntityManagerFactory;
-
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class QuestionServiceImplTest {
+class AnswerServiceImplTest {
+
 
     @Autowired
-    QuestionRepository repository;
-
+    AnswerRepository answerRepository;
     @Autowired
-    QuestionServiceImpl service;
-
+    QuestionRepository questionRepository;
     @Autowired
-    QuestionMapper mapper;
-
+    AnswerServiceImpl answerService;
+    @Autowired
+    QuestionServiceImpl questionService;
+    @Autowired
+    QuestionMapper questionMapper;
+    @Autowired
+    AnswerMapper answerMapper;
 
     QuestionDto question1;
     QuestionDto question2;
 
+    AnswerDto answer1;
+
     @BeforeEach
     void setUp() {
-
         question1 = QuestionDto.builder()
                 .answers(new ArrayList<>())
                 .contents("testQuestion1")
@@ -73,35 +74,40 @@ class QuestionServiceImplTest {
                 .lastModifiedDate(OffsetDateTime.now())
                 .build();
 
-        assertAll(
-                () -> assertThat(question1.getContents()).isEqualTo(question2.getContents())
-        );
+        answer1 = AnswerDto.builder()
+                .answer("test1")
+                .correct(true)
+                .version(1L)
+                .createdDate(OffsetDateTime.now())
+                .lastModifiedDate(OffsetDateTime.now())
+                .id(UUID.randomUUID())
+                .build();
+
     }
 
     @Test
-    public void callingSaveOrUpdateMultipleTimesShouldAlwaysReturnSingleEntity() {
-        // Given
-        QuestionDto savedQuestion1 = service.saveOrUpdate(question1);
-        QuestionDto savedQuestion2 = service.saveOrUpdate(question2);
+    void callingSaveOrUpdateMultipleTimesShouldAlwaysReturnSingleEntity() {
+        //Given
 
-       service.saveOrUpdate(savedQuestion1);
-       service.saveOrUpdate(savedQuestion1);
-       service.saveOrUpdate(savedQuestion1);
-       service.saveOrUpdate(savedQuestion2);
-       service.saveOrUpdate(savedQuestion2);
-       service.saveOrUpdate(savedQuestion2);
-        // When
-        Optional<QuestionDto> searchResult = service.findById(savedQuestion1.getId());
+        question1.addAnswer(answer1);
+        QuestionDto savedQuestion = questionService.saveOrUpdate(question1);
+        AnswerDto savedAnswer = savedQuestion.getAnswers().get(0);
+
+        question2.addAnswer(savedAnswer);
+        questionService.saveOrUpdate(question2);
 
 
-        List<QuestionDto> all = service.findAll();
-        // Then
+        //When
+        List<AnswerDto> answers = answerService.findAll();
+
+
+
+        //Then
+
         assertAll(
-                () -> assertThat(searchResult.isPresent()),
-                () -> assertThat(searchResult.get().getId()).isEqualTo(savedQuestion1.getId()),
-                () -> assertThat(all.size()).isEqualTo(2),
-                () -> assertThat(all.get(0)).isEqualTo(savedQuestion1),
-                () -> assertThat(all.get(1)).isEqualTo(savedQuestion2)
+                () -> assertThat(answers.size()).isEqualTo(1),
+                () -> assertThat(answers.get(0).getId()).isEqualTo(savedAnswer.getId()),
+                () -> assertThat(question1.getAnswers().size()).isEqualTo(1)
         );
     }
 }

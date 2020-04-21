@@ -38,9 +38,8 @@ public class AnswerDto extends BaseItem {
     public String toString() {
         return "AnswerDto{" +
                 "id='" + this.getId() + '\'' +
-                "answer='" + answer + '\'' +
-                ", correct=" + correct +
-                ", question_id=" + question.getId() +
+                "answer='" + this.getAnswer() + '\'' +
+                ", correct=" + this.getCorrect() +
                 '}';
     }
 }

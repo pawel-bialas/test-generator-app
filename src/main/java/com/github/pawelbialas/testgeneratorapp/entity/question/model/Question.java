@@ -23,7 +23,7 @@ public class Question extends BaseEntity {
     private java.lang.String specificTech;
     @Enumerated
     private SkillLevel skillLevel;
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Answer> answers = new ArrayList<>();
 
     @Builder

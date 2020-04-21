@@ -21,8 +21,8 @@ public class Answer extends BaseEntity {
     private String answer;
     @Column(nullable = false)
     private Boolean correct;
-    @ManyToOne (fetch = FetchType.LAZY)
-    @JoinColumn(name = "question_id", insertable = false, updatable = false)
+    @ManyToOne //(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_id")
     private Question question;
 
     @Builder

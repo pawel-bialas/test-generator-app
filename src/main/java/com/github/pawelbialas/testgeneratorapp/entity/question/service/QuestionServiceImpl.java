@@ -28,9 +28,9 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Question saveOrUpdate(@NotNull QuestionDto questionDto) {
-
-        return questionRepository.save(mapper.dtoToObject(questionDto, new CycleAvoidingMappingContext()));
+    public QuestionDto saveOrUpdate(@NotNull QuestionDto questionDto) {
+        Question save = questionRepository.save(mapper.dtoToObject(questionDto, new CycleAvoidingMappingContext()));
+        return mapper.objectToDto(save, new CycleAvoidingMappingContext());
     }
 
     @Override

@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public interface QuestionService {
 
-    Question saveOrUpdate(@NotNull QuestionDto questionDto);
+    QuestionDto saveOrUpdate(@NotNull QuestionDto questionDto);
 
     Optional<QuestionDto> findById(UUID uuid);
 
