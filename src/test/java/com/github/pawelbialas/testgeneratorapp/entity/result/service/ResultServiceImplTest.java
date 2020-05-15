@@ -336,9 +336,29 @@ public class ResultServiceImplTest {
     public void callingSaveOrUpdateMultipleTimesShouldAlwaysReturnSingleEntity() {
         // Given
 
+        ResultDto resultDto = ResultDto.builder()
+                .version(1L)
+                .createdDate(OffsetDateTime.now())
+                .lastModifiedDate(OffsetDateTime.now())
+                .score(12F)
+                .build();
         // When
 
+        ResultDto save = resultService.saveOrUpdate(resultDto);
+
+        resultService.saveOrUpdate(save);
+        resultService.saveOrUpdate(save);
+        resultService.saveOrUpdate(save);
+        resultService.saveOrUpdate(save);
+        resultService.saveOrUpdate(save);
+
+        List<ResultDto> all = resultService.findAll();
         // Then
+
+        assertAll(
+                ()-> assertThat(all.size()).isEqualTo(1),
+                () -> assertThat(all.get(0).getId()).isEqualTo(save.getId())
+        );
 
     }
 }

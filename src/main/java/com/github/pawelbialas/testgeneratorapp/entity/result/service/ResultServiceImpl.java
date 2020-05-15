@@ -41,6 +41,12 @@ public class ResultServiceImpl implements ResultService {
 
 
     @Override
+    public ResultDto saveOrUpdate(ResultDto resultDto) {
+        Result save = repository.save(mapper.dtoToObject(resultDto, new CycleAvoidingMappingContext()));
+        return mapper.objectToDto(save, new CycleAvoidingMappingContext());
+    }
+
+    @Override
     public Optional<ResultDto> findById(UUID uuid) {
         return Optional.of(mapper.objectToDto(repository.getOne(uuid), new CycleAvoidingMappingContext()));
 

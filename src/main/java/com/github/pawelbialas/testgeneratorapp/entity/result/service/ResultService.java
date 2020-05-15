@@ -10,6 +10,8 @@ import java.util.UUID;
 public interface ResultService {
 
 
+    ResultDto saveOrUpdate (ResultDto resultDto);
+
     Optional<ResultDto> findById (UUID uuid);
 
     List<ResultDto> findAll();
