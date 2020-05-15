@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContextProvider.contextProvider;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -65,12 +66,12 @@ class ContestantServiceImplTest {
         // Given
         contestantDto.addTest(skillTestDto);
         contestantDto.addResult(resultDto);
-        Contestant save = contestantMapper.dtoToObject(contestantService.saveOrUpdate(contestantDto), new CycleAvoidingMappingContext());
+        Contestant save = contestantMapper.dtoToObject(contestantService.saveOrUpdate(contestantDto), contextProvider());
         // When
-        contestantService.saveOrUpdate(contestantMapper.objectToDto(save, new CycleAvoidingMappingContext()));
-        contestantService.saveOrUpdate(contestantMapper.objectToDto(save, new CycleAvoidingMappingContext()));
-        contestantService.saveOrUpdate(contestantMapper.objectToDto(save, new CycleAvoidingMappingContext()));
-        contestantService.saveOrUpdate(contestantMapper.objectToDto(save, new CycleAvoidingMappingContext()));
+        contestantService.saveOrUpdate(contestantMapper.objectToDto(save, contextProvider()));
+        contestantService.saveOrUpdate(contestantMapper.objectToDto(save, contextProvider()));
+        contestantService.saveOrUpdate(contestantMapper.objectToDto(save, contextProvider()));
+        contestantService.saveOrUpdate(contestantMapper.objectToDto(save, contextProvider()));
 
         List<ContestantDto> all = contestantService.findAll();
         // Then

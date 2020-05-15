@@ -22,6 +22,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import static com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContextProvider.contextProvider;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -90,7 +91,7 @@ class ResultMapperTest {
     @Test
     void objectToDto() {
 
-        ResultDto resultDto = resultMapper.objectToDto(result, new CycleAvoidingMappingContext());
+        ResultDto resultDto = resultMapper.objectToDto(result, contextProvider());
 
         assertAll(
                 () -> assertThat(resultDto.getId()).isEqualTo(result.getId())

@@ -13,6 +13,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContextProvider.contextProvider;
+
 @Service
 public class ContestantServiceImpl implements ContestantService {
 
@@ -28,28 +30,28 @@ public class ContestantServiceImpl implements ContestantService {
 
     @Override
     public ContestantDto saveOrUpdate(ContestantDto contestantDto) {
-        Contestant save = repository.save(mapper.dtoToObject(contestantDto, new CycleAvoidingMappingContext()));
-        return mapper.objectToDto(save, new CycleAvoidingMappingContext());
+        Contestant save = repository.save(mapper.dtoToObject(contestantDto, contextProvider()));
+        return mapper.objectToDto(save, contextProvider());
     }
 
     @Override
     public List<ContestantDto> findAll() {
         return repository.findAll().stream()
-                .map(val -> mapper.objectToDto(val, new CycleAvoidingMappingContext()))
+                .map(val -> mapper.objectToDto(val, contextProvider()))
                 .collect(Collectors.toList());
     }
 
     @Override
     public Optional<ContestantDto> findContestantByNumber(String contestantNumber) {
         return repository.findByContestantNumber(contestantNumber)
-                .map(contestant -> mapper.objectToDto(contestant, new CycleAvoidingMappingContext()));
+                .map(contestant -> mapper.objectToDto(contestant, contextProvider()));
 
 
     }
 
     public Optional<ContestantDto> findById (UUID id) {
         return repository.findById(id)
-                .map(contestant -> mapper.objectToDto(contestant, new CycleAvoidingMappingContext()));
+                .map(contestant -> mapper.objectToDto(contestant, contextProvider()));
     }
 
     @Override

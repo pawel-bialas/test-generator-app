@@ -11,6 +11,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.result.repository.ResultRe
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.service.SkillTestServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
+import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContextProvider;
 import com.github.pawelbialas.testgeneratorapp.shared.exception.BadRequestException;
 import com.github.pawelbialas.testgeneratorapp.shared.exception.NotFoundException;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import static com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContextProvider.contextProvider;
 
 @Service
 public class ResultServiceImpl implements ResultService {
@@ -42,27 +45,27 @@ public class ResultServiceImpl implements ResultService {
 
     @Override
     public ResultDto saveOrUpdate(ResultDto resultDto) {
-        Result save = repository.save(mapper.dtoToObject(resultDto, new CycleAvoidingMappingContext()));
-        return mapper.objectToDto(save, new CycleAvoidingMappingContext());
+        Result save = repository.save(mapper.dtoToObject(resultDto, CycleAvoidingMappingContextProvider.contextProvider()));
+        return mapper.objectToDto(save, contextProvider());
     }
 
     @Override
     public Optional<ResultDto> findById(UUID uuid) {
-        return Optional.of(mapper.objectToDto(repository.getOne(uuid), new CycleAvoidingMappingContext()));
+        return Optional.of(mapper.objectToDto(repository.getOne(uuid), contextProvider()));
 
     }
 
     @Override
     public List<ResultDto> findAll() {
         return repository.findAll().stream()
-                .map(val -> mapper.objectToDto(val, new CycleAvoidingMappingContext()))
+                .map(val -> mapper.objectToDto(val, contextProvider()))
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<ResultDto> findAllByContestantIdOrContestantNumber(UUID contestantId, String contestantNumber) {
         return repository.findAllByContestant_IdOrContestant_ContestantNumber(contestantId, contestantNumber).stream()
-                .map(val -> mapper.objectToDto(val, new CycleAvoidingMappingContext()))
+                .map(val -> mapper.objectToDto(val, contextProvider()))
                 .collect(Collectors.toList());
     }
 

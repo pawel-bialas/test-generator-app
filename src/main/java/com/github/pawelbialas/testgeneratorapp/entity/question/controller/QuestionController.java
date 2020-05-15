@@ -26,7 +26,8 @@ public class QuestionController {
     @ResponseStatus(HttpStatus.OK)
     private void updateQuestion (@RequestBody QuestionDto questionDto) {
         questionServiceImpl.findById(questionDto.getId())
-                .ifPresentOrElse(questionServiceImpl::saveOrUpdate,() -> {
+                .ifPresentOrElse(questionServiceImpl::saveOrUpdate,
+                        () -> {
                     throw new NotFoundException("Question not found");
                 });
     }

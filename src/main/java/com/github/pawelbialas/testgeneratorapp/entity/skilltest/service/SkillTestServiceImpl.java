@@ -13,16 +13,16 @@ import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestParameter;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestStatus;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
 import com.github.pawelbialas.testgeneratorapp.shared.exception.BadRequestException;
 import com.github.pawelbialas.testgeneratorapp.shared.exception.InternalServerErrorException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManagerFactory;
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContextProvider.contextProvider;
 
 @Service
 public class SkillTestServiceImpl implements SkillTestService {
@@ -53,28 +53,28 @@ public class SkillTestServiceImpl implements SkillTestService {
 
     @Override
     public SkillTestDto saveOrUpdate(@NotNull SkillTestDto skillTestDto) {
-        SkillTest save = skillTestRepository.save(testMapper.dtoToObject(skillTestDto, new CycleAvoidingMappingContext()));
-        return testMapper.objectToDto(save, new CycleAvoidingMappingContext());
+        SkillTest save = skillTestRepository.save(testMapper.dtoToObject(skillTestDto, contextProvider()));
+        return testMapper.objectToDto(save, contextProvider());
     }
 
     @Override
     public List<SkillTestDto> findAll() {
         return skillTestRepository.findAll().stream()
-                .map(val -> testMapper.objectToDto(val, new CycleAvoidingMappingContext()))
+                .map(val -> testMapper.objectToDto(val, contextProvider()))
                 .collect(Collectors.toList());
     }
 
     public Optional<SkillTestDto> findTestByUUID(UUID testUUID) {
         return skillTestRepository.findById(testUUID)
-                .map(skillTest -> testMapper.objectToDto(skillTest, new CycleAvoidingMappingContext()));
+                .map(skillTest -> testMapper.objectToDto(skillTest, contextProvider()));
 
     }
 
     @Override
     public List<SkillTestDto> findAllByContestant(ContestantDto contestant) {
-        return skillTestRepository.findAllByContestant(contestantMapper.dtoToObject(contestant, new CycleAvoidingMappingContext()))
+        return skillTestRepository.findAllByContestant(contestantMapper.dtoToObject(contestant, contextProvider()))
                 .stream()
-                .map(val -> testMapper.objectToDto(val, new CycleAvoidingMappingContext()))
+                .map(val -> testMapper.objectToDto(val, contextProvider()))
                 .collect(Collectors.toList());
     }
 
@@ -83,7 +83,7 @@ public class SkillTestServiceImpl implements SkillTestService {
 
         return skillTestRepository.findByContestant_ContestantNumber(contestantNumber)
                 .stream()
-                .map(skillTest -> testMapper.objectToDto(skillTest, new CycleAvoidingMappingContext()))
+                .map(skillTest -> testMapper.objectToDto(skillTest, contextProvider()))
                 .collect(Collectors.toList());
 
     }
@@ -98,8 +98,8 @@ public class SkillTestServiceImpl implements SkillTestService {
         if (contestantDto == null) {
             throw new InternalServerErrorException("Something went wrong ... Server side problem");
         }
-        SkillTest skillTest = skillTestRepository.save(testMapper.dtoToObject(generateTest(contestantDto, testParams), new CycleAvoidingMappingContext()));
-        return testMapper.objectToDto(skillTest, new CycleAvoidingMappingContext());
+        SkillTest skillTest = skillTestRepository.save(testMapper.dtoToObject(generateTest(contestantDto, testParams), contextProvider()));
+        return testMapper.objectToDto(skillTest, contextProvider());
     }
 
     private SkillTestDto generateTest(ContestantDto contestant, List<TestParameter> testParams) {

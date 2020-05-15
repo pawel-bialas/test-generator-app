@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import static com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContextProvider.contextProvider;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -81,12 +82,12 @@ class AnswerMapperTest {
 
         //When
 
-        AnswerDto answerDto = answerMapper.objectToDto(testAnswer, new CycleAvoidingMappingContext());
-        QuestionDto questionDto = questionMapper.objectToDto(testQuestion, new CycleAvoidingMappingContext());
+        AnswerDto answerDto = answerMapper.objectToDto(testAnswer, contextProvider());
+        QuestionDto questionDto = questionMapper.objectToDto(testQuestion, contextProvider());
         questionDto.addAnswer(answerDto);
 
-        Answer mappedAnswer = answerMapper.dtoToObject(answerDto, new CycleAvoidingMappingContext());
-        Question mappedQuestion = questionMapper.dtoToObject(questionDto, new CycleAvoidingMappingContext());
+        Answer mappedAnswer = answerMapper.dtoToObject(answerDto, contextProvider());
+        Question mappedQuestion = questionMapper.dtoToObject(questionDto, contextProvider());
         mappedQuestion.addAnswer(mappedAnswer);
         //Then
 
@@ -103,8 +104,8 @@ class AnswerMapperTest {
     void objectToDto() {
 
         //When
-        AnswerDto answerDto = answerMapper.objectToDto(testAnswer, new CycleAvoidingMappingContext());
-        QuestionDto questionDto = questionMapper.objectToDto(testQuestion, new CycleAvoidingMappingContext());
+        AnswerDto answerDto = answerMapper.objectToDto(testAnswer, contextProvider());
+        QuestionDto questionDto = questionMapper.objectToDto(testQuestion, contextProvider());
 
         questionDto.addAnswer(answerDto);
 

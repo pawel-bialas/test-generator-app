@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import static com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContextProvider.contextProvider;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -80,13 +81,13 @@ class QuestionMapperTest {
     @Test
     void dtoToObject() {
         //When
-        QuestionDto questionDto = questionMapper.objectToDto(question, new CycleAvoidingMappingContext());
+        QuestionDto questionDto = questionMapper.objectToDto(question, contextProvider());
         assertAll(
                 () -> assertThat(questionDto.getAnswers().size()).isEqualTo(2),
                 () -> assertThat(questionDto.getId()).isEqualTo(question.getId()),
                 () -> assertThat(questionDto.getAnswers().get(0).getAnswer()).isEqualTo(answer1.getAnswer())
         );
-        Question result = questionMapper.dtoToObject(questionDto, new CycleAvoidingMappingContext());
+        Question result = questionMapper.dtoToObject(questionDto, contextProvider());
 
         assertAll(
                 () -> assertThat(result.getId()).isEqualTo(questionDto.getId()),
@@ -98,7 +99,7 @@ class QuestionMapperTest {
     @Test
     void objectToDto() {
         //When
-        QuestionDto questionDto = questionMapper.objectToDto(question, new CycleAvoidingMappingContext());
+        QuestionDto questionDto = questionMapper.objectToDto(question, contextProvider());
         System.out.println(questionDto);
         //Then
         assertAll(

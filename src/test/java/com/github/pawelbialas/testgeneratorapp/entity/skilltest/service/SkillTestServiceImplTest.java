@@ -1,11 +1,5 @@
 package com.github.pawelbialas.testgeneratorapp.entity.skilltest.service;
 
-import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantDto;
-import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
-import com.github.pawelbialas.testgeneratorapp.entity.contestant.service.ContestantServiceImpl;
-import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionDto;
-import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
-import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultDto;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +11,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;

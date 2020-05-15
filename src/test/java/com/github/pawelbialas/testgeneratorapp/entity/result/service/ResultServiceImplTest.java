@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContextProvider.contextProvider;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.Mockito.when;
@@ -203,9 +204,9 @@ public class ResultServiceImplTest {
         // Given
         SkillTestDto otherSkillTest = skillTest;
 
-        when(contestantRepository.findById(contestantDto.getId())).thenReturn(Optional.of(contestantMapper.dtoToObject(contestantDto, new CycleAvoidingMappingContext())));
+        when(contestantRepository.findById(contestantDto.getId())).thenReturn(Optional.of(contestantMapper.dtoToObject(contestantDto, contextProvider())));
 
-        when(skillTestRepository.findById(skillTest.getId())).thenReturn(Optional.of(testMapper.dtoToObject(skillTest, new CycleAvoidingMappingContext())));
+        when(skillTestRepository.findById(skillTest.getId())).thenReturn(Optional.of(testMapper.dtoToObject(skillTest, contextProvider())));
         // When
 
         Float score = resultService.resolveTest(contestantDto.getId(), skillTest.getId(), otherSkillTest);
@@ -257,8 +258,8 @@ public class ResultServiceImplTest {
 
         otherSkillTest.setQuestions(questions);
 
-        when(skillTestRepository.findById(skillTest.getId())).thenReturn(Optional.of(testMapper.dtoToObject(skillTest, new CycleAvoidingMappingContext())));
-        when(contestantRepository.findById(contestantDto.getId())).thenReturn(Optional.of(contestantMapper.dtoToObject(contestantDto, new CycleAvoidingMappingContext())));
+        when(skillTestRepository.findById(skillTest.getId())).thenReturn(Optional.of(testMapper.dtoToObject(skillTest, contextProvider())));
+        when(contestantRepository.findById(contestantDto.getId())).thenReturn(Optional.of(contestantMapper.dtoToObject(contestantDto, contextProvider())));
         //When
         Float score = resultService.resolveTest(contestantDto.getId(), skillTest.getId(), otherSkillTest);
         System.out.println(score);
@@ -290,8 +291,8 @@ public class ResultServiceImplTest {
 
         otherSkillTest.setQuestions(questions);
         //When
-        when(contestantRepository.findById(contestantDto.getId())).thenReturn(Optional.of(contestantMapper.dtoToObject(contestantDto, new CycleAvoidingMappingContext())));
-        when(skillTestRepository.findById(skillTest.getId())).thenReturn(Optional.of(testMapper.dtoToObject(skillTest, new CycleAvoidingMappingContext())));
+        when(contestantRepository.findById(contestantDto.getId())).thenReturn(Optional.of(contestantMapper.dtoToObject(contestantDto, contextProvider())));
+        when(skillTestRepository.findById(skillTest.getId())).thenReturn(Optional.of(testMapper.dtoToObject(skillTest, contextProvider())));
         //Then
         try {
             resultService.resolveTest(contestantDto.getId(), skillTest.getId(), otherSkillTest);
@@ -319,8 +320,8 @@ public class ResultServiceImplTest {
         questions.add(otherQuestion);
         otherSkillTest.setQuestions(questions);
         //When
-        when(contestantRepository.findById(contestantDto.getId())).thenReturn(Optional.of(contestantMapper.dtoToObject(contestantDto, new CycleAvoidingMappingContext())));
-        when(skillTestRepository.findById(skillTest.getId())).thenReturn(Optional.of(testMapper.dtoToObject(skillTest, new CycleAvoidingMappingContext())));
+        when(contestantRepository.findById(contestantDto.getId())).thenReturn(Optional.of(contestantMapper.dtoToObject(contestantDto, contextProvider())));
+        when(skillTestRepository.findById(skillTest.getId())).thenReturn(Optional.of(testMapper.dtoToObject(skillTest, contextProvider())));
 
         //Then
         try {

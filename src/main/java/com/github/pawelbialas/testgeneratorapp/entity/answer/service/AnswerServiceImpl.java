@@ -14,6 +14,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContextProvider.contextProvider;
+
 @Service
 public class AnswerServiceImpl implements AnswerService {
 
@@ -33,33 +35,33 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     public Answer saveOrUpdate(@NotNull AnswerDto answerDto) {
         return repository.findById(answerDto.getId())
-                .map(val -> emf.createEntityManager().merge(mapper.dtoToObject(answerDto, new CycleAvoidingMappingContext())))
-                .orElse(repository.save(mapper.dtoToObject(answerDto, new CycleAvoidingMappingContext())));
+                .map(val -> emf.createEntityManager().merge(mapper.dtoToObject(answerDto, contextProvider())))
+                .orElse(repository.save(mapper.dtoToObject(answerDto, contextProvider())));
     }
 
 
     @Override
     public List<AnswerDto> findAll() {
         return repository.findAll().stream()
-                .map(val -> mapper.objectToDto(val, new CycleAvoidingMappingContext()))
+                .map(val -> mapper.objectToDto(val, contextProvider()))
                 .collect(Collectors.toList());
     }
 
     @Override
     public Optional<AnswerDto> findById(UUID uuid) {
-        return repository.findById(uuid).map(val -> mapper.objectToDto(val, new CycleAvoidingMappingContext()));
+        return repository.findById(uuid).map(val -> mapper.objectToDto(val, contextProvider()));
     }
 
     @Override
     public Optional<AnswerDto> findByAnswer(String answer) {
         return repository.findByAnswer(answer)
-                .map(val -> mapper.objectToDto(val, new CycleAvoidingMappingContext()));
+                .map(val -> mapper.objectToDto(val, contextProvider()));
     }
 
     @Override
     public List<AnswerDto> findAllByQuestionId(UUID uuid) {
         return repository.findAllByQuestionId(uuid).stream()
-                .map(val -> mapper.objectToDto(val, new CycleAvoidingMappingContext()))
+                .map(val -> mapper.objectToDto(val, contextProvider()))
                 .collect(Collectors.toList());
     }
 

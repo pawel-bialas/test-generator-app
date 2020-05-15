@@ -27,6 +27,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import static com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContextProvider.contextProvider;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -100,11 +101,11 @@ class ContestantMapperTest {
         //When
         contestant.addTest(skillTest);
         contestant.addResult(result);
-        ContestantDto contestantDto = contestantMapper.objectToDto(contestant, new CycleAvoidingMappingContext());
+        ContestantDto contestantDto = contestantMapper.objectToDto(contestant, contextProvider());
         contestantDto.setSkillTests(new ArrayList<SkillTestDto>());
-        contestantDto.addTest(skillTestMapper.objectToDto(contestant.getSkillTests().get(contestant.getSkillTests().size()-1), new CycleAvoidingMappingContext()));
+        contestantDto.addTest(skillTestMapper.objectToDto(contestant.getSkillTests().get(contestant.getSkillTests().size() - 1), contextProvider()));
         contestantDto.setResults(new ArrayList<ResultDto>());
-        contestantDto.addResult(resultMapper.objectToDto(contestant.getResults().get(contestant.getResults().size()-1), new CycleAvoidingMappingContext()));
+        contestantDto.addResult(resultMapper.objectToDto(contestant.getResults().get(contestant.getResults().size() - 1), contextProvider()));
 
         //Then
 
@@ -112,7 +113,7 @@ class ContestantMapperTest {
                 () -> assertThat(contestantDto.getId()).isEqualTo(contestant.getId()),
                 () -> assertThat(contestantDto.getContestantNumber()).isEqualTo("1234"),
                 () -> assertThat(contestantDto.getSkillTests().size()).isEqualTo(1),
-                () -> assertThat(contestantDto.getSkillTests().get(0).getId()).isEqualTo(skillTestMapper.objectToDto(skillTest, new CycleAvoidingMappingContext()).getId())
+                () -> assertThat(contestantDto.getSkillTests().get(0).getId()).isEqualTo(skillTestMapper.objectToDto(skillTest, contextProvider()).getId())
         );
 
 

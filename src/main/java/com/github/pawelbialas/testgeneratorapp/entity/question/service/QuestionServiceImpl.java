@@ -16,6 +16,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContextProvider.contextProvider;
+
 @Service
 public class QuestionServiceImpl implements QuestionService {
 
@@ -29,19 +31,19 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public QuestionDto saveOrUpdate(@NotNull QuestionDto questionDto) {
-        Question save = questionRepository.save(mapper.dtoToObject(questionDto, new CycleAvoidingMappingContext()));
-        return mapper.objectToDto(save, new CycleAvoidingMappingContext());
+        Question save = questionRepository.save(mapper.dtoToObject(questionDto, contextProvider()));
+        return mapper.objectToDto(save, contextProvider());
     }
 
     @Override
     public Optional<QuestionDto> findById(UUID uuid) {
-        return questionRepository.findById(uuid).map(val -> mapper.objectToDto(val, new CycleAvoidingMappingContext()));
+        return questionRepository.findById(uuid).map(val -> mapper.objectToDto(val, contextProvider()));
     }
 
     @Override
     public List<QuestionDto> findAll() {
         return questionRepository.findAll().stream()
-                .map(question -> mapper.objectToDto(question, new CycleAvoidingMappingContext()))
+                .map(question -> mapper.objectToDto(question, contextProvider()))
                 .collect(Collectors.toList());
     }
 
@@ -51,7 +53,7 @@ public class QuestionServiceImpl implements QuestionService {
     public List<QuestionDto> findAllByMainTech(String mainTech) {
         return questionRepository.findAllByMainTech(mainTech).stream()
                 .filter(question -> question.getMainTech().equals(mainTech))
-                .map(question -> mapper.objectToDto(question, new CycleAvoidingMappingContext()))
+                .map(question -> mapper.objectToDto(question, contextProvider()))
                 .collect(Collectors.toList());
     }
 
@@ -59,7 +61,7 @@ public class QuestionServiceImpl implements QuestionService {
     public List<QuestionDto> findAllByMainTechAndSpecificTech(String mainTech, java.lang.String specificTech) {
         return questionRepository.findAllByMainTechAndSpecificTech(mainTech, specificTech)
                 .stream()
-                .map(question -> mapper.objectToDto(question, new CycleAvoidingMappingContext()))
+                .map(question -> mapper.objectToDto(question, contextProvider()))
                 .collect(Collectors.toList());
     }
 
@@ -67,7 +69,7 @@ public class QuestionServiceImpl implements QuestionService {
     public List<QuestionDto> findAllByMainTechAndSkillLevel(String mainTech, SkillLevel skillLevel) {
         return questionRepository.findAllByMainTechAndSkillLevel(mainTech, skillLevel)
                 .stream()
-                .map(question -> mapper.objectToDto(question, new CycleAvoidingMappingContext()))
+                .map(question -> mapper.objectToDto(question, contextProvider()))
                 .collect(Collectors.toList());
     }
 
@@ -75,7 +77,7 @@ public class QuestionServiceImpl implements QuestionService {
     public List<QuestionDto> findAllByMainTechAndSkillLevelAndSpecificTech(String mainTech, java.lang.String specificTech, SkillLevel skillLevel) {
         return questionRepository.findAllByMainTechAndSkillLevelAndSpecificTech(mainTech, skillLevel, specificTech)
                 .stream()
-                .map(question -> mapper.objectToDto(question, new CycleAvoidingMappingContext()))
+                .map(question -> mapper.objectToDto(question, contextProvider()))
                 .collect(Collectors.toList());
     }
 
