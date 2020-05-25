@@ -15,18 +15,19 @@ import java.util.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "skill_tests")
+@Builder
 @Entity
 public class SkillTest extends BaseEntity {
 
 
-    @ManyToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    // MOD (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany
     private List<Question> questions = new ArrayList<>();
     @ManyToOne
     private Contestant contestant;
     @OneToOne(mappedBy = "skillTest")
     private Result result;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private TestStatus testStatus;
 
     @Builder

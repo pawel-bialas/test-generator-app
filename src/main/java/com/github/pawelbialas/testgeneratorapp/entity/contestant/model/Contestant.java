@@ -19,17 +19,18 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "contestants")
 @Entity
 public class Contestant extends BaseEntity {
 
     @Column(updatable = false, nullable = false)
     private String contestantNumber;
+    //MOD
     @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(mappedBy = "contestant", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "contestant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SkillTest> skillTests = new ArrayList<>();
+    //MOD
     @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(mappedBy = "contestant", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "contestant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Result> results = new ArrayList<>();
 
 

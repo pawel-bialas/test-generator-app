@@ -14,7 +14,6 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "questions")
 @Entity
 public class Question extends BaseEntity {
 
@@ -23,7 +22,8 @@ public class Question extends BaseEntity {
     private java.lang.String specificTech;
     @Enumerated
     private SkillLevel skillLevel;
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    //MOD cascade = CascadeType.ALL, orphanRemoval = true
+    @OneToMany(mappedBy = "question")
     private List<Answer> answers = new ArrayList<>();
 
     @Builder

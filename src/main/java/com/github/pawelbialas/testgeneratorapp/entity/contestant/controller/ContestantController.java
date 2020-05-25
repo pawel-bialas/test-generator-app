@@ -10,6 +10,9 @@ public class ContestantController {
     private final ContestantServiceImpl contestantService;
 
     public ContestantController(ContestantServiceImpl contestantService) {
+
         this.contestantService = contestantService;
     }
+
+
 }

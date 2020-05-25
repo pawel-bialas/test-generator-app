@@ -18,9 +18,9 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = false)
 public class ContestantDto extends BaseItem {
 
-    public String contestantNumber;
-    public List<SkillTestDto> skillTests = new ArrayList<>();
-    public List<ResultDto> results = new ArrayList<>();
+    private String contestantNumber;
+    private List<SkillTestDto> skillTests = new ArrayList<>();
+    private List<ResultDto> results = new ArrayList<>();
 
     @Builder
     public ContestantDto (UUID id,

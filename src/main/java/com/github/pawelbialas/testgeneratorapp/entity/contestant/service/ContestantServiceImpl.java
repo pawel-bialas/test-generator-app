@@ -8,6 +8,7 @@ import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMa
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManagerFactory;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,6 +31,10 @@ public class ContestantServiceImpl implements ContestantService {
 
     @Override
     public ContestantDto saveOrUpdate(ContestantDto contestantDto) {
+        if (!confirmContestant(contestantDto.getContestantNumber())) {
+            contestantDto.setResults(new ArrayList<>());
+            contestantDto.setSkillTests(new ArrayList<>());
+        }
         Contestant save = repository.save(mapper.dtoToObject(contestantDto, contextProvider()));
         return mapper.objectToDto(save, contextProvider());
     }

@@ -13,7 +13,6 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "answers")
 @Entity
 public class Answer extends BaseEntity {
 
@@ -21,7 +20,7 @@ public class Answer extends BaseEntity {
     private String answer;
     @Column(nullable = false)
     private Boolean correct;
-    @ManyToOne //(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "question_id")
     private Question question;
 

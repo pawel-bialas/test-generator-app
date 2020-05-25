@@ -16,7 +16,6 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "results")
 @Entity
 public class Result extends BaseEntity {
 
@@ -35,10 +34,6 @@ public class Result extends BaseEntity {
         this.skillTest = skillTest;
         this.contestant = contestant;
     }
-
-//    @JsonPOJOBuilder(withPrefix = "")
-//    public static final class ResultBuilder {
-//    }
 
     @Override
     public String toString() {
