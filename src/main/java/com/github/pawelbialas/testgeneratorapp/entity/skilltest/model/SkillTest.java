@@ -16,6 +16,14 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@NamedEntityGraphs({
+        @NamedEntityGraph(name = "fullJoins", attributeNodes = {
+                @NamedAttributeNode("questions"),
+                @NamedAttributeNode("contestant"),
+                @NamedAttributeNode("result")
+
+        })
+})
 public class SkillTest extends BaseEntity {
 
 
