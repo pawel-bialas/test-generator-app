@@ -8,6 +8,7 @@ import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMa
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManagerFactory;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

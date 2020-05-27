@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
@@ -43,6 +44,7 @@ public class BaseEntity implements Serializable {
 
     @CreationTimestamp
     @Column(updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
     @UpdateTimestamp

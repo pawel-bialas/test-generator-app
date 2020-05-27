@@ -25,12 +25,12 @@ public class Contestant extends BaseEntity {
     @Column(updatable = false, nullable = false)
     private String contestantNumber;
     //MOD
+    @OneToMany(mappedBy = "contestant", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(mappedBy = "contestant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SkillTest> skillTests = new ArrayList<>();
     //MOD
+    @OneToMany(mappedBy = "contestant", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(mappedBy = "contestant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Result> results = new ArrayList<>();
 
 

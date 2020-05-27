@@ -52,23 +52,17 @@ class QuestionServiceImplTest {
         question1 = QuestionDto.builder()
                 .answers(new ArrayList<>())
                 .contents("testQuestion1")
-                .version(1L)
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
                 .mainTech("Java")
-                .createdDate(OffsetDateTime.now())
-                .lastModifiedDate(OffsetDateTime.now())
                 .build();
 
         question2 = QuestionDto.builder()
                 .answers(new ArrayList<>())
                 .contents("testQuestion1")
-                .version(1L)
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
                 .mainTech("Java")
-                .createdDate(OffsetDateTime.now())
-                .lastModifiedDate(OffsetDateTime.now())
                 .build();
 
         assertAll(

@@ -42,7 +42,6 @@ class QuestionMapperTest {
                 .contents("test123")
                 .answers(new ArrayList<Answer>())
                 .id(UUID.randomUUID())
-                .version(1L)
                 .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                 .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
                 .mainTech("Java")
@@ -52,7 +51,6 @@ class QuestionMapperTest {
 
         answer1 = Answer.builder()
                 .id(UUID.randomUUID())
-                .version(1L)
                 .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                 .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
                 .correct(true)
@@ -61,7 +59,6 @@ class QuestionMapperTest {
 
         answer2 = Answer.builder()
                 .id(UUID.randomUUID())
-                .version(1L)
                 .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                 .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
                 .correct(true)

@@ -52,7 +52,7 @@ public class SkillTestServiceImpl implements SkillTestService {
 
 
     @Override
-    public SkillTestDto saveOrUpdate(@NotNull SkillTestDto skillTestDto) {
+    public SkillTestDto saveOrUpdate(SkillTestDto skillTestDto) {
         SkillTest save = skillTestRepository.save(testMapper.dtoToObject(skillTestDto, contextProvider()));
         return testMapper.objectToDto(save, contextProvider());
     }

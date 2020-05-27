@@ -43,7 +43,6 @@ class ContestantServiceImplTest {
                 .contestantNumber("1234")
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
-                .version(1L)
                 .results(new ArrayList<>())
                 .skillTests(new ArrayList<>())
                 .build();
@@ -52,7 +51,6 @@ class ContestantServiceImplTest {
                 .questions(new ArrayList<>())
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
-                .version(1L)
                 .build();
 
         resultDto = ResultDto.builder()

@@ -57,7 +57,6 @@ class ContestantMapperTest {
                 .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                 .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
                 .id(UUID.randomUUID())
-                .version(1L)
                 .results(new ArrayList<Result>())
                 .skillTests(new ArrayList<SkillTest>())
                 .build();
@@ -67,7 +66,6 @@ class ContestantMapperTest {
                 .questions(new ArrayList<Question>())
                 .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                 .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
-                .version(1L)
                 .id(UUID.randomUUID())
                 .result(new Result())
                 .contestant(new Contestant())
@@ -77,7 +75,6 @@ class ContestantMapperTest {
                 .contestant(new Contestant())
                 .score(12F)
                 .skillTest(new SkillTest())
-                .version(1L)
                 .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                 .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
                 .id(UUID.randomUUID())

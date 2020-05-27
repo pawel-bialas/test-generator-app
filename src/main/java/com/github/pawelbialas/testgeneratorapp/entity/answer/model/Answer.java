@@ -3,6 +3,8 @@ package com.github.pawelbialas.testgeneratorapp.entity.answer.model;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.model.BaseEntity;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -20,8 +22,7 @@ public class Answer extends BaseEntity {
     private String answer;
     @Column(nullable = false)
     private Boolean correct;
-    @ManyToOne
-    @JoinColumn(name = "question_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Question question;
 
     @Builder

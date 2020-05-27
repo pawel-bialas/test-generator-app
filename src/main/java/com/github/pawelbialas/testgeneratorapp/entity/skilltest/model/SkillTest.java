@@ -15,7 +15,6 @@ import java.util.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
 public class SkillTest extends BaseEntity {
 
@@ -23,16 +22,22 @@ public class SkillTest extends BaseEntity {
     // MOD (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @ManyToMany
     private List<Question> questions = new ArrayList<>();
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.LAZY)
     private Contestant contestant;
-    @OneToOne(mappedBy = "skillTest")
+    @OneToOne(mappedBy = "skillTest", fetch = FetchType.LAZY)
     private Result result;
     @Enumerated(EnumType.STRING)
     private TestStatus testStatus;
 
     @Builder
-    public SkillTest(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,
-                     ArrayList<Question> questions, Contestant contestant, Result result, TestStatus testStatus) {
+    public SkillTest(UUID id,
+                     Long version,
+                     Timestamp createdDate,
+                     Timestamp lastModifiedDate,
+                     ArrayList<Question> questions,
+                     Contestant contestant,
+                     Result result,
+                     TestStatus testStatus) {
         super(id, version, createdDate, lastModifiedDate);
         this.questions = questions;
         this.contestant = contestant;

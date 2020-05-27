@@ -48,7 +48,6 @@ class ResultMapperTest {
                 .createdDate(new Timestamp(System.currentTimeMillis()))
                 .lastModifiedDate(new Timestamp(System.currentTimeMillis()))
                 .score(12F)
-                .version(1L)
                 .contestant(null)
                 .skillTest(null)
                 .build();
@@ -56,7 +55,6 @@ class ResultMapperTest {
         skillTest = SkillTest.builder()
                 .questions(new ArrayList<Question>())
                 .id(UUID.randomUUID())
-                .version(1L)
                 .result(null)
                 .contestant(null)
                 .createdDate(new Timestamp(System.currentTimeMillis()))
@@ -67,7 +65,6 @@ class ResultMapperTest {
         contestant = Contestant.builder()
                 .skillTests(new ArrayList<SkillTest>())
                 .results(new ArrayList<Result>())
-                .version(1L)
                 .id(UUID.randomUUID())
                 .createdDate(new Timestamp(System.currentTimeMillis()))
                 .lastModifiedDate(new Timestamp(System.currentTimeMillis()))

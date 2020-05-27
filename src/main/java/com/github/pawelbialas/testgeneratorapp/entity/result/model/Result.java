@@ -27,8 +27,13 @@ public class Result extends BaseEntity {
     private Contestant contestant;
 
     @Builder
-    public Result (UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,
-                   Float score, SkillTest skillTest, Contestant contestant) {
+    public Result (UUID id,
+                   Long version,
+                   Timestamp createdDate,
+                   Timestamp lastModifiedDate,
+                   Float score,
+                   SkillTest skillTest,
+                   Contestant contestant) {
         super(id, version, createdDate, lastModifiedDate);
         this.score = score;
         this.skillTest = skillTest;

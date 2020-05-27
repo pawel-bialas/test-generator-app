@@ -2,14 +2,12 @@ package com.github.pawelbialas.testgeneratorapp.entity.answer.service;
 
 import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerDto;
 import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerMapper;
-import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
 import com.github.pawelbialas.testgeneratorapp.entity.answer.repository.AnswerRepository;
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionDto;
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.entity.question.repository.QuestionRepository;
 import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionServiceImpl;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -53,32 +51,22 @@ class AnswerServiceImplTest {
         question1 = QuestionDto.builder()
                 .answers(new ArrayList<>())
                 .contents("testQuestion1")
-                .version(1L)
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
                 .mainTech("Java")
-                .createdDate(OffsetDateTime.now())
-                .lastModifiedDate(OffsetDateTime.now())
                 .build();
 
         question2 = QuestionDto.builder()
                 .answers(new ArrayList<>())
                 .contents("testQuestion1")
-                .version(1L)
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
                 .mainTech("Java")
-                .createdDate(OffsetDateTime.now())
-                .lastModifiedDate(OffsetDateTime.now())
                 .build();
 
         answer1 = AnswerDto.builder()
                 .answer("test1")
                 .correct(true)
-                .version(1L)
-                .createdDate(OffsetDateTime.now())
-                .lastModifiedDate(OffsetDateTime.now())
-                .id(UUID.randomUUID())
                 .build();
 
     }

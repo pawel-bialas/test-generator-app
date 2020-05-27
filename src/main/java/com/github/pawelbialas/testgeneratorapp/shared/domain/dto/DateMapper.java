@@ -9,7 +9,8 @@ import java.time.ZoneOffset;
 @Component
 public class DateMapper {
 
-    public OffsetDateTime asOffsetDateTime(Timestamp ts){
+
+    public OffsetDateTime asLocalDateTime(Timestamp ts){
         if (ts != null){
             return OffsetDateTime.of(ts.toLocalDateTime().getYear(), ts.toLocalDateTime().getMonthValue(),
                     ts.toLocalDateTime().getDayOfMonth(), ts.toLocalDateTime().getHour(), ts.toLocalDateTime().getMinute(),
@@ -26,4 +27,5 @@ public class DateMapper {
             return null;
         }
     }
+
 }

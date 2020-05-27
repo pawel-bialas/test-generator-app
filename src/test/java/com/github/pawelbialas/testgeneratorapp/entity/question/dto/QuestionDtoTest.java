@@ -32,7 +32,6 @@ class QuestionDtoTest {
                 .contents("test123")
                 .answers(new ArrayList<AnswerDto>())
                 .id(UUID.randomUUID())
-                .version(1L)
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
                 .mainTech("Java")
@@ -42,7 +41,6 @@ class QuestionDtoTest {
 
         answer1 = AnswerDto.builder()
                 .id(UUID.randomUUID())
-                .version(1L)
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
                 .correct(true)
@@ -51,7 +49,6 @@ class QuestionDtoTest {
 
         answer2 = AnswerDto.builder()
                 .id(UUID.randomUUID())
-                .version(1L)
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
                 .correct(true)

@@ -30,7 +30,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public QuestionDto saveOrUpdate(@NotNull QuestionDto questionDto) {
+    public QuestionDto saveOrUpdate(QuestionDto questionDto) {
         Question save = questionRepository.save(mapper.dtoToObject(questionDto, contextProvider()));
         return mapper.objectToDto(save, contextProvider());
     }

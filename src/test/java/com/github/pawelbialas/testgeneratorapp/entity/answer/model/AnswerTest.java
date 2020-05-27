@@ -31,7 +31,6 @@ class AnswerTest {
          answer = Answer.builder()
                 .answer("test1")
                 .correct(true)
-                .version(1L)
                 .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
                 .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                 .id(UUID.randomUUID())
@@ -44,7 +43,6 @@ class AnswerTest {
                  .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
                  .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                  .id(UUID.randomUUID())
-                 .version(1L)
                  .contents("test1")
                  .answers(new ArrayList<Answer>())
                  .build();

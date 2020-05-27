@@ -48,7 +48,6 @@ class AnswerMapperTest {
                 .mainTech("Java")
                 .specificTech("JPA")
                 .skillLevel(SkillLevel.ENTRY)
-                .version(1L)
                 .id(UUID.randomUUID())
                 .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                 .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
@@ -61,7 +60,6 @@ class AnswerMapperTest {
                 .correct(false)
                 .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                 .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
-                .version(1L)
                 .id(UUID.randomUUID())
 
                 .build();

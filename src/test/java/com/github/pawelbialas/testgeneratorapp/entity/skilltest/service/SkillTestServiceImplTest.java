@@ -32,7 +32,6 @@ class SkillTestServiceImplTest {
                 .questions(new ArrayList<>())
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
-                .version(1L)
                 .testStatus("BASE")
                 .build();
 

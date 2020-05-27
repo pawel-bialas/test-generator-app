@@ -16,6 +16,7 @@ import com.github.pawelbialas.testgeneratorapp.shared.exception.BadRequestExcept
 import com.github.pawelbialas.testgeneratorapp.shared.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -56,6 +57,7 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
+
     public List<ResultDto> findAll() {
         return repository.findAll().stream()
                 .map(val -> mapper.objectToDto(val, contextProvider()))

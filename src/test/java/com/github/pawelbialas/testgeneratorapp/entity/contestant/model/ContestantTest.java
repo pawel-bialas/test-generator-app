@@ -36,7 +36,6 @@ class ContestantTest {
                 .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                 .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
                 .id(UUID.randomUUID())
-                .version(1L)
                 .results(new ArrayList<Result>())
                 .skillTests(new ArrayList<SkillTest>())
                 .build();
@@ -45,16 +44,11 @@ class ContestantTest {
                 .questions(new ArrayList<Question>())
                 .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                 .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
-                .version(1L)
                 .id(UUID.randomUUID())
                 .build();
 
         result = Result.builder()
-//                .createdDate(Timestamp.valueOf(LocalDateTime.now()))
-//                .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
                 .score(12F)
-//                .id(UUID.randomUUID())
-//                .version(1L)
                 .build();
 
         assertAll(

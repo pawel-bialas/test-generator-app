@@ -3,7 +3,6 @@ package com.github.pawelbialas.testgeneratorapp.entity.result.service;
 import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerDto;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantDto;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantMapper;
-import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.repository.ContestantRepository;
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionDto;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
@@ -12,7 +11,6 @@ import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
 import com.github.pawelbialas.testgeneratorapp.shared.exception.BadRequestException;
 import org.junit.Before;
 import org.junit.Test;
@@ -70,7 +68,6 @@ public class ResultServiceImplTest {
         question1 = QuestionDto.builder()
                 .answers(new ArrayList<>())
                 .contents("testQuestion1")
-                .version(1L)
                 .id(UUID.randomUUID())
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
@@ -82,7 +79,6 @@ public class ResultServiceImplTest {
         question2 = QuestionDto.builder()
                 .answers(new ArrayList<>())
                 .contents("testQuestion1")
-                .version(1L)
                 .id(UUID.randomUUID())
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
@@ -94,7 +90,6 @@ public class ResultServiceImplTest {
         question3 = QuestionDto.builder()
                 .answers(new ArrayList<>())
                 .contents("testQuestion2")
-                .version(1L)
                 .id(UUID.randomUUID())
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
@@ -106,7 +101,6 @@ public class ResultServiceImplTest {
         question4 = QuestionDto.builder()
                 .answers(new ArrayList<>())
                 .contents("testQuestion2")
-                .version(1L)
                 .id(UUID.randomUUID())
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
@@ -117,7 +111,6 @@ public class ResultServiceImplTest {
 
         answer1 = AnswerDto.builder()
                 .id(UUID.randomUUID())
-                .version(1L)
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
                 .correct(true)
@@ -127,7 +120,6 @@ public class ResultServiceImplTest {
 
         answer2 = AnswerDto.builder()
                 .id(UUID.randomUUID())
-                .version(1L)
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
                 .correct(false)
@@ -137,7 +129,6 @@ public class ResultServiceImplTest {
 
         answer3 = AnswerDto.builder()
                 .id(UUID.randomUUID())
-                .version(1L)
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
                 .correct(false)
@@ -147,7 +138,6 @@ public class ResultServiceImplTest {
 
         answer4 = AnswerDto.builder()
                 .id(UUID.randomUUID())
-                .version(1L)
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
                 .correct(false)
@@ -160,7 +150,6 @@ public class ResultServiceImplTest {
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
                 .id(UUID.randomUUID())
-                .version(1L)
                 .results(new ArrayList<>())
                 .skillTests(new ArrayList<>())
                 .build();
@@ -173,7 +162,6 @@ public class ResultServiceImplTest {
 
         skillTest = SkillTestDto.builder()
                 .id(UUID.randomUUID())
-                .version(1L)
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
                 .contestant(new ContestantDto())
@@ -228,7 +216,6 @@ public class ResultServiceImplTest {
 
         AnswerDto otherAnswer1 = AnswerDto.builder()
                 .id(UUID.randomUUID())
-                .version(1L)
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
                 .correct(false)
@@ -238,7 +225,6 @@ public class ResultServiceImplTest {
 
         AnswerDto otherAnswer2 = AnswerDto.builder()
                 .id(UUID.randomUUID())
-                .version(1L)
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
                 .correct(true)
@@ -280,7 +266,6 @@ public class ResultServiceImplTest {
 
         SkillTestDto otherSkillTest = SkillTestDto.builder()
                 .id(UUID.randomUUID())
-                .version(1L)
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
                 .contestant(new ContestantDto())
@@ -338,7 +323,6 @@ public class ResultServiceImplTest {
         // Given
 
         ResultDto resultDto = ResultDto.builder()
-                .version(1L)
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
                 .score(12F)
