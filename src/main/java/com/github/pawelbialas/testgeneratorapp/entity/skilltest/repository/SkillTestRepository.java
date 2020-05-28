@@ -13,14 +13,6 @@ import java.util.UUID;
 @Repository
 public interface SkillTestRepository extends JpaRepository<SkillTest, UUID> {
 
-    @EntityGraph(value = "fullJoins", type = EntityGraph.EntityGraphType.FETCH)
-    @Override
-    <S extends SkillTest> S save(S s);
-
-    @EntityGraph(value = "fullJoins", type = EntityGraph.EntityGraphType.FETCH)
-    @Override
-    List<SkillTest> findAll();
-
     List<SkillTest> findAllByContestant (Contestant contestant);
 
     List<SkillTest> findByContestant_ContestantNumber (String contestantNumber);

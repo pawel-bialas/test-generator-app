@@ -109,6 +109,7 @@ class AnswerMapperTest {
 
         System.out.println(answerDto);
         System.out.println(questionDto);
+        System.out.println(questionDto.getAnswers().get(0));
 
         //Then
         assertAll(

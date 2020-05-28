@@ -15,7 +15,6 @@ import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestStatus
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
 import com.github.pawelbialas.testgeneratorapp.shared.exception.BadRequestException;
 import com.github.pawelbialas.testgeneratorapp.shared.exception.InternalServerErrorException;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

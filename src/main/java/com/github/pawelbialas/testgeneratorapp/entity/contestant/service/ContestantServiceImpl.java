@@ -4,7 +4,6 @@ import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantD
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.repository.ContestantRepository;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManagerFactory;
@@ -55,7 +54,7 @@ public class ContestantServiceImpl implements ContestantService {
 
     }
 
-    public Optional<ContestantDto> findById (UUID id) {
+    public Optional<ContestantDto> findById(UUID id) {
         return repository.findById(id)
                 .map(contestant -> mapper.objectToDto(contestant, contextProvider()));
     }
@@ -64,10 +63,6 @@ public class ContestantServiceImpl implements ContestantService {
     public Boolean confirmContestant(String contestantNumber) {
         return repository.findByContestantNumber(contestantNumber).isPresent();
     }
-
-
-
-
 
 
 }

@@ -17,11 +17,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@NamedEntityGraphs({
-        @NamedEntityGraph(name = "fullJoins", attributeNodes = {
-                @NamedAttributeNode("answers")
-        })
-})
 public class Question extends BaseEntity {
 
     private String contents;
@@ -29,7 +24,6 @@ public class Question extends BaseEntity {
     private String specificTech;
     @Enumerated (EnumType.STRING)
     private SkillLevel skillLevel;
-    //MOD cascade = CascadeType.ALL, orphanRemoval = true     @Fetch(FetchMode.SUBSELECT)
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Answer> answers = new ArrayList<>();
 

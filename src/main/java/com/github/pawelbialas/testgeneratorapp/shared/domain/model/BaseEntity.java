@@ -43,13 +43,11 @@ public class BaseEntity implements Serializable {
     private Long version;
 
     @CreationTimestamp
-    @Column(updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    @Column(updatable = false, nullable = false)
+    private Timestamp createdDate;
 
     @UpdateTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
+    private Timestamp lastModifiedDate;
 
     public int hashCode () {
         return Objects.hash(this.id);

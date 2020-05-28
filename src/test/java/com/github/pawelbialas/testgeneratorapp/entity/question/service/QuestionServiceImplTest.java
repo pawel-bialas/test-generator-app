@@ -74,7 +74,9 @@ class QuestionServiceImplTest {
     public void callingSaveOrUpdateMultipleTimesShouldAlwaysReturnSingleEntity() {
         // Given
         QuestionDto savedQuestion1 = service.saveOrUpdate(question1);
+        System.out.println(savedQuestion1);
         QuestionDto savedQuestion2 = service.saveOrUpdate(question2);
+        System.out.println(savedQuestion2);
 
        service.saveOrUpdate(savedQuestion1);
        service.saveOrUpdate(savedQuestion1);

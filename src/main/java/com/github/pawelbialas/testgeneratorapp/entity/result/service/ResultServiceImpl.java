@@ -10,13 +10,11 @@ import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 import com.github.pawelbialas.testgeneratorapp.entity.result.repository.ResultRepository;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.service.SkillTestServiceImpl;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContextProvider;
 import com.github.pawelbialas.testgeneratorapp.shared.exception.BadRequestException;
 import com.github.pawelbialas.testgeneratorapp.shared.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

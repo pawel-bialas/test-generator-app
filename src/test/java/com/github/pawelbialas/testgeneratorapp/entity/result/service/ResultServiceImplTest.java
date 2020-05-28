@@ -323,8 +323,6 @@ public class ResultServiceImplTest {
         // Given
 
         ResultDto resultDto = ResultDto.builder()
-                .createdDate(OffsetDateTime.now())
-                .lastModifiedDate(OffsetDateTime.now())
                 .score(12F)
                 .build();
         // When
@@ -338,6 +336,7 @@ public class ResultServiceImplTest {
         resultService.saveOrUpdate(save);
 
         List<ResultDto> all = resultService.findAll();
+
         // Then
 
         assertAll(
