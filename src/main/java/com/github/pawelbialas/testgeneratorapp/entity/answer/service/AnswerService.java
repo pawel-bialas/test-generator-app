@@ -19,7 +19,7 @@ public interface AnswerService {
 
     List<AnswerDto> findAllByQuestionId (UUID uuid);
 
-    Answer saveOrUpdate(@NotNull AnswerDto answerDto);
+    AnswerDto saveOrUpdate(@NotNull AnswerDto answerDto);
 
 
 }

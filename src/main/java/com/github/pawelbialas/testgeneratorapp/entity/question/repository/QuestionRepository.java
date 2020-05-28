@@ -16,15 +16,15 @@ import java.util.UUID;
 public interface QuestionRepository extends JpaRepository<Question, UUID> {
 
 
-    @EntityGraph(value = "answers", type = EntityGraph.EntityGraphType.FETCH)
+    @EntityGraph(value = "fullJoins", type = EntityGraph.EntityGraphType.FETCH)
     @Override
     <S extends Question> S save(S s);
 
-    @EntityGraph(value = "answers", type = EntityGraph.EntityGraphType.FETCH)
+    @EntityGraph(value = "fullJoins", type = EntityGraph.EntityGraphType.FETCH)
     @Override
     Optional<Question> findById(UUID uuid);
 
-    @EntityGraph(value = "answers", type = EntityGraph.EntityGraphType.FETCH)
+    @EntityGraph(value = "fullJoins", type = EntityGraph.EntityGraphType.FETCH)
     @Override
     List<Question> findAll();
 

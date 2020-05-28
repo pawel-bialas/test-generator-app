@@ -18,7 +18,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @NamedEntityGraphs({
-        @NamedEntityGraph(name = "answers", attributeNodes = {
+        @NamedEntityGraph(name = "fullJoins", attributeNodes = {
                 @NamedAttributeNode("answers")
         })
 })

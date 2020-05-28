@@ -34,10 +34,9 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public Answer saveOrUpdate(@NotNull AnswerDto answerDto) {
-        return repository.findById(answerDto.getId())
-                .map(val -> emf.createEntityManager().merge(mapper.dtoToObject(answerDto, contextProvider())))
-                .orElse(repository.save(mapper.dtoToObject(answerDto, contextProvider())));
+    public AnswerDto saveOrUpdate(@NotNull AnswerDto answerDto) {
+        Answer save = repository.save(mapper.dtoToObject(answerDto, contextProvider()));
+        return mapper.objectToDto(save, contextProvider());
     }
 
 
