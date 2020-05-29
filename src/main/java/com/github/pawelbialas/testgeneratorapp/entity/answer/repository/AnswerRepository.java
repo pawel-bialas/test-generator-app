@@ -26,8 +26,10 @@ public interface AnswerRepository extends JpaRepository<Answer, UUID> {
    @Override
    Optional<Answer> findById(UUID uuid);
 
+   @EntityGraph(value = "answer.fullJoins")
    Optional<Answer> findByAnswer(String answer);
 
+   @EntityGraph(value = "answer.fullJoins")
    List<Answer> findAllByQuestionId (UUID uuid);
 
 }

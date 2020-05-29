@@ -5,6 +5,8 @@ import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.model.BaseEntity;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -16,13 +18,30 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@NamedEntityGraph(
+        name = "skillTest.fullJoins",
+        attributeNodes ={
+                @NamedAttributeNode(value = "questions"),
+                @NamedAttributeNode(value = "contestant"),
+                @NamedAttributeNode(value = "result", subgraph = "skillTest.result.contestant.subgraph")
+        },
+        subgraphs = {
+//                @NamedSubgraph(
+//                        name = "skillTest.questions.answers.subgraph",
+//                        attributeNodes = @NamedAttributeNode(value = "answers")
+//                ),
+                @NamedSubgraph(
+                        name = "skillTest.result.contestant.subgraph",
+                        attributeNodes = @NamedAttributeNode(value = "contestant")
+                )
+        }
+
+)
 public class SkillTest extends BaseEntity {
 
-
-    // MOD (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Question> questions = new ArrayList<>();
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Contestant contestant;
     @OneToOne(mappedBy = "skillTest", fetch = FetchType.LAZY)
     private Result result;

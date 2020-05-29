@@ -28,14 +28,19 @@ public interface QuestionRepository extends JpaRepository<Question, UUID> {
     @Override
     Optional<Question> findById(UUID uuid);
 
+    @EntityGraph(value = "question.fullJoins")
     Question findByContentsEquals(String contents);
 
+    @EntityGraph(value = "question.fullJoins")
     List<Question> findAllByMainTechAndSpecificTech(String mainTech, java.lang.String specificTech);
 
+    @EntityGraph(value = "question.fullJoins")
     List<Question> findAllByMainTech(String mainTech);
 
+    @EntityGraph(value = "question.fullJoins")
     List<Question> findAllByMainTechAndSkillLevel(String mainTech, SkillLevel skillLevel);
 
+    @EntityGraph(value = "question.fullJoins")
     List<Question> findAllByMainTechAndSkillLevelAndSpecificTech(String mainTech, SkillLevel skillLevel, String specificTech);
 
 
