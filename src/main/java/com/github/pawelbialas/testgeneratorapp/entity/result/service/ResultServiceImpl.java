@@ -55,7 +55,6 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
-
     public List<ResultDto> findAll() {
         return repository.findAll().stream()
                 .map(val -> mapper.objectToDto(val, contextProvider()))

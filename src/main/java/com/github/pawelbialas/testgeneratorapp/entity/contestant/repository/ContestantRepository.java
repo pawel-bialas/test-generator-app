@@ -15,6 +15,7 @@ import java.util.UUID;
 @Repository
 public interface ContestantRepository extends JpaRepository<Contestant, UUID> {
 
+
     Optional<Contestant> findByContestantNumber (String contestantNumber);
 
 }

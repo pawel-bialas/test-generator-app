@@ -14,6 +14,18 @@ import java.util.UUID;
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer, UUID> {
 
+   @EntityGraph(value = "answer.fullJoins")
+   @Override
+   List<Answer> findAll();
+
+   @EntityGraph(value = "answer.fullJoins")
+   @Override
+   <S extends Answer> S save(S s);
+
+   @EntityGraph(value = "answer.fullJoins")
+   @Override
+   Optional<Answer> findById(UUID uuid);
+
    Optional<Answer> findByAnswer(String answer);
 
    List<Answer> findAllByQuestionId (UUID uuid);

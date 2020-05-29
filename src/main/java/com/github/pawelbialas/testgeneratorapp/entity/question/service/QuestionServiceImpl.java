@@ -30,7 +30,6 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    @Transactional
     public QuestionDto saveOrUpdate(QuestionDto questionDto) {
         Question save = questionRepository.save(mapper.dtoToObject(questionDto, contextProvider()));
         return mapper.objectToDto(save, contextProvider());

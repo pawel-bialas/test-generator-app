@@ -16,6 +16,17 @@ import java.util.UUID;
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, UUID> {
 
+    @EntityGraph(value = "question.fullJoins")
+    @Override
+    List<Question> findAll();
+
+    @EntityGraph(value = "question.fullJoins")
+    @Override
+    <S extends Question> S save(S s);
+
+    @EntityGraph(value = "question.fullJoins")
+    @Override
+    Optional<Question> findById(UUID uuid);
 
     Question findByContentsEquals(String contents);
 
