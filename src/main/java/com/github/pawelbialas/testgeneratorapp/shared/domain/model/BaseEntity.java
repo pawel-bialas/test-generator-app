@@ -49,12 +49,12 @@ public class BaseEntity implements Serializable {
     @UpdateTimestamp
     private Timestamp lastModifiedDate;
 
-    public int hashCode () {
-        return Objects.hash(this.id);
-    }
-
-    public boolean equals (Object that) {
-        return this == that || that instanceof BaseEntity && Objects.equals(this.id, ((BaseEntity) that).id);
-    }
+//    public int hashCode () {
+//        return Objects.hash(this.id);
+//    }
+//
+//    public boolean equals (Object that) {
+//        return this == that || that instanceof BaseEntity && Objects.equals(this.id, ((BaseEntity) that).id);
+//    }
 
 }

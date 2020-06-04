@@ -17,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.UUID;
 
 import static com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContextProvider.contextProvider;
@@ -40,7 +41,7 @@ class QuestionMapperTest {
     void setUp() {
         question = Question.builder()
                 .contents("test123")
-                .answers(new ArrayList<Answer>())
+                .answers(new LinkedHashSet<>())
                 .id(UUID.randomUUID())
                 .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                 .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
@@ -79,17 +80,20 @@ class QuestionMapperTest {
     void dtoToObject() {
         //When
         QuestionDto questionDto = questionMapper.objectToDto(question, contextProvider());
+
+        ArrayList<AnswerDto> answerDtos = new ArrayList<>(questionDto.getAnswers());
         assertAll(
                 () -> assertThat(questionDto.getAnswers().size()).isEqualTo(2),
                 () -> assertThat(questionDto.getId()).isEqualTo(question.getId()),
-                () -> assertThat(questionDto.getAnswers().get(0).getAnswer()).isEqualTo(answer1.getAnswer())
+                () -> assertThat(answerDtos.get(0).getAnswer()).isEqualTo(answer1.getAnswer())
         );
         Question result = questionMapper.dtoToObject(questionDto, contextProvider());
 
+        ArrayList<Answer> answers = new ArrayList<>(result.getAnswers());
         assertAll(
                 () -> assertThat(result.getId()).isEqualTo(questionDto.getId()),
                 () -> assertThat(result.getAnswers().size()).isEqualTo(2),
-                () -> assertThat(result.getAnswers().get(0)).isEqualTo(answer1)
+                () -> assertThat(answers.get(0)).isEqualTo(answer1)
         );
     }
 
@@ -97,13 +101,15 @@ class QuestionMapperTest {
     void objectToDto() {
         //When
         QuestionDto questionDto = questionMapper.objectToDto(question, contextProvider());
-        System.out.println(questionDto);
+
         //Then
+
+        ArrayList<AnswerDto> answerDtos = new ArrayList<>(questionDto.getAnswers());
         assertAll(
                 () -> assertThat(questionDto.getAnswers().size()).isEqualTo(2),
                 () -> assertThat(questionDto.getId()).isEqualTo(question.getId()),
-                () -> assertThat(questionDto.getAnswers().get(0).getAnswer()).isEqualTo(answer1.getAnswer()),
-                () -> assertThat(questionDto.getAnswers().get(0)).isInstanceOf(AnswerDto.class),
+                () -> assertThat(answerDtos.get(0).getAnswer()).isEqualTo(answer1.getAnswer()),
+                () -> assertThat(answerDtos.get(0)).isInstanceOf(AnswerDto.class),
                 () -> assertThat(questionDto).isInstanceOf(QuestionDto.class)
         );
     }

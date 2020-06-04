@@ -18,29 +18,14 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@NamedEntityGraph(
-        name = "skillTest.fullJoins",
-        attributeNodes ={
-                @NamedAttributeNode(value = "questions"),
-                @NamedAttributeNode(value = "contestant"),
-                @NamedAttributeNode(value = "result", subgraph = "skillTest.result.contestant.subgraph")
-        },
-        subgraphs = {
-//                @NamedSubgraph(
-//                        name = "skillTest.questions.answers.subgraph",
-//                        attributeNodes = @NamedAttributeNode(value = "answers")
-//                ),
-                @NamedSubgraph(
-                        name = "skillTest.result.contestant.subgraph",
-                        attributeNodes = @NamedAttributeNode(value = "contestant")
-                )
-        }
-
-)
+//@NamedEntityGraph(
+//        name = "skillTest.fullJoins",
+//
+//)
 public class SkillTest extends BaseEntity {
 
     @ManyToMany(fetch = FetchType.LAZY)
-    private List<Question> questions = new ArrayList<>();
+    private Set<Question> questions = new LinkedHashSet<>();
     @ManyToOne(fetch = FetchType.LAZY)
     private Contestant contestant;
     @OneToOne(mappedBy = "skillTest", fetch = FetchType.LAZY)
@@ -53,7 +38,7 @@ public class SkillTest extends BaseEntity {
                      Long version,
                      Timestamp createdDate,
                      Timestamp lastModifiedDate,
-                     ArrayList<Question> questions,
+                     LinkedHashSet<Question> questions,
                      Contestant contestant,
                      Result result,
                      TestStatus testStatus) {

@@ -21,10 +21,7 @@ import javax.persistence.EntityManagerFactory;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,7 +47,7 @@ class QuestionServiceImplTest {
     void setUp() {
 
         question1 = QuestionDto.builder()
-                .answers(new ArrayList<>())
+                .answers(new LinkedHashSet<>())
                 .contents("testQuestion1")
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
@@ -58,7 +55,7 @@ class QuestionServiceImplTest {
                 .build();
 
         question2 = QuestionDto.builder()
-                .answers(new ArrayList<>())
+                .answers(new LinkedHashSet<>())
                 .contents("testQuestion1")
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")

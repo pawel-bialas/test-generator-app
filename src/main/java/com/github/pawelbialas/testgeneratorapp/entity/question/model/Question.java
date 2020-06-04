@@ -8,19 +8,25 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@NamedEntityGraph(
-        name = "question.fullJoins",
-        attributeNodes = @NamedAttributeNode(value = "answers")
-)
+//@NamedEntityGraph(
+//        name = "question.fullJoins",
+//        attributeNodes = {
+//                @NamedAttributeNode(value = "createdDate"),
+//                @NamedAttributeNode(value = "lastModifiedDate"),
+//                @NamedAttributeNode(value = "contents"),
+//                @NamedAttributeNode(value = "mainTech"),
+//                @NamedAttributeNode(value = "specificTech"),
+//                @NamedAttributeNode(value = "skillLevel"),
+//                @NamedAttributeNode(value = "answers")
+//        }
+//)
 public class Question extends BaseEntity {
 
     private String contents;
@@ -29,7 +35,7 @@ public class Question extends BaseEntity {
     @Enumerated (EnumType.STRING)
     private SkillLevel skillLevel;
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Answer> answers = new ArrayList<>();
+    private Set<Answer> answers = new LinkedHashSet<>();
 
     @Builder
     public Question(UUID id,
@@ -39,7 +45,7 @@ public class Question extends BaseEntity {
                     java.lang.String contents,
                     String mainTech,
                     java.lang.String specificTech,
-                    ArrayList<Answer> answers,
+                    LinkedHashSet<Answer> answers,
                     SkillLevel skillLevel) {
         super(id, version, createdDate, lastModifiedDate);
         this.contents = contents;

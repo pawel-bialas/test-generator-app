@@ -16,10 +16,16 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@NamedEntityGraph(
-        name = "answer.fullJoins",
-        attributeNodes = @NamedAttributeNode(value = "question")
-)
+//@NamedEntityGraph(
+//        name = "answer.fullJoins",
+//        attributeNodes ={
+//                @NamedAttributeNode(value = "createdDate"),
+//                @NamedAttributeNode(value = "lastModifiedDate"),
+//                @NamedAttributeNode(value = "answer"),
+//                @NamedAttributeNode(value = "correct"),
+//                @NamedAttributeNode(value = "question")
+//        }
+//)
 public class Answer extends BaseEntity {
 
     @Column(nullable = false)

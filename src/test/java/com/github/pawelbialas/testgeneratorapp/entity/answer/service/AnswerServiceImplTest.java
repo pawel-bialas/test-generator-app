@@ -17,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.UUID;
 
@@ -49,7 +50,7 @@ class AnswerServiceImplTest {
     @BeforeEach
     void setUp() {
         question1 = QuestionDto.builder()
-                .answers(new ArrayList<>())
+                .answers(new LinkedHashSet<>())
                 .contents("testQuestion1")
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
@@ -57,7 +58,7 @@ class AnswerServiceImplTest {
                 .build();
 
         question2 = QuestionDto.builder()
-                .answers(new ArrayList<>())
+                .answers(new LinkedHashSet<>())
                 .contents("testQuestion1")
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
@@ -77,12 +78,11 @@ class AnswerServiceImplTest {
 
         question1.addAnswer(answer1);
         QuestionDto savedQuestion = questionService.saveOrUpdate(question1);
-        AnswerDto savedAnswer = savedQuestion.getAnswers().get(0);
+        QuestionDto savedQuestion1 = questionService.saveOrUpdate(question1);
+        QuestionDto savedQuestion2 = questionService.saveOrUpdate(question1);
+        QuestionDto savedQuestion3 = questionService.saveOrUpdate(question1);
 
-        question2.addAnswer(savedAnswer);
-        questionService.saveOrUpdate(question2);
-
-
+        ArrayList<AnswerDto> answerDtos = new ArrayList<>(question1.getAnswers());
         //When
         List<AnswerDto> answers = answerService.findAll();
 
@@ -92,7 +92,7 @@ class AnswerServiceImplTest {
 
         assertAll(
                 () -> assertThat(answers.size()).isEqualTo(1),
-                () -> assertThat(answers.get(0).getId()).isEqualTo(savedAnswer.getId()),
+                () -> assertThat(answers.get(0).getId()).isEqualTo(answerDtos.get(0).getId()),
                 () -> assertThat(question1.getAnswers().size()).isEqualTo(1)
         );
     }

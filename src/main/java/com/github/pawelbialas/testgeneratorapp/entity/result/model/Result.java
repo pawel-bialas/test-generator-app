@@ -17,6 +17,11 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+//@NamedEntityGraph(
+//        name = "result.fullJoins",
+//
+//
+//)
 public class Result extends BaseEntity {
 
     @Column(nullable = false)

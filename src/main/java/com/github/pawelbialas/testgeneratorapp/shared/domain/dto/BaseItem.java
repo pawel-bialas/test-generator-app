@@ -33,12 +33,12 @@ public class BaseItem {
     @JsonProperty("lastModified")
     private OffsetDateTime lastModifiedDate;
 
-    public int hashCode () {
-        return Objects.hash(this.id);
-    }
-
-    public boolean equals (Object that) {
-        return this == that || that instanceof BaseItem && Objects.equals(this.id, ((BaseItem) that).id);
-    }
+//    public int hashCode () {
+//        return Objects.hash(this.id);
+//    }
+//
+//    public boolean equals (Object that) {
+//        return this == that || that instanceof BaseItem && Objects.equals(this.id, ((BaseItem) that).id);
+//    }
 
 }

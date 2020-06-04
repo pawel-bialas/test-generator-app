@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,7 +31,7 @@ class QuestionTest {
 
          question = Question.builder()
                 .contents("test123")
-                .answers(new ArrayList<Answer>())
+                .answers(new LinkedHashSet<>())
                 .id(UUID.randomUUID())
                 .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                 .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))

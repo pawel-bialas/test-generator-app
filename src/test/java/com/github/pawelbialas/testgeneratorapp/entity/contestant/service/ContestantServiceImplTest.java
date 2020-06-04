@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,12 +44,12 @@ class ContestantServiceImplTest {
                 .contestantNumber("1234")
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
-                .results(new ArrayList<>())
-                .skillTests(new ArrayList<>())
+                .results(new LinkedHashSet<>())
+                .skillTests(new LinkedHashSet<>())
                 .build();
 
         skillTestDto = SkillTestDto.builder()
-                .questions(new ArrayList<>())
+                .questions(new LinkedHashSet<>())
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
                 .build();

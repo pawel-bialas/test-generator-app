@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.UUID;
 
 import static com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContextProvider.contextProvider;
@@ -53,7 +54,7 @@ class ResultMapperTest {
                 .build();
 
         skillTest = SkillTest.builder()
-                .questions(new ArrayList<Question>())
+                .questions(new LinkedHashSet<>())
                 .id(UUID.randomUUID())
                 .result(null)
                 .contestant(null)
@@ -63,8 +64,8 @@ class ResultMapperTest {
                 .build();
 
         contestant = Contestant.builder()
-                .skillTests(new ArrayList<SkillTest>())
-                .results(new ArrayList<Result>())
+                .skillTests(new LinkedHashSet<>())
+                .results(new LinkedHashSet<>())
                 .id(UUID.randomUUID())
                 .createdDate(new Timestamp(System.currentTimeMillis()))
                 .lastModifiedDate(new Timestamp(System.currentTimeMillis()))
@@ -77,9 +78,12 @@ class ResultMapperTest {
         skillTest.setResult(result);
         result.setSkillTest(skillTest);
 
+        ArrayList<Result> results = new ArrayList<>(contestant.getResults());
+        ArrayList<SkillTest> skillTests = new ArrayList<>(contestant.getSkillTests());
+
         assertAll(
-                () -> assertThat(contestant.getSkillTests().get(0)).isEqualTo(skillTest),
-                () -> assertThat(contestant.getResults().get(0)).isEqualTo(result),
+                () -> assertThat(skillTests.get(0)).isEqualTo(skillTest),
+                () -> assertThat(results.get(0)).isEqualTo(result),
                 () -> assertThat(result.getSkillTest()).isEqualTo(skillTest),
                 () -> assertThat(skillTest.getResult()).isEqualTo(result)
         );

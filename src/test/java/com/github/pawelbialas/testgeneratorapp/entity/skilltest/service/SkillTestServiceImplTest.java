@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,7 +30,7 @@ class SkillTestServiceImplTest {
     void setUp() {
 
         skillTestDto = SkillTestDto.builder()
-                .questions(new ArrayList<>())
+                .questions(new LinkedHashSet<>())
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
                 .testStatus("BASE")

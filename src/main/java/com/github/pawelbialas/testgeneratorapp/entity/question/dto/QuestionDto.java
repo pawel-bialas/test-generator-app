@@ -6,33 +6,31 @@ import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.BaseItem;
 import lombok.*;
 
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+//@EqualsAndHashCode(callSuper = true)
 public class QuestionDto extends BaseItem {
 
     private java.lang.String contents;
     private String mainTech;
     private java.lang.String specificTech;
     private SkillLevel skillLevel;
-    private List<AnswerDto> answers = new ArrayList<>();
+    private Set<AnswerDto> answers = new LinkedHashSet<>();
 
     @Builder
     public QuestionDto (UUID id,
                         Long version,
                         OffsetDateTime createdDate,
                         OffsetDateTime lastModifiedDate,
-                        java.lang.String contents,
+                        String contents,
                         String mainTech,
-                        java.lang.String specificTech,
-                        ArrayList<AnswerDto> answers,
+                        String specificTech,
+                        LinkedHashSet<AnswerDto> answers,
                         SkillLevel skillLevel) {
         super(id, version, createdDate, lastModifiedDate);
         this.contents = contents;

@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,7 +31,7 @@ class QuestionDtoTest {
 
         question = QuestionDto.builder()
                 .contents("test123")
-                .answers(new ArrayList<AnswerDto>())
+                .answers(new LinkedHashSet<>())
                 .id(UUID.randomUUID())
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
