@@ -91,15 +91,26 @@ public class ResultServiceImpl implements ResultService {
 
     public Integer calculateMaxScore(SkillTestDto baseTest) {
         Integer maxScore = 0;
-        List<QuestionDto> questions = new ArrayList<>(baseTest.getQuestions());
-        for (int i = 0; i < questions.size(); i++) {
-            List<AnswerDto> answers = new ArrayList<>(questions.get(i).getAnswers());
-            for (int j = 0; j < answers.size(); j++) {
-                if (answers.get(j).getCorrect().equals(true)) {
+
+        Iterator<QuestionDto> questions = baseTest.getQuestions().iterator();
+        while (questions.hasNext()) {
+            Iterator<AnswerDto> answers = questions.next().getAnswers().iterator();
+            while (answers.hasNext()) {
+                if (answers.next().getCorrect().equals(true)) {
                     maxScore++;
                 }
             }
         }
+
+//        List<QuestionDto> questions = new ArrayList<>(baseTest.getQuestions());
+//        for (int i = 0; i < questions.size(); i++) {
+//            List<AnswerDto> answers = new ArrayList<>(questions.get(i).getAnswers());
+//            for (int j = 0; j < answers.size(); j++) {
+//                if (answers.get(j).getCorrect().equals(true)) {
+//                    maxScore++;
+//                }
+//            }
+//        }
         return maxScore;
     }
 

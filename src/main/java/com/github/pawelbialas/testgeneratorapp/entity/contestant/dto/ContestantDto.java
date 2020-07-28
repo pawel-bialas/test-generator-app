@@ -17,8 +17,8 @@ import java.util.*;
 public class ContestantDto extends BaseItem {
 
     private String contestantNumber;
-    private Set<SkillTestDto> skillTests = new LinkedHashSet<>();
-    private Set<ResultDto> results = new LinkedHashSet<>();
+    private LinkedHashSet<SkillTestDto> skillTests = new LinkedHashSet<>();
+    private LinkedHashSet<ResultDto> results = new LinkedHashSet<>();
 
     @Builder
     public ContestantDto (UUID id,

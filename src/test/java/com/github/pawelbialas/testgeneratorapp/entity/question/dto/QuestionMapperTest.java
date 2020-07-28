@@ -82,6 +82,8 @@ class QuestionMapperTest {
         QuestionDto questionDto = questionMapper.objectToDto(question, contextProvider());
 
         ArrayList<AnswerDto> answerDtos = new ArrayList<>(questionDto.getAnswers());
+
+        //Then
         assertAll(
                 () -> assertThat(questionDto.getAnswers().size()).isEqualTo(2),
                 () -> assertThat(questionDto.getId()).isEqualTo(question.getId()),
@@ -91,7 +93,7 @@ class QuestionMapperTest {
 
         ArrayList<Answer> answers = new ArrayList<>(result.getAnswers());
         assertAll(
-                () -> assertThat(result.getId()).isEqualTo(questionDto.getId()),
+                () -> assertThat(result.getId()).isEqualTo(question.getId()),
                 () -> assertThat(result.getAnswers().size()).isEqualTo(2),
                 () -> assertThat(answers.get(0)).isEqualTo(answer1)
         );

@@ -18,7 +18,7 @@ import java.util.*;
 public class SkillTestDto extends BaseItem {
 
 
-    private Set<QuestionDto> questions = new LinkedHashSet<>();
+    private LinkedHashSet<QuestionDto> questions = new LinkedHashSet<>();
     private ContestantDto contestant;
     private ResultDto result;
     private String testStatus;

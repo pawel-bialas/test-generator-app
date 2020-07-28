@@ -20,7 +20,7 @@ public class QuestionDto extends BaseItem {
     private String mainTech;
     private java.lang.String specificTech;
     private SkillLevel skillLevel;
-    private Set<AnswerDto> answers = new LinkedHashSet<>();
+    private LinkedHashSet<AnswerDto> answers = new LinkedHashSet<>();
 
     @Builder
     public QuestionDto (UUID id,

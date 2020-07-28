@@ -167,7 +167,7 @@ public class ResultServiceImplTest {
                 .testStatus("BASE")
                 .build();
 
-        Set<QuestionDto> questions = skillTest.getQuestions();
+       LinkedHashSet<QuestionDto> questions = skillTest.getQuestions();
 
         questions.add(question2);
         questions.add(question1);
@@ -237,7 +237,7 @@ public class ResultServiceImplTest {
         question1.addAnswer(otherAnswer1);
         question1.addAnswer(otherAnswer2);
 
-        Set<QuestionDto> questions = new LinkedHashSet<>();
+        LinkedHashSet<QuestionDto> questions = new LinkedHashSet<>();
         questions.add(question2);
         questions.add(question1);
 
@@ -259,7 +259,7 @@ public class ResultServiceImplTest {
     public void given_2TestsWithDifferentQuestionsContent_Then_Should_ThrowAnException() {
         // This test will prove questionIntegrityValidator
         // Given
-        Set<QuestionDto> questions = new LinkedHashSet<>();
+        LinkedHashSet<QuestionDto> questions = new LinkedHashSet<>();
         questions.add(question4);
         questions.add(question3);
 
@@ -299,7 +299,7 @@ public class ResultServiceImplTest {
         otherQuestion.addAnswer(answer3);
 
         otherSkillTest.setQuestions(new LinkedHashSet<>());
-        Set<QuestionDto> questions = new LinkedHashSet<>();
+        LinkedHashSet<QuestionDto> questions = new LinkedHashSet<>();
         questions.add(question2);
         questions.add(otherQuestion);
         otherSkillTest.setQuestions(questions);

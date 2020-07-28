@@ -31,8 +31,8 @@ public class ContestantServiceImpl implements ContestantService {
     @Override
     public ContestantDto saveOrUpdate(ContestantDto contestantDto) {
         if (!confirmContestant(contestantDto.getContestantNumber())) {
-            contestantDto.setResults(new HashSet<>());
-            contestantDto.setSkillTests(new HashSet<>());
+            contestantDto.setResults(new LinkedHashSet<>());
+            contestantDto.setSkillTests(new LinkedHashSet<>());
         }
         Contestant save = repository.save(mapper.dtoToObject(contestantDto, contextProvider()));
         return mapper.objectToDto(save, contextProvider());
