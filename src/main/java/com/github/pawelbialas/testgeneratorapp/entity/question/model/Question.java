@@ -15,18 +15,6 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-//@NamedEntityGraph(
-//        name = "question.fullJoins",
-//        attributeNodes = {
-//                @NamedAttributeNode(value = "createdDate"),
-//                @NamedAttributeNode(value = "lastModifiedDate"),
-//                @NamedAttributeNode(value = "contents"),
-//                @NamedAttributeNode(value = "mainTech"),
-//                @NamedAttributeNode(value = "specificTech"),
-//                @NamedAttributeNode(value = "skillLevel"),
-//                @NamedAttributeNode(value = "answers")
-//        }
-//)
 public class Question extends BaseEntity {
 
     private String contents;

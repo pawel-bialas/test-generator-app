@@ -18,10 +18,6 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-//@NamedEntityGraph(
-//        name = "skillTest.fullJoins",
-//
-//)
 public class SkillTest extends BaseEntity {
 
     @ManyToMany(fetch = FetchType.LAZY)

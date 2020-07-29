@@ -18,11 +18,6 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-//@NamedEntityGraph(
-//        name = "contestant.fullJoins",
-//
-//
-//)
 public class Contestant extends BaseEntity {
 
     @Column(updatable = false, nullable = false)
