@@ -95,7 +95,8 @@ class QuestionMapperTest {
         assertAll(
                 () -> assertThat(result.getId()).isEqualTo(question.getId()),
                 () -> assertThat(result.getAnswers().size()).isEqualTo(2),
-                () -> assertThat(answers.get(0)).isEqualTo(answer1)
+                () -> assertThat(answers.get(0).getId()).isEqualTo(answer1.getId()),
+                () -> assertThat(answers.get(1).getId()).isEqualTo(answer2.getId())
         );
     }
 

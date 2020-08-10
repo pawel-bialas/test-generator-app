@@ -19,8 +19,10 @@ import java.util.UUID;
 @Entity
 @NamedEntityGraphs(value = {
         @NamedEntityGraph(
-                name = "answer.question",
+                name = "answer.fullJoins",
                 attributeNodes = {
+                        @NamedAttributeNode(value = "answer"),
+                        @NamedAttributeNode(value = "correct"),
                         @NamedAttributeNode(value = "question", subgraph = "question.anwers")
                 },
                 subgraphs = {

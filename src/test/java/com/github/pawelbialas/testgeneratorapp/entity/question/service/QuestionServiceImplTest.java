@@ -1,14 +1,9 @@
 package com.github.pawelbialas.testgeneratorapp.entity.question.service;
 
-import com.github.pawelbialas.testgeneratorapp.entity.answer.dto.AnswerMapperImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionDto;
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionMapper;
-import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionMapperImpl;
-import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.entity.question.repository.QuestionRepository;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.DateMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -16,15 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.persistence.EntityManagerFactory;
-
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.time.OffsetDateTime;
-import java.util.*;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

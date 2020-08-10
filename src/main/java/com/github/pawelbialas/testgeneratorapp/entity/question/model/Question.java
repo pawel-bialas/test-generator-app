@@ -19,8 +19,12 @@ import java.util.*;
 @Entity
 @NamedEntityGraphs(value = {
         @NamedEntityGraph(
-                name = "question.anwers",
+                name = "question.fullJoins",
                 attributeNodes = {
+                        @NamedAttributeNode(value = "contents"),
+                        @NamedAttributeNode(value = "mainTech"),
+                        @NamedAttributeNode(value = "specificTech"),
+                        @NamedAttributeNode(value = "skillLevel"),
                         @NamedAttributeNode(value = "answers")
                 }
         )

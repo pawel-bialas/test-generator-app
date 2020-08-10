@@ -17,7 +17,28 @@ import java.util.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "SKILLTESTS")
 @Entity
+@NamedEntityGraphs(value = {
+        @NamedEntityGraph(
+                name = "skillTest.fullJoins",
+                attributeNodes = {
+                        @NamedAttributeNode(value = "questions", subgraph = "skillTest.questions.answers"),
+                        @NamedAttributeNode(value = "contestant"),
+                        @NamedAttributeNode(value = "result"),
+                        @NamedAttributeNode(value = "testStatus"),
+                },
+                subgraphs = {
+                        @NamedSubgraph(
+                                name = "skillTest.questions.answers",
+                                attributeNodes = {
+                                        @NamedAttributeNode(value = "answers")
+                                }
+                        )
+                }
+        )
+})
+
 public class SkillTest extends BaseEntity {
 
     @ManyToMany(fetch = FetchType.LAZY)

@@ -17,7 +17,38 @@ import java.util.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "CONTESTANTS")
 @Entity
+@NamedEntityGraphs(value = {
+        @NamedEntityGraph(
+                name = "contestant.fullJoins",
+                attributeNodes = {
+                        @NamedAttributeNode(value = "contestantNumber"),
+                        @NamedAttributeNode(value = "skillTests", subgraph = "contestant.fullJoins.skillTests"),
+                        @NamedAttributeNode(value = "results", subgraph = "contestant.fullJoins.results")
+                },
+                subgraphs = {
+                        @NamedSubgraph(
+                                name = "contestant.fullJoins.results",
+                                attributeNodes = {
+                                        @NamedAttributeNode(value = "score"),
+                                        @NamedAttributeNode(value = "skillTest"),
+                                        @NamedAttributeNode(value = "contestant")
+                                }
+                        ),
+                        @NamedSubgraph(
+                                name = "contestant.fullJoins.skillTests",
+                                attributeNodes = {
+                                        @NamedAttributeNode(value = "questions"),
+                                        @NamedAttributeNode(value = "contestant"),
+                                        @NamedAttributeNode(value = "result"),
+                                        @NamedAttributeNode(value = "testStatus")
+                                }
+                        )
+                }
+        )
+})
+
 public class Contestant extends BaseEntity {
 
     @Column(updatable = false, nullable = false)
