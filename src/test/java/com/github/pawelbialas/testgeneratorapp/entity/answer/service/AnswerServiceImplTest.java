@@ -16,10 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -77,19 +74,15 @@ class AnswerServiceImplTest {
         //Given
 
         question1.addAnswer(answer1);
-        QuestionDto savedQuestion = questionService.saveOrUpdate(question1);
         QuestionDto savedQuestion1 = questionService.saveOrUpdate(question1);
-        QuestionDto savedQuestion2 = questionService.saveOrUpdate(question1);
-        QuestionDto savedQuestion3 = questionService.saveOrUpdate(question1);
-
-        ArrayList<AnswerDto> answerDtos = new ArrayList<>(question1.getAnswers());
+        questionService.saveOrUpdate(savedQuestion1);
+        questionService.saveOrUpdate(savedQuestion1);
+        questionService.saveOrUpdate(savedQuestion1);
+        QuestionDto anotherSavedQuestion1 = questionService.saveOrUpdate(savedQuestion1);
+        ArrayList<AnswerDto> answerDtos = new ArrayList<>(anotherSavedQuestion1.getAnswers());
         //When
         List<AnswerDto> answers = answerService.findAll();
-
-
-
         //Then
-
         assertAll(
                 () -> assertThat(answers.size()).isEqualTo(1),
                 () -> assertThat(answers.get(0).getId()).isEqualTo(answerDtos.get(0).getId()),
