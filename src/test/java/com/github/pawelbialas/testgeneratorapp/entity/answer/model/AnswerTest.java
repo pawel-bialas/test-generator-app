@@ -11,8 +11,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -46,7 +44,7 @@ class AnswerTest {
                  .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                  .id(UUID.randomUUID())
                  .contents("test1")
-                 .answers(new LinkedHashSet<>())
+                 .answers(new ArrayList<Answer>())
                  .build();
 
     }

@@ -12,7 +12,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-//@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class AnswerDto extends BaseItem {
 
     private String answer;

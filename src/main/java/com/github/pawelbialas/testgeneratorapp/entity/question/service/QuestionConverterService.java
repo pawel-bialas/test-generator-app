@@ -44,7 +44,7 @@ public class QuestionConverterService {
                     question.setSpecificTech(nextLine[2]);
                     question.setSkillLevel(convertSkillLevel(nextLine[3]));
                     question.setContents(nextLine[4]);
-                    ArrayList<String> rawAnswers = new ArrayList<>();
+                    ArrayList<java.lang.String> rawAnswers = new ArrayList<>();
                     rawAnswers.add(nextLine[5]);
                     rawAnswers.add(nextLine[6]);
                     rawAnswers.add(nextLine[7]);

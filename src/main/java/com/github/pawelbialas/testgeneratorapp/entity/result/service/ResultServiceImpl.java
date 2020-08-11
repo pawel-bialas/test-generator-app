@@ -15,7 +15,9 @@ import com.github.pawelbialas.testgeneratorapp.shared.exception.BadRequestExcept
 import com.github.pawelbialas.testgeneratorapp.shared.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContextProvider.contextProvider;
@@ -91,33 +93,22 @@ public class ResultServiceImpl implements ResultService {
 
     public Integer calculateMaxScore(SkillTestDto baseTest) {
         Integer maxScore = 0;
-
-        Iterator<QuestionDto> questions = baseTest.getQuestions().iterator();
-        while (questions.hasNext()) {
-            Iterator<AnswerDto> answers = questions.next().getAnswers().iterator();
-            while (answers.hasNext()) {
-                if (answers.next().getCorrect().equals(true)) {
+        List<QuestionDto> questions = baseTest.getQuestions();
+        for (int i = 0; i < questions.size(); i++) {
+            List<AnswerDto> answers = questions.get(i).getAnswers();
+            for (int j = 0; j < answers.size(); j++) {
+                if (answers.get(j).getCorrect().equals(true)) {
                     maxScore++;
                 }
             }
         }
-
-//        List<QuestionDto> questions = new ArrayList<>(baseTest.getQuestions());
-//        for (int i = 0; i < questions.size(); i++) {
-//            List<AnswerDto> answers = new ArrayList<>(questions.get(i).getAnswers());
-//            for (int j = 0; j < answers.size(); j++) {
-//                if (answers.get(j).getCorrect().equals(true)) {
-//                    maxScore++;
-//                }
-//            }
-//        }
         return maxScore;
     }
 
 
     private Integer checkAnswers(SkillTestDto baseTest, SkillTestDto resultTest) {
-        List<QuestionDto> baseQuestions = new ArrayList<>(baseTest.getQuestions());
-        List<QuestionDto> resultQuestions = new ArrayList<>(resultTest.getQuestions());
+        List<QuestionDto> baseQuestions = baseTest.getQuestions();
+        List<QuestionDto> resultQuestions = resultTest.getQuestions();
         boolean integrity = questionIntegrityValidator(baseQuestions, resultQuestions);
         if (!integrity) {
             throw new BadRequestException("ResultService: test integrity error");
@@ -128,8 +119,8 @@ public class ResultServiceImpl implements ResultService {
     private Integer calculateFinalScore(List<QuestionDto> baseQuestions, List<QuestionDto> resultQuestions) {
         Integer score = 0;
         for (int i = 0; i < baseQuestions.size(); i++) {
-            List<AnswerDto> baseAnswers = new ArrayList<>(baseQuestions.get(i).getAnswers());
-            List<AnswerDto> resultAnswers = new ArrayList<>(resultQuestions.get(i).getAnswers());
+            List<AnswerDto> baseAnswers = baseQuestions.get(i).getAnswers();
+            List<AnswerDto> resultAnswers = resultQuestions.get(i).getAnswers();
             for (int j = 0; j < baseAnswers.size(); j++) {
                 if (baseAnswers.get(j).getCorrect().equals(false)) {
                     break;
@@ -151,7 +142,7 @@ public class ResultServiceImpl implements ResultService {
                 integrityValidator = false;
                 break;
             }
-            if (!answerIntegrityValidation(new ArrayList<>(baseQuestions.get(i).getAnswers()), new ArrayList<>(resultQuestions.get(i).getAnswers()))) {
+            if (!answerIntegrityValidation(baseQuestions.get(i).getAnswers(), resultQuestions.get(i).getAnswers())) {
                 integrityValidator = false;
                 break;
             }

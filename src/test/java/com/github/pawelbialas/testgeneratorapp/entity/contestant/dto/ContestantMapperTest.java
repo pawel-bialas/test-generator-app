@@ -25,7 +25,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.UUID;
 
 import static com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContextProvider.contextProvider;
@@ -58,13 +57,13 @@ class ContestantMapperTest {
                 .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                 .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
                 .id(UUID.randomUUID())
-                .results(new LinkedHashSet<>())
-                .skillTests(new LinkedHashSet<>())
+                .results(new ArrayList<Result>())
+                .skillTests(new ArrayList<SkillTest>())
                 .build();
 
         skillTest = SkillTest.builder()
                 .testStatus(TestStatus.BASE)
-                .questions(new LinkedHashSet<>())
+                .questions(new ArrayList<Question>())
                 .createdDate(Timestamp.valueOf(LocalDateTime.now()))
                 .lastModifiedDate(Timestamp.valueOf(LocalDateTime.now()))
                 .id(UUID.randomUUID())
@@ -85,14 +84,11 @@ class ContestantMapperTest {
         contestant.addResult(result);
         contestant.addTest(skillTest);
 
-        ArrayList<Result> results = new ArrayList<>(contestant.getResults());
-        ArrayList<SkillTest> skillTests = new ArrayList<>(contestant.getSkillTests());
-
         assertAll(
                 () -> assertThat(contestant.getContestantNumber()).isEqualTo("1234"),
-                () -> assertThat(results.get(0)).isEqualTo(result),
-                () -> assertThat(skillTests.get(0)).isEqualTo(skillTest),
-                () -> assertThat(results.get(0).getScore()).isEqualTo(12F)
+                () -> assertThat(contestant.getResults().get(0)).isEqualTo(result),
+                () -> assertThat(contestant.getSkillTests().get(0)).isEqualTo(skillTest),
+                () -> assertThat(contestant.getResults().get(0).getScore()).isEqualTo(12F)
         );
 
     }
@@ -102,27 +98,19 @@ class ContestantMapperTest {
         //When
         contestant.addTest(skillTest);
         contestant.addResult(result);
-
-        ArrayList<SkillTest> skillTests = new ArrayList<>(contestant.getSkillTests());
-        ArrayList<Result> results = new ArrayList<>(contestant.getResults());
-
-
         ContestantDto contestantDto = contestantMapper.objectToDto(contestant, contextProvider());
-        contestantDto.setSkillTests(new LinkedHashSet<>());
-        contestantDto.addTest(skillTestMapper.objectToDto(skillTests.get(contestant.getSkillTests().size() - 1), contextProvider()));
-        contestantDto.setResults(new LinkedHashSet<>());
-        contestantDto.addResult(resultMapper.objectToDto(results.get(contestant.getResults().size() - 1), contextProvider()));
+        contestantDto.setSkillTests(new ArrayList<SkillTestDto>());
+        contestantDto.addTest(skillTestMapper.objectToDto(contestant.getSkillTests().get(contestant.getSkillTests().size() - 1), contextProvider()));
+        contestantDto.setResults(new ArrayList<ResultDto>());
+        contestantDto.addResult(resultMapper.objectToDto(contestant.getResults().get(contestant.getResults().size() - 1), contextProvider()));
 
         //Then
-        ArrayList<ResultDto> resultDtos = new ArrayList<>(contestantDto.getResults());
-        ArrayList<SkillTestDto> skillTestDtos = new ArrayList<>(contestantDto.getSkillTests());
 
         assertAll(
                 () -> assertThat(contestantDto.getId()).isEqualTo(contestant.getId()),
                 () -> assertThat(contestantDto.getContestantNumber()).isEqualTo("1234"),
                 () -> assertThat(contestantDto.getSkillTests().size()).isEqualTo(1),
-                () -> assertThat(skillTestDtos.get(0).getId()).isEqualTo(skillTestMapper.objectToDto(skillTest, contextProvider()).getId()),
-                () -> assertThat(resultDtos.get(0).getId()).isEqualTo(resultMapper.objectToDto(result, contextProvider()).getId())
+                () -> assertThat(contestantDto.getSkillTests().get(0).getId()).isEqualTo(skillTestMapper.objectToDto(skillTest, contextProvider()).getId())
         );
 
 

@@ -16,7 +16,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.OffsetDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -47,7 +49,7 @@ class AnswerServiceImplTest {
     @BeforeEach
     void setUp() {
         question1 = QuestionDto.builder()
-                .answers(new LinkedHashSet<>())
+                .answers(new ArrayList<>())
                 .contents("testQuestion1")
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
@@ -55,7 +57,7 @@ class AnswerServiceImplTest {
                 .build();
 
         question2 = QuestionDto.builder()
-                .answers(new LinkedHashSet<>())
+                .answers(new ArrayList<>())
                 .contents("testQuestion1")
                 .skillLevel(SkillLevel.ENTRY)
                 .specificTech("Core")
@@ -74,18 +76,23 @@ class AnswerServiceImplTest {
         //Given
 
         question1.addAnswer(answer1);
-        QuestionDto savedQuestion1 = questionService.saveOrUpdate(question1);
-        questionService.saveOrUpdate(savedQuestion1);
-        questionService.saveOrUpdate(savedQuestion1);
-        questionService.saveOrUpdate(savedQuestion1);
-        QuestionDto anotherSavedQuestion1 = questionService.saveOrUpdate(savedQuestion1);
-        ArrayList<AnswerDto> answerDtos = new ArrayList<>(anotherSavedQuestion1.getAnswers());
+        QuestionDto savedQuestion = questionService.saveOrUpdate(question1);
+        questionService.saveOrUpdate(question1);
+        questionService.saveOrUpdate(question1);
+        questionService.saveOrUpdate(question1);
+        questionService.saveOrUpdate(question1);
+        questionService.saveOrUpdate(question1);
+
+        AnswerDto savedAnswer = savedQuestion.getAnswers().get(0);
+
         //When
         List<AnswerDto> answers = answerService.findAll();
+
         //Then
+
         assertAll(
                 () -> assertThat(answers.size()).isEqualTo(1),
-                () -> assertThat(answers.get(0).getId()).isEqualTo(answerDtos.get(0).getId()),
+                () -> assertThat(answers.get(0).getId()).isEqualTo(savedAnswer.getId()),
                 () -> assertThat(question1.getAnswers().size()).isEqualTo(1)
         );
     }

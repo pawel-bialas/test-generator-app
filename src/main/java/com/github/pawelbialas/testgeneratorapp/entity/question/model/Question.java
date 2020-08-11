@@ -1,5 +1,4 @@
 package com.github.pawelbialas.testgeneratorapp.entity.question.model;
-
 import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.model.BaseEntity;
 import lombok.*;
@@ -9,35 +8,28 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "QUESTIONS")
 @Entity
-@NamedEntityGraphs(value = {
-        @NamedEntityGraph(
-                name = "question.fullJoins",
-                attributeNodes = {
-                        @NamedAttributeNode(value = "contents"),
-                        @NamedAttributeNode(value = "mainTech"),
-                        @NamedAttributeNode(value = "specificTech"),
-                        @NamedAttributeNode(value = "skillLevel"),
-                        @NamedAttributeNode(value = "answers")
-                }
-        )
-})
+@NamedEntityGraph(
+        name = "question.fullJoins",
+        attributeNodes = @NamedAttributeNode(value = "answers")
+)
 public class Question extends BaseEntity {
 
     private String contents;
     private String mainTech;
     private String specificTech;
-    @Enumerated(EnumType.STRING)
+    @Enumerated (EnumType.STRING)
     private SkillLevel skillLevel;
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set<Answer> answers = new LinkedHashSet<>();
+    private List<Answer> answers = new ArrayList<>();
 
     @Builder
     public Question(UUID id,
@@ -47,7 +39,7 @@ public class Question extends BaseEntity {
                     java.lang.String contents,
                     String mainTech,
                     java.lang.String specificTech,
-                    LinkedHashSet<Answer> answers,
+                    ArrayList<Answer> answers,
                     SkillLevel skillLevel) {
         super(id, version, createdDate, lastModifiedDate);
         this.contents = contents;
@@ -62,7 +54,7 @@ public class Question extends BaseEntity {
         answer.setQuestion(this);
     }
 
-    public void removeAnswer(Answer answer) {
+    public void removeAnswer (Answer answer) {
         this.getAnswers().remove(answer);
         answer.setQuestion(null);
     }

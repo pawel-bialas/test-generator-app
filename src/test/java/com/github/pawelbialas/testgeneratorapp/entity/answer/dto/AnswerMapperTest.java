@@ -18,8 +18,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.UUID;
 
 import static com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContextProvider.contextProvider;
@@ -45,7 +43,7 @@ class AnswerMapperTest {
     @BeforeEach
     void setUp() {
         testQuestion = Question.builder()
-                .answers(new LinkedHashSet<>())
+                .answers(new ArrayList<Answer>())
                 .contents("testQuestionContent")
                 .mainTech("Java")
                 .specificTech("JPA")
@@ -70,7 +68,7 @@ class AnswerMapperTest {
 
         assertAll(
                 () -> assertThat(testQuestion.getAnswers().size()).isEqualTo(1),
-                () -> assertThat(testQuestion.getAnswers().contains(testAnswer)).isEqualTo(true),
+                () -> assertThat(testQuestion.getAnswers().get(0)).isEqualTo(testAnswer),
                 () -> assertThat(testAnswer.getQuestion()).isEqualTo(testQuestion),
                 () -> assertThat(testAnswer.getAnswer()).isEqualTo("testAnswer"),
                 () -> assertThat(testQuestion.getContents()).isEqualTo("testQuestionContent")
@@ -94,7 +92,7 @@ class AnswerMapperTest {
         assertAll(
                 () -> assertThat(mappedAnswer.getId()).isEqualTo(answerDto.getId()),
                 () -> assertThat(mappedAnswer.getQuestion()).isEqualTo(mappedQuestion),
-                () -> assertThat(mappedQuestion.getAnswers().contains(mappedAnswer)).isEqualTo(true),
+                () -> assertThat(mappedQuestion.getAnswers().get(0)).isEqualTo(mappedAnswer),
                 () -> assertThat(mappedAnswer.getAnswer()).isEqualTo(answerDto.getAnswer())
         );
 
@@ -108,6 +106,10 @@ class AnswerMapperTest {
         QuestionDto questionDto = questionMapper.objectToDto(testQuestion, contextProvider());
 
         questionDto.addAnswer(answerDto);
+
+        System.out.println(answerDto);
+        System.out.println(questionDto);
+        System.out.println(questionDto.getAnswers().get(0));
 
         //Then
         assertAll(

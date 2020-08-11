@@ -102,7 +102,7 @@ public class SkillTestServiceImpl implements SkillTestService {
     }
 
     private SkillTestDto generateTest(ContestantDto contestant, List<TestParameter> testParams) {
-        LinkedHashSet<QuestionDto> questionDtos = new LinkedHashSet<>();
+        ArrayList<QuestionDto> questionDtos = new ArrayList<>();
 
         for (TestParameter param : testParams) {
             String mainTech = param.getMainTechParam();
@@ -120,6 +120,8 @@ public class SkillTestServiceImpl implements SkillTestService {
 
         }
 
+        Collections.shuffle(questionDtos);
+
         return SkillTestDto.builder()
                 .contestant(contestant)
                 .testStatus(java.lang.String.valueOf(TestStatus.BASE))
@@ -135,8 +137,8 @@ public class SkillTestServiceImpl implements SkillTestService {
         if (!confirmation) {
              contestantDto = ContestantDto.builder()
                     .contestantNumber(contestantNumber)
-                    .results(new LinkedHashSet<>())
-                    .skillTests(new LinkedHashSet<>())
+                    .results(new ArrayList<>())
+                    .skillTests(new ArrayList<>())
                     .build();
             UUID newId = contestantServiceImpl.saveOrUpdate(contestantDto).getId();
             Optional<ContestantDto> byId = contestantServiceImpl.findById(newId);

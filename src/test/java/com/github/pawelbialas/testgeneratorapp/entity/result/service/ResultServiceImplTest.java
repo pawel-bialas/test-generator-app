@@ -21,7 +21,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.OffsetDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import static com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContextProvider.contextProvider;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -63,7 +66,7 @@ public class ResultServiceImplTest {
     @Before
     public void setUp() {
         question1 = QuestionDto.builder()
-                .answers(new LinkedHashSet<>())
+                .answers(new ArrayList<>())
                 .contents("testQuestion1")
                 .id(UUID.randomUUID())
                 .skillLevel(SkillLevel.ENTRY)
@@ -74,7 +77,7 @@ public class ResultServiceImplTest {
                 .build();
 
         question2 = QuestionDto.builder()
-                .answers(new LinkedHashSet<>())
+                .answers(new ArrayList<>())
                 .contents("testQuestion1")
                 .id(UUID.randomUUID())
                 .skillLevel(SkillLevel.ENTRY)
@@ -85,7 +88,7 @@ public class ResultServiceImplTest {
                 .build();
 
         question3 = QuestionDto.builder()
-                .answers(new LinkedHashSet<>())
+                .answers(new ArrayList<>())
                 .contents("testQuestion2")
                 .id(UUID.randomUUID())
                 .skillLevel(SkillLevel.ENTRY)
@@ -96,7 +99,7 @@ public class ResultServiceImplTest {
                 .build();
 
         question4 = QuestionDto.builder()
-                .answers(new LinkedHashSet<>())
+                .answers(new ArrayList<>())
                 .contents("testQuestion2")
                 .id(UUID.randomUUID())
                 .skillLevel(SkillLevel.ENTRY)
@@ -147,8 +150,8 @@ public class ResultServiceImplTest {
                 .createdDate(OffsetDateTime.now())
                 .lastModifiedDate(OffsetDateTime.now())
                 .id(UUID.randomUUID())
-                .results(new LinkedHashSet<>())
-                .skillTests(new LinkedHashSet<>())
+                .results(new ArrayList<>())
+                .skillTests(new ArrayList<>())
                 .build();
 
         question1.addAnswer(answer1);
@@ -163,23 +166,21 @@ public class ResultServiceImplTest {
                 .lastModifiedDate(OffsetDateTime.now())
                 .contestant(new ContestantDto())
                 .result(new ResultDto())
-                .questions(new LinkedHashSet<>())
+                .questions(new ArrayList<>())
                 .testStatus("BASE")
                 .build();
 
-       LinkedHashSet<QuestionDto> questions = skillTest.getQuestions();
+        List<QuestionDto> questions = skillTest.getQuestions();
 
         questions.add(question2);
         questions.add(question1);
 
         skillTest.setQuestions(questions);
 
-        ArrayList<QuestionDto> questionDtos = new ArrayList<>(skillTest.getQuestions());
-
         assertAll(
                 () -> assertThat(resultService).isNotNull(),
                 () -> assertThat(skillTest.getQuestions().size()).isEqualTo(2),
-                () -> assertThat(questionDtos.get(0)).isEqualTo(question2)
+                () -> assertThat(skillTest.getQuestions().get(0)).isEqualTo(question2)
         );
     }
 
@@ -211,7 +212,7 @@ public class ResultServiceImplTest {
         // Given
         SkillTestDto otherSkillTest = skillTest;
 
-        otherSkillTest.setQuestions(new LinkedHashSet<>());
+        otherSkillTest.setQuestions(new ArrayList<>());
 
         AnswerDto otherAnswer1 = AnswerDto.builder()
                 .id(UUID.randomUUID())
@@ -233,11 +234,11 @@ public class ResultServiceImplTest {
 
         //Both otherAnswer 1 and 2 are now quite opposites of the base tests
 
-        question1.setAnswers(new LinkedHashSet<>());
+        question1.setAnswers(new ArrayList<>());
         question1.addAnswer(otherAnswer1);
         question1.addAnswer(otherAnswer2);
 
-        LinkedHashSet<QuestionDto> questions = new LinkedHashSet<>();
+        ArrayList<QuestionDto> questions = new ArrayList<>();
         questions.add(question2);
         questions.add(question1);
 
@@ -259,7 +260,7 @@ public class ResultServiceImplTest {
     public void given_2TestsWithDifferentQuestionsContent_Then_Should_ThrowAnException() {
         // This test will prove questionIntegrityValidator
         // Given
-        LinkedHashSet<QuestionDto> questions = new LinkedHashSet<>();
+        List<QuestionDto> questions = new ArrayList<>();
         questions.add(question4);
         questions.add(question3);
 
@@ -269,7 +270,7 @@ public class ResultServiceImplTest {
                 .lastModifiedDate(OffsetDateTime.now())
                 .contestant(new ContestantDto())
                 .result(new ResultDto())
-                .questions(new LinkedHashSet<>())
+                .questions(new ArrayList<>())
                 .testStatus("BASE")
                 .build();
 
@@ -294,12 +295,12 @@ public class ResultServiceImplTest {
         SkillTestDto otherSkillTest = skillTest;
         QuestionDto otherQuestion = question1;
 
-        otherQuestion.setAnswers(new LinkedHashSet<>());
+        otherQuestion.setAnswers(new ArrayList<>());
         otherQuestion.addAnswer(answer1);
         otherQuestion.addAnswer(answer3);
 
-        otherSkillTest.setQuestions(new LinkedHashSet<>());
-        LinkedHashSet<QuestionDto> questions = new LinkedHashSet<>();
+        otherSkillTest.setQuestions(new ArrayList<>());
+        ArrayList<QuestionDto> questions = new ArrayList<>();
         questions.add(question2);
         questions.add(otherQuestion);
         otherSkillTest.setQuestions(questions);

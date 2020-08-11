@@ -6,19 +6,21 @@ import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.BaseItem;
 import lombok.*;
 
 import java.time.OffsetDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-//@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false)
 public class ContestantDto extends BaseItem {
 
     private String contestantNumber;
-    private LinkedHashSet<SkillTestDto> skillTests = new LinkedHashSet<>();
-    private LinkedHashSet<ResultDto> results = new LinkedHashSet<>();
+    private List<SkillTestDto> skillTests = new ArrayList<>();
+    private List<ResultDto> results = new ArrayList<>();
 
     @Builder
     public ContestantDto (UUID id,
@@ -26,8 +28,8 @@ public class ContestantDto extends BaseItem {
                           OffsetDateTime createdDate,
                           OffsetDateTime lastModifiedDate,
                           String contestantNumber,
-                          LinkedHashSet<SkillTestDto> skillTests,
-                          LinkedHashSet<ResultDto> results) {
+                          List<SkillTestDto> skillTests,
+                          List<ResultDto> results) {
         super(id, version, createdDate, lastModifiedDate);
         this.contestantNumber = contestantNumber;
         this.results = results;

@@ -15,26 +15,11 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "ANSWERS")
 @Entity
-@NamedEntityGraphs(value = {
-        @NamedEntityGraph(
-                name = "answer.fullJoins",
-                attributeNodes = {
-                        @NamedAttributeNode(value = "answer"),
-                        @NamedAttributeNode(value = "correct"),
-                        @NamedAttributeNode(value = "question", subgraph = "question.anwers")
-                },
-                subgraphs = {
-                        @NamedSubgraph(
-                                name = "question.anwers",
-                                attributeNodes = {
-                                        @NamedAttributeNode(value = "answers")
-                                }
-                        )
-                }
-        )
-})
+@NamedEntityGraph(
+        name = "answer.fullJoins",
+        attributeNodes = @NamedAttributeNode(value = "question")
+)
 public class Answer extends BaseEntity {
 
     @Column(nullable = false)

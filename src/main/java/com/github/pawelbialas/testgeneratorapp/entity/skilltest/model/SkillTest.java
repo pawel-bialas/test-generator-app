@@ -17,32 +17,30 @@ import java.util.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "SKILLTESTS")
 @Entity
-@NamedEntityGraphs(value = {
-        @NamedEntityGraph(
-                name = "skillTest.fullJoins",
-                attributeNodes = {
-                        @NamedAttributeNode(value = "questions", subgraph = "skillTest.questions.answers"),
-                        @NamedAttributeNode(value = "contestant"),
-                        @NamedAttributeNode(value = "result"),
-                        @NamedAttributeNode(value = "testStatus"),
-                },
-                subgraphs = {
-                        @NamedSubgraph(
-                                name = "skillTest.questions.answers",
-                                attributeNodes = {
-                                        @NamedAttributeNode(value = "answers")
-                                }
-                        )
-                }
-        )
-})
+@NamedEntityGraph(
+        name = "skillTest.fullJoins",
+        attributeNodes ={
+                @NamedAttributeNode(value = "questions"),
+                @NamedAttributeNode(value = "contestant"),
+                @NamedAttributeNode(value = "result", subgraph = "skillTest.result.contestant.subgraph")
+        },
+        subgraphs = {
+//                @NamedSubgraph(
+//                        name = "skillTest.questions.answers.subgraph",
+//                        attributeNodes = @NamedAttributeNode(value = "answers")
+//                ),
+                @NamedSubgraph(
+                        name = "skillTest.result.contestant.subgraph",
+                        attributeNodes = @NamedAttributeNode(value = "contestant")
+                )
+        }
 
+)
 public class SkillTest extends BaseEntity {
 
     @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Question> questions = new LinkedHashSet<>();
+    private List<Question> questions = new ArrayList<>();
     @ManyToOne(fetch = FetchType.LAZY)
     private Contestant contestant;
     @OneToOne(mappedBy = "skillTest", fetch = FetchType.LAZY)
@@ -55,7 +53,7 @@ public class SkillTest extends BaseEntity {
                      Long version,
                      Timestamp createdDate,
                      Timestamp lastModifiedDate,
-                     LinkedHashSet<Question> questions,
+                     ArrayList<Question> questions,
                      Contestant contestant,
                      Result result,
                      TestStatus testStatus) {

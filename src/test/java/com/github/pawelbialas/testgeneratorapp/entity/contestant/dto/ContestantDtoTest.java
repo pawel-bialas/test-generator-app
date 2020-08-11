@@ -16,7 +16,6 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,13 +37,17 @@ class ContestantDtoTest {
 
         contestantDto = ContestantDto.builder()
                 .contestantNumber("1234")
+                .createdDate(OffsetDateTime.now())
+                .lastModifiedDate(OffsetDateTime.now())
                 .id(UUID.randomUUID())
-                .results(new LinkedHashSet<>())
-                .skillTests(new LinkedHashSet<>())
+                .results(new ArrayList<>())
+                .skillTests(new ArrayList<>())
                 .build();
 
         skillTestDto = SkillTestDto.builder()
-                .questions(new LinkedHashSet<>())
+                .questions(new ArrayList<>())
+                .createdDate(OffsetDateTime.now())
+                .lastModifiedDate(OffsetDateTime.now())
                 .id(UUID.randomUUID())
                 .build();
 
@@ -57,12 +60,11 @@ class ContestantDtoTest {
     void addTest() {
         //When
         contestantDto.addTest(skillTestDto);
-        ArrayList<SkillTestDto> skillTests = new ArrayList<>(contestantDto.getSkillTests());
         //Then
 
         assertAll(
                 () -> assertThat(contestantDto.getSkillTests().size()).isEqualTo(1),
-                () -> assertThat(skillTests.get(0)).isEqualTo(skillTestDto)
+                () -> assertThat(contestantDto.getSkillTests().get(0)).isEqualTo(skillTestDto)
         );
 
 
@@ -72,10 +74,9 @@ class ContestantDtoTest {
     void removeTest() {
         //When
         contestantDto.addTest(skillTestDto);
-        ArrayList<SkillTestDto> skillTests = new ArrayList<>(contestantDto.getSkillTests());
         assertAll(
                 () -> assertThat(contestantDto.getSkillTests().size()).isEqualTo(1),
-                () -> assertThat(skillTests.get(0)).isEqualTo(skillTestDto),
+                () -> assertThat(contestantDto.getSkillTests().get(0)).isEqualTo(skillTestDto),
                 () -> assertThat(skillTestDto.getContestant()).isEqualTo(contestantDto)
         );
         contestantDto.removeTest(skillTestDto);
@@ -91,10 +92,10 @@ class ContestantDtoTest {
         //When
         contestantDto.addResult(resultDto);
         //Then
-        ArrayList<ResultDto> results = new ArrayList<>(contestantDto.getResults());
+
         assertAll(
                 () -> assertThat(contestantDto.getResults().size()).isEqualTo(1),
-                () -> assertThat(results.get(0)).isEqualTo(resultDto)
+                () -> assertThat(contestantDto.getResults().get(0)).isEqualTo(resultDto)
         );
     }
 
@@ -102,10 +103,9 @@ class ContestantDtoTest {
     void removeResult() {
         //When
         contestantDto.addResult(resultDto);
-        ArrayList<ResultDto> results = new ArrayList<>(contestantDto.getResults());
         assertAll(
                 () -> assertThat(contestantDto.getResults().size()).isEqualTo(1),
-                () -> assertThat(results.get(0)).isEqualTo(resultDto),
+                () -> assertThat(contestantDto.getResults().get(0)).isEqualTo(resultDto),
                 () -> assertThat(resultDto.getContestant()).isEqualTo(contestantDto)
         );
         contestantDto.removeResult(resultDto);
