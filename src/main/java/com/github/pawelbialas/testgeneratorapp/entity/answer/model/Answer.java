@@ -18,7 +18,22 @@ import java.util.UUID;
 @Entity
 @NamedEntityGraph(
         name = "answer.fullJoins",
-        attributeNodes = @NamedAttributeNode(value = "question")
+        attributeNodes = {
+                @NamedAttributeNode(value = "id"),
+                @NamedAttributeNode(value = "createdDate"),
+                @NamedAttributeNode(value = "lastModifiedDate"),
+                @NamedAttributeNode(value = "answer"),
+                @NamedAttributeNode(value = "correct"),
+                @NamedAttributeNode(value = "question", subgraph = "answer.question.answers")
+        },
+        subgraphs = {
+                @NamedSubgraph(
+                        name = "answer.question.answers",
+                        attributeNodes = {
+                                @NamedAttributeNode(value = "answers")
+                        }
+                )
+        }
 )
 public class Answer extends BaseEntity {
 

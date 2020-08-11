@@ -1,4 +1,5 @@
 package com.github.pawelbialas.testgeneratorapp.entity.question.model;
+
 import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.model.BaseEntity;
 import lombok.*;
@@ -19,14 +20,23 @@ import java.util.UUID;
 @Entity
 @NamedEntityGraph(
         name = "question.fullJoins",
-        attributeNodes = @NamedAttributeNode(value = "answers")
+        attributeNodes = {
+                @NamedAttributeNode(value = "id"),
+                @NamedAttributeNode(value = "createdDate"),
+                @NamedAttributeNode(value = "lastModifiedDate"),
+                @NamedAttributeNode(value = "contents"),
+                @NamedAttributeNode(value = "mainTech"),
+                @NamedAttributeNode(value = "specificTech"),
+                @NamedAttributeNode(value = "skillLevel"),
+                @NamedAttributeNode(value = "answers"),
+        }
 )
 public class Question extends BaseEntity {
 
     private String contents;
     private String mainTech;
     private String specificTech;
-    @Enumerated (EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private SkillLevel skillLevel;
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Answer> answers = new ArrayList<>();
@@ -54,7 +64,7 @@ public class Question extends BaseEntity {
         answer.setQuestion(this);
     }
 
-    public void removeAnswer (Answer answer) {
+    public void removeAnswer(Answer answer) {
         this.getAnswers().remove(answer);
         answer.setQuestion(null);
     }

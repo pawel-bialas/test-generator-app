@@ -77,11 +77,13 @@ class AnswerServiceImplTest {
 
         question1.addAnswer(answer1);
         QuestionDto savedQuestion = questionService.saveOrUpdate(question1);
-        questionService.saveOrUpdate(question1);
-        questionService.saveOrUpdate(question1);
-        questionService.saveOrUpdate(question1);
-        questionService.saveOrUpdate(question1);
-        questionService.saveOrUpdate(question1);
+        questionService.saveOrUpdate(savedQuestion);
+        System.out.println("after 1st save");
+        questionService.saveOrUpdate(savedQuestion);
+        questionService.saveOrUpdate(savedQuestion);
+        questionService.saveOrUpdate(savedQuestion);
+        questionService.saveOrUpdate(savedQuestion);
+        System.out.println("after last save");
 
         AnswerDto savedAnswer = savedQuestion.getAnswers().get(0);
 

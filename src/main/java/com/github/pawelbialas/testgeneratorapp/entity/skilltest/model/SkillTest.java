@@ -21,18 +21,20 @@ import java.util.*;
 @NamedEntityGraph(
         name = "skillTest.fullJoins",
         attributeNodes ={
-                @NamedAttributeNode(value = "questions"),
+                @NamedAttributeNode(value = "questions", subgraph = "skillTest.questions.answers.subgraph"),
                 @NamedAttributeNode(value = "contestant"),
                 @NamedAttributeNode(value = "result", subgraph = "skillTest.result.contestant.subgraph")
         },
         subgraphs = {
-//                @NamedSubgraph(
-//                        name = "skillTest.questions.answers.subgraph",
-//                        attributeNodes = @NamedAttributeNode(value = "answers")
-//                ),
+                @NamedSubgraph(
+                        name = "skillTest.questions.answers.subgraph",
+                        attributeNodes = @NamedAttributeNode(value = "answers")
+                ),
                 @NamedSubgraph(
                         name = "skillTest.result.contestant.subgraph",
-                        attributeNodes = @NamedAttributeNode(value = "contestant")
+                        attributeNodes = {
+                                @NamedAttributeNode(value = "contestant"),
+                        }
                 )
         }
 
