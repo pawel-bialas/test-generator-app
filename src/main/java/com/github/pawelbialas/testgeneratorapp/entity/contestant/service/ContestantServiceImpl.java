@@ -22,38 +22,17 @@ import static com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvo
 public class ContestantServiceImpl implements ContestantService {
 
     private final ContestantRepository repository;
-    private final EntityManagerFactory emf;
+    private final EntityManager entityManager;
     private final ContestantMapper mapper;
 
     public ContestantServiceImpl(
             ContestantRepository repository,
-            EntityManagerFactory emf,
+            EntityManager entityManager,
             ContestantMapper mapper
     ) {
         this.repository = repository;
-        this.emf = emf;
+        this.entityManager = entityManager;
         this.mapper = mapper;
-    }
-
-    @Transactional
-    public List<Contestant> loadAll() {
-        doinjpa
-        List<Contestant> _contestants = emf.createEntityManager().createQuery(
-                "select distinct c " +
-                        "from Contestant c " +
-                        "left join fetch c.skillTests ", Contestant.class)
-                .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
-                .getResultList();
-
-        List<Contestant> contestants = emf.createEntityManager().createQuery(
-                "select distinct c " +
-                        "from Contestant c " +
-                        "left join fetch c.results " +
-                        "where c in :contestants", Contestant.class)
-                .setParameter("contestants", _contestants)
-                .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
-                .getResultList();
-     return contestants;
     }
 
     @Override

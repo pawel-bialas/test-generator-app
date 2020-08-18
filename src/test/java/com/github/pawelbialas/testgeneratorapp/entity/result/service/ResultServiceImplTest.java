@@ -328,12 +328,14 @@ public class ResultServiceImplTest {
         // When
 
         ResultDto save = resultService.saveOrUpdate(resultDto);
+        System.out.println("after 1st save");
 
         resultService.saveOrUpdate(save);
         resultService.saveOrUpdate(save);
         resultService.saveOrUpdate(save);
         resultService.saveOrUpdate(save);
         resultService.saveOrUpdate(save);
+        System.out.println("after last save");
 
         List<ResultDto> all = resultService.findAll();
 

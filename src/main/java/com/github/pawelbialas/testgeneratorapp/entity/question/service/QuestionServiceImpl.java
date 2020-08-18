@@ -9,6 +9,7 @@ import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMa
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -23,10 +24,16 @@ public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionRepository questionRepository;
     private final QuestionMapper mapper;
+    private final EntityManager entityManager;
 
-    public QuestionServiceImpl(QuestionRepository questionRepository, EntityManagerFactory emf, QuestionMapper mapper) {
+    public QuestionServiceImpl(
+            QuestionRepository questionRepository,
+            EntityManager entityManager,
+            QuestionMapper mapper
+    ) {
         this.questionRepository = questionRepository;
         this.mapper = mapper;
+        this.entityManager = entityManager;
     }
 
     @Override
@@ -35,18 +42,25 @@ public class QuestionServiceImpl implements QuestionService {
         return mapper.objectToDto(save, contextProvider());
     }
 
-    @Override
-    public Optional<QuestionDto> findById(UUID uuid) {
-        return questionRepository.findById(uuid).map(val -> mapper.objectToDto(val, contextProvider()));
+
+    public QuestionDto findByUuId(UUID uuid) {
+        Question question = entityManager.createQuery("select q from Question q " +
+                "left join fetch q.answers " +
+                "where q.id = :uuid", Question.class)
+                .setParameter("uuid", uuid)
+                .getSingleResult();
+        return mapper.objectToDto(question, contextProvider());
     }
 
     @Override
     public List<QuestionDto> findAll() {
-        return questionRepository.findAll().stream()
-                .map(question -> mapper.objectToDto(question, contextProvider()))
-                .collect(Collectors.toList());
+        List<Question> questions =
+                entityManager.createQuery(
+                        "select q from Question q " +
+                                "left join fetch q.answers", Question.class)
+                        .getResultList();
+        return questions.stream().map(question -> mapper.objectToDto(question, contextProvider())).collect(Collectors.toList());
     }
-
 
 
     @Override

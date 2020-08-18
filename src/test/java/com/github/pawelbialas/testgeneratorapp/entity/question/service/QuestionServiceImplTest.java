@@ -76,14 +76,14 @@ class QuestionServiceImplTest {
         service.saveOrUpdate(savedQuestion2);
         System.out.println("last save 2");
         // When
-        Optional<QuestionDto> searchResult = service.findById(savedQuestion1.getId());
+        QuestionDto searchResult = service.findByUuId(savedQuestion1.getId());
 
 
         List<QuestionDto> all = service.findAll();
         // Then
         assertAll(
-                () -> assertThat(searchResult.isPresent()),
-                () -> assertThat(searchResult.get().getId()).isEqualTo(savedQuestion1.getId()),
+                () -> assertThat(searchResult).isNotNull(),
+                () -> assertThat(searchResult.getId()).isEqualTo(savedQuestion1.getId()),
                 () -> assertThat(all.size()).isEqualTo(2),
                 () -> assertThat(all.get(0).getId()).isEqualTo(savedQuestion1.getId()),
                 () -> assertThat(all.get(1).getId()).isEqualTo(savedQuestion2.getId())

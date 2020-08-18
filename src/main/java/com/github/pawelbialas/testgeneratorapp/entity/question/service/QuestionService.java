@@ -13,8 +13,6 @@ public interface QuestionService {
 
     QuestionDto saveOrUpdate(QuestionDto questionDto);
 
-    Optional<QuestionDto> findById(UUID uuid);
-
     List<QuestionDto> findAll ();
 
     List<QuestionDto> findAllByMainTech(String mainTech);

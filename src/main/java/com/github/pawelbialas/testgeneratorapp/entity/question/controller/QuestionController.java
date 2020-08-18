@@ -22,13 +22,13 @@ public class QuestionController {
         questionServiceImpl.saveOrUpdate(question);
     }
 
-    @PutMapping(path = "/manage/question/update")
-    @ResponseStatus(HttpStatus.OK)
-    private void updateQuestion (@RequestBody QuestionDto questionDto) {
-        questionServiceImpl.findById(questionDto.getId())
-                .ifPresentOrElse(questionServiceImpl::saveOrUpdate,
-                        () -> {
-                    throw new NotFoundException("Question not found");
-                });
-    }
+//    @PutMapping(path = "/manage/question/update")
+//    @ResponseStatus(HttpStatus.OK)
+//    private void updateQuestion (@RequestBody QuestionDto questionDto) {
+//        questionServiceImpl.findByUuId(questionDto.getId())
+//                .ifPresentOrElse(questionServiceImpl::saveOrUpdate,
+//                        () -> {
+//                    throw new NotFoundException("Question not found");
+//                });
+//    }
 }

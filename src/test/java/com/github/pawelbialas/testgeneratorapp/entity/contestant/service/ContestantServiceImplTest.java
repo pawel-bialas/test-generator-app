@@ -5,7 +5,6 @@ import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantM
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
 import com.github.pawelbialas.testgeneratorapp.entity.result.dto.ResultDto;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.dto.SkillTestDto;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -16,9 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-import static com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContextProvider.contextProvider;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -74,13 +71,11 @@ class ContestantServiceImplTest {
         contestantService.saveOrUpdate(save);
         System.out.println("after last save");
 
-        List<Contestant> all = contestantService.loadAll();
-
-        System.out.println(all);
-        // Then
-//        assertAll (
-//                () -> assertThat(all.size()).isEqualTo(1),
-//                () -> assertThat(all.get(0).getId()).isEqualTo(save.getId())
-//        );
+        List<ContestantDto> all = contestantService.findAll();
+//         Then
+        assertAll (
+                () -> assertThat(all.size()).isEqualTo(1),
+                () -> assertThat(all.get(0).getId()).isEqualTo(save.getId())
+        );
     }
 }
