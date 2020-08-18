@@ -1,11 +1,11 @@
 package com.github.pawelbialas.testgeneratorapp.entity.result.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.model.BaseEntity;
 import lombok.*;
-import lombok.experimental.Accessors;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.sql.Timestamp;

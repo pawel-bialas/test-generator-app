@@ -3,10 +3,11 @@ package com.github.pawelbialas.testgeneratorapp.entity.answer.model;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.model.BaseEntity;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -16,25 +17,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@NamedEntityGraph(
-        name = "answer.fullJoins",
-        attributeNodes = {
-                @NamedAttributeNode(value = "id"),
-                @NamedAttributeNode(value = "createdDate"),
-                @NamedAttributeNode(value = "lastModifiedDate"),
-                @NamedAttributeNode(value = "answer"),
-                @NamedAttributeNode(value = "correct"),
-                @NamedAttributeNode(value = "question", subgraph = "answer.question.answers")
-        },
-        subgraphs = {
-                @NamedSubgraph(
-                        name = "answer.question.answers",
-                        attributeNodes = {
-                                @NamedAttributeNode(value = "answers")
-                        }
-                )
-        }
-)
 public class Answer extends BaseEntity {
 
     @Column(nullable = false)

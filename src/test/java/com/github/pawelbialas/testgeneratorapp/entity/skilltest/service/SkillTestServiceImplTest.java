@@ -43,12 +43,14 @@ class SkillTestServiceImplTest {
         // Given
 
         SkillTestDto savedTest = skillTestService.saveOrUpdate(skillTestDto);
+        System.out.println("after 1st save");
 
         //When
         skillTestService.saveOrUpdate(savedTest);
         skillTestService.saveOrUpdate(savedTest);
         skillTestService.saveOrUpdate(savedTest);
         skillTestService.saveOrUpdate(savedTest);
+        System.out.println("after last save");
 
         List<SkillTestDto> all = skillTestService.findAll();
         //Then

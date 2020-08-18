@@ -1,13 +1,10 @@
 package com.github.pawelbialas.testgeneratorapp.entity.contestant.model;
-
-
 import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.SkillTest;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.model.BaseEntity;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -25,16 +22,21 @@ public class Contestant extends BaseEntity {
     @Column(updatable = false, nullable = false)
     private String contestantNumber;
     @OneToMany(mappedBy = "contestant", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @Fetch(FetchMode.SUBSELECT)
     private List<SkillTest> skillTests = new ArrayList<>();
     @OneToMany(mappedBy = "contestant", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @Fetch(FetchMode.SUBSELECT)
     private List<Result> results = new ArrayList<>();
 
 
     @Builder
-    public Contestant(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,
-                      String contestantNumber, ArrayList<SkillTest> skillTests, ArrayList<Result> results) {
+    public Contestant(
+            UUID id,
+            Long version,
+            Timestamp createdDate,
+            Timestamp lastModifiedDate,
+            String contestantNumber,
+            ArrayList<SkillTest> skillTests,
+            ArrayList<Result> results
+    ) {
         super(id, version, createdDate, lastModifiedDate);
         this.contestantNumber = contestantNumber;
         this.skillTests = skillTests;

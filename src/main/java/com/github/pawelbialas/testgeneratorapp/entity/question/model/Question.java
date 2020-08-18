@@ -3,9 +3,8 @@ package com.github.pawelbialas.testgeneratorapp.entity.question.model;
 import com.github.pawelbialas.testgeneratorapp.entity.answer.model.Answer;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.model.BaseEntity;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -18,19 +17,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@NamedEntityGraph(
-        name = "question.fullJoins",
-        attributeNodes = {
-                @NamedAttributeNode(value = "id"),
-                @NamedAttributeNode(value = "createdDate"),
-                @NamedAttributeNode(value = "lastModifiedDate"),
-                @NamedAttributeNode(value = "contents"),
-                @NamedAttributeNode(value = "mainTech"),
-                @NamedAttributeNode(value = "specificTech"),
-                @NamedAttributeNode(value = "skillLevel"),
-                @NamedAttributeNode(value = "answers"),
-        }
-)
 public class Question extends BaseEntity {
 
     private String contents;

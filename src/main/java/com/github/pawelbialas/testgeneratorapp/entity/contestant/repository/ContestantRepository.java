@@ -16,6 +16,19 @@ import java.util.UUID;
 public interface ContestantRepository extends JpaRepository<Contestant, UUID> {
 
 
+    @Override
+//    @EntityGraph(value = "contestant.fullJoins", type = EntityGraph.EntityGraphType.FETCH)
+    List<Contestant> findAll();
+
+    @Override
+//    @EntityGraph(value = "contestant.fullJoins", type = EntityGraph.EntityGraphType.FETCH)
+    <S extends Contestant> S save(S s);
+
+    @Override
+//    @EntityGraph(value = "contestant.fullJoins", type = EntityGraph.EntityGraphType.FETCH)
+    Optional<Contestant> findById(UUID uuid);
+
+//    @EntityGraph(value = "contestant.fullJoins", type = EntityGraph.EntityGraphType.FETCH)
     Optional<Contestant> findByContestantNumber (String contestantNumber);
 
 }

@@ -4,8 +4,10 @@ import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantD
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.repository.ContestantRepository;
+import org.hibernate.annotations.QueryHints;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -23,10 +25,35 @@ public class ContestantServiceImpl implements ContestantService {
     private final EntityManagerFactory emf;
     private final ContestantMapper mapper;
 
-    public ContestantServiceImpl(ContestantRepository repository, EntityManagerFactory emf, ContestantMapper mapper) {
+    public ContestantServiceImpl(
+            ContestantRepository repository,
+            EntityManagerFactory emf,
+            ContestantMapper mapper
+    ) {
         this.repository = repository;
         this.emf = emf;
         this.mapper = mapper;
+    }
+
+    @Transactional
+    public List<Contestant> loadAll() {
+        doinjpa
+        List<Contestant> _contestants = emf.createEntityManager().createQuery(
+                "select distinct c " +
+                        "from Contestant c " +
+                        "left join fetch c.skillTests ", Contestant.class)
+                .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
+                .getResultList();
+
+        List<Contestant> contestants = emf.createEntityManager().createQuery(
+                "select distinct c " +
+                        "from Contestant c " +
+                        "left join fetch c.results " +
+                        "where c in :contestants", Contestant.class)
+                .setParameter("contestants", _contestants)
+                .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
+                .getResultList();
+     return contestants;
     }
 
     @Override

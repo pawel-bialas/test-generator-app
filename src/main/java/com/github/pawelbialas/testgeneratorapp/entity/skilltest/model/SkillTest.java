@@ -5,12 +5,14 @@ import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.result.model.Result;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.model.BaseEntity;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 
 @Getter
@@ -18,30 +20,18 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@NamedEntityGraph(
-        name = "skillTest.fullJoins",
-        attributeNodes ={
-                @NamedAttributeNode(value = "questions", subgraph = "skillTest.questions.answers.subgraph"),
-                @NamedAttributeNode(value = "contestant"),
-                @NamedAttributeNode(value = "result", subgraph = "skillTest.result.contestant.subgraph")
-        },
-        subgraphs = {
-                @NamedSubgraph(
-                        name = "skillTest.questions.answers.subgraph",
-                        attributeNodes = @NamedAttributeNode(value = "answers")
-                ),
-                @NamedSubgraph(
-                        name = "skillTest.result.contestant.subgraph",
-                        attributeNodes = {
-                                @NamedAttributeNode(value = "contestant"),
-                        }
-                )
-        }
-
-)
 public class SkillTest extends BaseEntity {
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            fetch = FetchType.LAZY)
+    @JoinTable(name = "skill_est_suestions",
+            joinColumns = @JoinColumn(name = "skill_test_id"),
+            inverseJoinColumns = @JoinColumn(name = "question_id")
+    )
     private List<Question> questions = new ArrayList<>();
     @ManyToOne(fetch = FetchType.LAZY)
     private Contestant contestant;
