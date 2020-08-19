@@ -4,10 +4,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.shared.domain.model.BaseEntity;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -17,6 +14,28 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@NamedEntityGraphs({
+        @NamedEntityGraph(
+                name = "answer.fullJoins",
+                attributeNodes = {
+                        @NamedAttributeNode(value = "id"),
+                        @NamedAttributeNode(value = "createdDate"),
+                        @NamedAttributeNode(value = "lastModifiedDate"),
+                        @NamedAttributeNode(value = "answer"),
+                        @NamedAttributeNode(value = "correct"),
+                        @NamedAttributeNode(value = "question", subgraph = "answer.join.question"),
+                },
+                subgraphs = {
+                        @NamedSubgraph(
+                                name = "answer.join.question",
+                                attributeNodes = {
+                                        @NamedAttributeNode(value = "id"),
+                                        @NamedAttributeNode(value = "answers"),
+                                }
+                        )
+                }
+        )
+})
 public class Answer extends BaseEntity {
 
     @Column(nullable = false)

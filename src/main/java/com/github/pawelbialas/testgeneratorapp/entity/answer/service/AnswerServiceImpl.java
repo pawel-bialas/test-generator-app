@@ -8,6 +8,7 @@ import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMa
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -22,15 +23,15 @@ public class AnswerServiceImpl implements AnswerService {
 
     private final AnswerRepository repository;
     private final AnswerMapper mapper;
-    private final EntityManagerFactory emf;
+    private final EntityManager entityManager;
 
 
     public AnswerServiceImpl(AnswerRepository repository,
                              AnswerMapper mapper,
-                             EntityManagerFactory emf) {
+                             EntityManager entityManager) {
         this.repository = repository;
         this.mapper = mapper;
-        this.emf = emf;
+        this.entityManager = entityManager;
     }
 
     @Override
