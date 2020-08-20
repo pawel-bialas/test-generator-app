@@ -46,8 +46,8 @@ public class SkillTestDto extends BaseItem {
         return "SkillTestDto{" +
                 " uuid=" + this.getId() +
                 ", questions=" + questions +
-//                ", contestant=" + contestant.getId() +
-//                ", result=" + result.getId() +
+                ", contestant=" + contestant +
+                ", result=" + result +
                 ", testStatus='" + testStatus + '\'' +
                 '}';
     }

@@ -4,6 +4,7 @@ import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantD
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.dto.ContestantMapper;
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.service.ContestantServiceImpl;
 import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionDto;
+import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionConverterService;
 import com.github.pawelbialas.testgeneratorapp.entity.question.service.QuestionServiceImpl;
@@ -76,18 +77,37 @@ public class SkillTestServiceImpl implements SkillTestService {
     }
 
 
-
     @Transactional
-    List<SkillTest> fetchAll () {
-        return emf.createEntityManager().createQuery(
+    List<SkillTest> fetchAll() {
+        EntityManager em = emf.createEntityManager();
+        List<SkillTest> skillTests = em.createQuery(
                 "select distinct s from SkillTest s " +
-                        "left join fetch s.questions " +
-                        "left join fetch s.contestant " +
-                        "left join fetch s.result",
+                        "left join fetch s.questions q " +
+                        "left join fetch s.contestant c " +
+                        "left join fetch s.result r ",
                 SkillTest.class)
                 .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
                 .getResultList();
+
+        List<Question> questions = skillTests.stream().map(SkillTest::getQuestions).flatMap(List::stream).collect(Collectors.toList());
+
+        List<Question> questionsWithAnswers = em.createQuery(
+                "select distinct q from Question q " +
+                        "left join fetch q.answers " +
+                        "where q in :questions",
+                Question.class)
+                .setParameter("questions", questions)
+                .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
+                .getResultList();
+
+        List<SkillTest> join = skillTests.stream().peek(skillTest -> {
+            List<Question> questionList = skillTest.getQuestions();
+            questionList.forEach(question -> question.setAnswers(questionsWithAnswers.get(questionsWithAnswers.indexOf(question)).getAnswers()));
+            skillTest.setQuestions(questionList);
+        }).collect(Collectors.toList());
+        return join;
     }
+
     @Override
     public List<SkillTestDto> findAllByContestant(ContestantDto contestant) {
         return skillTestRepository.findAllByContestant(contestantMapper.dtoToObject(contestant, contextProvider()))
@@ -154,7 +174,7 @@ public class SkillTestServiceImpl implements SkillTestService {
         Boolean confirmation = contestantServiceImpl.confirmContestant(contestantNumber);
         ContestantDto contestantDto = null;
         if (!confirmation) {
-             contestantDto = ContestantDto.builder()
+            contestantDto = ContestantDto.builder()
                     .contestantNumber(contestantNumber)
                     .results(new ArrayList<>())
                     .skillTests(new ArrayList<>())
@@ -162,7 +182,7 @@ public class SkillTestServiceImpl implements SkillTestService {
             UUID newId = contestantServiceImpl.saveOrUpdate(contestantDto).getId();
             Optional<ContestantDto> byId = contestantServiceImpl.findById(newId);
             if (byId.isPresent()) {
-                 contestantDto = byId.get();
+                contestantDto = byId.get();
             }
         } else {
             Optional<ContestantDto> queryResult = contestantServiceImpl.findContestantByNumber(contestantNumber);

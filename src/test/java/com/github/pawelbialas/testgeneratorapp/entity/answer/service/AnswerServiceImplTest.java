@@ -15,10 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -77,15 +75,15 @@ class AnswerServiceImplTest {
 
         question1.addAnswer(answer1);
         QuestionDto savedQuestion = questionService.saveOrUpdate(question1);
-        questionService.saveOrUpdate(savedQuestion);
+        QuestionDto savedQuestion1 = questionService.saveOrUpdate(savedQuestion);
         System.out.println("after 1st save");
-        questionService.saveOrUpdate(savedQuestion);
-        questionService.saveOrUpdate(savedQuestion);
-        questionService.saveOrUpdate(savedQuestion);
-        questionService.saveOrUpdate(savedQuestion);
+        QuestionDto savedQuestion2 = questionService.saveOrUpdate(savedQuestion1);
+        QuestionDto savedQuestion3 = questionService.saveOrUpdate(savedQuestion2);
+        QuestionDto savedQuestion4 = questionService.saveOrUpdate(savedQuestion3);
+        QuestionDto savedQuestion5 = questionService.saveOrUpdate(savedQuestion4);
         System.out.println("after last save");
 
-        AnswerDto savedAnswer = savedQuestion.getAnswers().get(0);
+        AnswerDto savedAnswer = savedQuestion5.getAnswers().get(0);
 
         //When
         List<AnswerDto> answers = answerService.findAll();

@@ -61,7 +61,7 @@ public class SkillTest extends BaseEntity {
     public String toString() {
         return "SkillTest{" +
                 " uuid=" + this.getId() +
-                ", questions=" + questions +
+                ", questions=" + questions.size() +
                 ", contestant=" + contestant +
                 ", result=" + result +
                 ", testStatus=" + testStatus +
