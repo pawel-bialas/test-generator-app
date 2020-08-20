@@ -109,14 +109,6 @@ public class SkillTestServiceImpl implements SkillTestService {
     }
 
     @Override
-    public List<SkillTestDto> findAllByContestant(ContestantDto contestant) {
-        return skillTestRepository.findAllByContestant(contestantMapper.dtoToObject(contestant, contextProvider()))
-                .stream()
-                .map(val -> testMapper.objectToDto(val, contextProvider()))
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public List<SkillTestDto> findAllByContestantNumber(String contestantNumber) {
 
         return skillTestRepository.findByContestant_ContestantNumber(contestantNumber)

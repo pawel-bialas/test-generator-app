@@ -67,13 +67,13 @@ class QuestionServiceImplTest {
         QuestionDto savedQuestion2 = service.saveOrUpdate(question2);
         System.out.println("first save 2" + savedQuestion2);
 
-        service.saveOrUpdate(savedQuestion1);
-        service.saveOrUpdate(savedQuestion1);
-        service.saveOrUpdate(savedQuestion1);
+        QuestionDto savedQuestion1a = service.saveOrUpdate(savedQuestion1);
+        QuestionDto savedQuestion1b = service.saveOrUpdate(savedQuestion1a);
+        QuestionDto savedQuestion1c = service.saveOrUpdate(savedQuestion1b);
         System.out.println("last save 1");
-        service.saveOrUpdate(savedQuestion2);
-        service.saveOrUpdate(savedQuestion2);
-        service.saveOrUpdate(savedQuestion2);
+        QuestionDto savedQuestion2a = service.saveOrUpdate(savedQuestion2);
+        QuestionDto savedQuestion2b = service.saveOrUpdate(savedQuestion2a);
+        service.saveOrUpdate(savedQuestion2b);
         System.out.println("last save 2");
         // When
         QuestionDto searchResult = service.findByUuId(savedQuestion1.getId());

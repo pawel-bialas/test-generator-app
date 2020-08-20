@@ -15,21 +15,15 @@ import java.util.UUID;
 @Repository
 public interface SkillTestRepository extends JpaRepository<SkillTest, UUID> {
 
-//    @EntityGraph(value = "skillTest.fullJoins")
     @Override
     List<SkillTest> findAll();
 
-//    @EntityGraph(value = "skillTest.fullJoins")
     @Override
     <S extends SkillTest> S save(S s);
 
-//    @EntityGraph(value = "skillTest.fullJoins")
     @Override
     Optional<SkillTest> findById(UUID uuid);
 
-//    @EntityGraph(value = "skillTest.fullJoins")
-    List<SkillTest> findAllByContestant (Contestant contestant);
 
-//    @EntityGraph(value = "skillTest.fullJoins")
     List<SkillTest> findByContestant_ContestantNumber (String contestantNumber);
 }

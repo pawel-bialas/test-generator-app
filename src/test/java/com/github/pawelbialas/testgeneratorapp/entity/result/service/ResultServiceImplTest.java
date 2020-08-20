@@ -330,11 +330,11 @@ public class ResultServiceImplTest {
         ResultDto save = resultService.saveOrUpdate(resultDto);
         System.out.println("after 1st save");
 
-        resultService.saveOrUpdate(save);
-        resultService.saveOrUpdate(save);
-        resultService.saveOrUpdate(save);
-        resultService.saveOrUpdate(save);
-        resultService.saveOrUpdate(save);
+        ResultDto save1 = resultService.saveOrUpdate(save);
+        ResultDto save2 = resultService.saveOrUpdate(save1);
+        ResultDto save3 = resultService.saveOrUpdate(save2);
+        ResultDto save4 = resultService.saveOrUpdate(save3);
+        ResultDto save5 = resultService.saveOrUpdate(save4);
         System.out.println("after last save");
 
         List<ResultDto> all = resultService.findAll();

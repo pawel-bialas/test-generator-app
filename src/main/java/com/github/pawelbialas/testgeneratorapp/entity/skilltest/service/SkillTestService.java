@@ -16,8 +16,6 @@ public interface SkillTestService {
 
     List<SkillTestDto> findAll();
 
-    List<SkillTestDto> findAllByContestant(ContestantDto contestant);
-
     List<SkillTestDto> findAllByContestantNumber(String contestantNumber);
 
     SkillTestDto createNewTest(String contestantNumber, List<TestParameter> testParams);

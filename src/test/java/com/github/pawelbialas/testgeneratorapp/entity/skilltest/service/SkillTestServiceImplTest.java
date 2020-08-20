@@ -87,27 +87,13 @@ class SkillTestServiceImplTest {
         questionDto.addAnswer(answerDto2);
         questionDto.addAnswer(answerDto3);
         QuestionDto savedQuestion = questionService.saveOrUpdate(questionDto);
-
         SkillTestDto savedSkillTest = skillTestService.saveOrUpdate(skillTestDto);
-
         savedSkillTest.getQuestions().add(savedQuestion);
-
         SkillTestDto savedTest = skillTestService.saveOrUpdate(savedSkillTest);
-
-        System.out.println("after 1st save");
-
         //When
-
         SkillTestDto savedTest2 = skillTestService.saveOrUpdate(savedTest);
-        System.out.println("after 2nd save");
-
         SkillTestDto savedTest3 = skillTestService.saveOrUpdate(savedTest2);
-        System.out.println("after 3rd save");
-
         SkillTestDto savedTest4 = skillTestService.saveOrUpdate(savedTest3);
-
-        System.out.println("after 4th save");
-
         SkillTestDto savedTest5 = skillTestService.saveOrUpdate(savedTest4);
         System.out.println("after last save");
 

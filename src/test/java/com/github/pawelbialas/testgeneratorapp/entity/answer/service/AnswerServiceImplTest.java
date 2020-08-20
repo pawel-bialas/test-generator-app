@@ -92,8 +92,8 @@ class AnswerServiceImplTest {
 
         assertAll(
                 () -> assertThat(answers.size()).isEqualTo(1),
-                () -> assertThat(answers.get(0).getId()).isEqualTo(savedAnswer.getId())
-//                () -> assertThat(question1.getAnswers().size()).isEqualTo(1)
+                () -> assertThat(answers.get(0).getId()).isEqualTo(savedAnswer.getId()),
+                () -> assertThat(question1.getAnswers().size()).isEqualTo(1)
         );
     }
 }
