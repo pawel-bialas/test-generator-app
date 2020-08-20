@@ -44,8 +44,8 @@ public class ResultDto extends BaseItem {
         return "ResultDto{" +
                 "id='" + this.getId() + '\'' +
                 "score=" + score +
-                ", skillTest=" + skillTest+
-                ", contestant=" + contestant+
+                ", skillTest=" + skillTest.getId()+
+                ", contestant=" + contestant.getId()+
                 '}';
     }
 }

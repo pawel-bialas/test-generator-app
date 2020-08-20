@@ -5,15 +5,11 @@ import com.github.pawelbialas.testgeneratorapp.entity.question.dto.QuestionMappe
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.Question;
 import com.github.pawelbialas.testgeneratorapp.entity.question.model.SkillLevel;
 import com.github.pawelbialas.testgeneratorapp.entity.question.repository.QuestionRepository;
-import com.github.pawelbialas.testgeneratorapp.shared.domain.dto.CycleAvoidingMappingContext;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -24,16 +20,16 @@ public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionRepository questionRepository;
     private final QuestionMapper mapper;
-    private final EntityManager entityManager;
+    private final EntityManagerFactory emf;
 
     public QuestionServiceImpl(
             QuestionRepository questionRepository,
-            EntityManager entityManager,
+            EntityManagerFactory emf,
             QuestionMapper mapper
     ) {
         this.questionRepository = questionRepository;
         this.mapper = mapper;
-        this.entityManager = entityManager;
+        this.emf = emf;
     }
 
     @Override
@@ -44,7 +40,7 @@ public class QuestionServiceImpl implements QuestionService {
 
 
     public QuestionDto findByUuId(UUID uuid) {
-        Question question = entityManager.createQuery("select q from Question q " +
+        Question question = emf.createEntityManager().createQuery("select q from Question q " +
                 "left join fetch q.answers " +
                 "where q.id = :uuid", Question.class)
                 .setParameter("uuid", uuid)
@@ -55,7 +51,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List<QuestionDto> findAll() {
         List<Question> questions =
-                entityManager.createQuery(
+                emf.createEntityManager().createQuery(
                         "select q from Question q " +
                                 "left join fetch q.answers", Question.class)
                         .getResultList();

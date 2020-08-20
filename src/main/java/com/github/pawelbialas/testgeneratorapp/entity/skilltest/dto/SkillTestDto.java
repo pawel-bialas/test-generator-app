@@ -44,10 +44,10 @@ public class SkillTestDto extends BaseItem {
     @Override
     public String toString() {
         return "SkillTestDto{" +
-                "id='" + this.getId() + '\'' +
-                "questions=" + questions.size() +
-                ", contestant=" + contestant.getId() +
-                ", result=" + result.getId() +
+                " uuid=" + this.getId() +
+                ", questions=" + questions +
+//                ", contestant=" + contestant.getId() +
+//                ", result=" + result.getId() +
                 ", testStatus='" + testStatus + '\'' +
                 '}';
     }

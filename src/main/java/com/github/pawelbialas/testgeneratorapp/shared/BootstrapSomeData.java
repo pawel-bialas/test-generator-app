@@ -33,7 +33,7 @@ public class BootstrapSomeData implements ApplicationListener<ContextRefreshedEv
     @Override
     @Transactional
     public void onApplicationEvent(@NotNull ContextRefreshedEvent contextRefreshedEvent) {
-
+//
 //        questionConverterService.readQuestionsFromCsv(csvProdPath);
 //
 //
@@ -87,7 +87,7 @@ public class BootstrapSomeData implements ApplicationListener<ContextRefreshedEv
 //        System.out.println("=======================");
 //        System.out.println("this tes has4: " + newTest3.getQuestions().size());
 //        System.out.println("=======================");
-
+//
 
     }
 }

@@ -20,17 +20,18 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@org.hibernate.annotations.Entity
 public class SkillTest extends BaseEntity {
 
     @ManyToMany(
             cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH
             },
             fetch = FetchType.LAZY)
-    @JoinTable(name = "skill_est_suestions",
-            joinColumns = @JoinColumn(name = "skill_test_id"),
-            inverseJoinColumns = @JoinColumn(name = "question_id")
+    @JoinTable(name = "skill_test_questions",
+            joinColumns = @JoinColumn(name = "skill_test_id", nullable = false, updatable = false),
+            inverseJoinColumns = @JoinColumn(name = "question_id", nullable = false, updatable = false)
     )
     private List<Question> questions = new ArrayList<>();
     @ManyToOne(fetch = FetchType.LAZY)
@@ -59,10 +60,10 @@ public class SkillTest extends BaseEntity {
     @Override
     public String toString() {
         return "SkillTest{" +
-                "id='" + this.getId() + '\'' +
-                "questions=" + questions.size() +
-                ", contestant=" + contestant.getId() +
-                ", result=" + result.getId() +
+                " uuid=" + this.getId() +
+                ", questions=" + questions +
+                ", contestant=" + contestant +
+                ", result=" + result +
                 ", testStatus=" + testStatus +
                 '}';
     }

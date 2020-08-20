@@ -14,8 +14,7 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
-@Getter
-@Setter
+
 @MappedSuperclass
 public class BaseEntity implements Serializable {
 
@@ -57,4 +56,35 @@ public class BaseEntity implements Serializable {
         return this == that || that instanceof BaseEntity && Objects.equals(this.id, ((BaseEntity) that).id);
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
+    public Timestamp getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Timestamp createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Timestamp getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Timestamp lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
 }

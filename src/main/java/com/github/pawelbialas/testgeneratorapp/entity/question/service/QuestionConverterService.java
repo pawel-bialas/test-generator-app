@@ -35,7 +35,7 @@ public class QuestionConverterService {
     @Transactional
     public void readQuestionsFromCsv(java.lang.String fileLocation) {
         try {
-            CSVReader reader = new CSVReader(new FileReader(fileLocation), ',');
+            CSVReader reader = new CSVReader(new FileReader(fileLocation), ';');
             try {
                 java.lang.String[] nextLine;
                 while ((nextLine = reader.readNext()) != null) {

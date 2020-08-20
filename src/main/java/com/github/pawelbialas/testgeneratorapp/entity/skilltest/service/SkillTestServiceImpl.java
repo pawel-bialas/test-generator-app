@@ -15,9 +15,12 @@ import com.github.pawelbialas.testgeneratorapp.entity.skilltest.model.TestStatus
 import com.github.pawelbialas.testgeneratorapp.entity.skilltest.repository.SkillTestRepository;
 import com.github.pawelbialas.testgeneratorapp.shared.exception.BadRequestException;
 import com.github.pawelbialas.testgeneratorapp.shared.exception.InternalServerErrorException;
+import org.hibernate.annotations.QueryHints;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -32,6 +35,7 @@ public class SkillTestServiceImpl implements SkillTestService {
     private final SkillTestMapper testMapper;
     private final QuestionConverterService questionConverterService;
     private final ContestantMapper contestantMapper;
+    private final EntityManagerFactory emf;
 
 
     public SkillTestServiceImpl(
@@ -40,13 +44,15 @@ public class SkillTestServiceImpl implements SkillTestService {
             ContestantServiceImpl contestantServiceImpl,
             SkillTestMapper testMapper,
             QuestionConverterService questionConverterService,
-            ContestantMapper contestantMapper) {
+            ContestantMapper contestantMapper,
+            EntityManagerFactory emf) {
         this.questionServiceImpl = questionServiceImpl;
         this.contestantServiceImpl = contestantServiceImpl;
         this.skillTestRepository = skillTestRepository;
         this.testMapper = testMapper;
         this.questionConverterService = questionConverterService;
         this.contestantMapper = contestantMapper;
+        this.emf = emf;
     }
 
 
@@ -58,7 +64,7 @@ public class SkillTestServiceImpl implements SkillTestService {
 
     @Override
     public List<SkillTestDto> findAll() {
-        return skillTestRepository.findAll().stream()
+        return fetchAll().stream()
                 .map(val -> testMapper.objectToDto(val, contextProvider()))
                 .collect(Collectors.toList());
     }
@@ -69,6 +75,19 @@ public class SkillTestServiceImpl implements SkillTestService {
 
     }
 
+
+
+    @Transactional
+    List<SkillTest> fetchAll () {
+        return emf.createEntityManager().createQuery(
+                "select distinct s from SkillTest s " +
+                        "left join fetch s.questions " +
+                        "left join fetch s.contestant " +
+                        "left join fetch s.result",
+                SkillTest.class)
+                .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
+                .getResultList();
+    }
     @Override
     public List<SkillTestDto> findAllByContestant(ContestantDto contestant) {
         return skillTestRepository.findAllByContestant(contestantMapper.dtoToObject(contestant, contextProvider()))
