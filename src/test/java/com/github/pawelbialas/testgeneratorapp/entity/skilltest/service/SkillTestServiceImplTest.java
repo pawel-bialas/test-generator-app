@@ -98,12 +98,7 @@ class SkillTestServiceImplTest {
         System.out.println("after last save");
 
         List<SkillTestDto> all = skillTestService.findAll();
-        System.out.println("result");
-        System.out.println(all.get(0));
-        System.out.println(all.get(0).getVersion());
-        System.out.println("answer1: " + all.get(0).getQuestions().get(0).getAnswers().get(0));
-        System.out.println("answer2: " + all.get(0).getQuestions().get(0).getAnswers().get(1));
-        System.out.println("answer2: " + all.get(0).getQuestions().get(0).getAnswers().get(2));
+
         //Then
 
         assertAll(

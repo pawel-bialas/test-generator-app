@@ -77,7 +77,6 @@ public class SkillTestServiceImpl implements SkillTestService {
     }
 
 
-    @Transactional
     List<SkillTest> fetchAll() {
         EntityManager em = emf.createEntityManager();
         List<SkillTest> skillTests = em.createQuery(

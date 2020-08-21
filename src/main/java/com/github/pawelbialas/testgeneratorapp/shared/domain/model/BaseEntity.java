@@ -1,22 +1,18 @@
 package com.github.pawelbialas.testgeneratorapp.shared.domain.model;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
 
 @MappedSuperclass
-public class BaseEntity implements Serializable {
+public class BaseEntity implements Persistable<UUID> {
 
 
     public BaseEntity () {
@@ -59,6 +55,21 @@ public class BaseEntity implements Serializable {
     public UUID getId() {
         return id;
     }
+
+    @Transient
+    private boolean isNew = true;
+
+    @Override
+    public boolean isNew() {
+        return isNew;
+    }
+
+    @PrePersist
+    @PostLoad
+    void markNotNew() {
+        this.isNew = false;
+    }
+
 
     public void setId(UUID id) {
         this.id = id;

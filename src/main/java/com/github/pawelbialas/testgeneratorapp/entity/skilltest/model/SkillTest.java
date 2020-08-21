@@ -25,8 +25,8 @@ public class SkillTest extends BaseEntity {
 
     @ManyToMany(
             cascade = {
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH
+                    CascadeType.MERGE
+
             },
             fetch = FetchType.LAZY)
     @JoinTable(name = "skill_test_questions",

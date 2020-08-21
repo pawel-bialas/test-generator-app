@@ -6,10 +6,10 @@ import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestan
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.repository.ContestantRepository;
 import org.hibernate.annotations.QueryHints;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

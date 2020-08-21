@@ -2,11 +2,9 @@ package com.github.pawelbialas.testgeneratorapp.entity.contestant.repository;
 
 
 import com.github.pawelbialas.testgeneratorapp.entity.contestant.model.Contestant;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,18 +15,18 @@ public interface ContestantRepository extends JpaRepository<Contestant, UUID> {
 
 
     @Override
-//    @EntityGraph(value = "contestant.fullJoins", type = EntityGraph.EntityGraphType.FETCH)
+    @Transactional
     List<Contestant> findAll();
 
     @Override
-//    @EntityGraph(value = "contestant.fullJoins", type = EntityGraph.EntityGraphType.FETCH)
+    @Transactional
     <S extends Contestant> S save(S s);
 
     @Override
-//    @EntityGraph(value = "contestant.fullJoins", type = EntityGraph.EntityGraphType.FETCH)
+    @Transactional
     Optional<Contestant> findById(UUID uuid);
 
-//    @EntityGraph(value = "contestant.fullJoins", type = EntityGraph.EntityGraphType.FETCH)
-    Optional<Contestant> findByContestantNumber (String contestantNumber);
+    @Transactional
+    Optional<Contestant> findByContestantNumber(String contestantNumber);
 
 }

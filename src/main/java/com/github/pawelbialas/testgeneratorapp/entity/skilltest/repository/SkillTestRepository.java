@@ -16,14 +16,17 @@ import java.util.UUID;
 public interface SkillTestRepository extends JpaRepository<SkillTest, UUID> {
 
     @Override
+    @Transactional
     List<SkillTest> findAll();
 
     @Override
+    @Transactional
     <S extends SkillTest> S save(S s);
 
     @Override
+    @Transactional
     Optional<SkillTest> findById(UUID uuid);
 
-
+    @Transactional
     List<SkillTest> findByContestant_ContestantNumber (String contestantNumber);
 }
