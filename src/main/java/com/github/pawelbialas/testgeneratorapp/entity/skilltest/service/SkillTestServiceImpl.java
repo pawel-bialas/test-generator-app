@@ -77,7 +77,7 @@ public class SkillTestServiceImpl implements SkillTestService {
     }
 
 
-    List<SkillTest> fetchAll() {
+    private List<SkillTest> fetchAll() {
         EntityManager em = emf.createEntityManager();
         List<SkillTest> skillTests = em.createQuery(
                 "select distinct s from SkillTest s " +

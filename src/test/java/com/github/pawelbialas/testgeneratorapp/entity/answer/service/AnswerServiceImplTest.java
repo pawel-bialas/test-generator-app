@@ -77,13 +77,14 @@ class AnswerServiceImplTest {
         QuestionDto savedQuestion = questionService.saveOrUpdate(question1);
         QuestionDto savedQuestion1 = questionService.saveOrUpdate(savedQuestion);
         System.out.println("after 1st save");
+
         QuestionDto savedQuestion2 = questionService.saveOrUpdate(savedQuestion1);
         QuestionDto savedQuestion3 = questionService.saveOrUpdate(savedQuestion2);
         QuestionDto savedQuestion4 = questionService.saveOrUpdate(savedQuestion3);
         QuestionDto savedQuestion5 = questionService.saveOrUpdate(savedQuestion4);
+        QuestionDto lastSave = questionService.saveOrUpdate(savedQuestion5);
         System.out.println("after last save");
-
-        AnswerDto savedAnswer = savedQuestion5.getAnswers().get(0);
+        AnswerDto savedAnswer = lastSave.getAnswers().get(0);
 
         //When
         List<AnswerDto> answers = answerService.findAll();

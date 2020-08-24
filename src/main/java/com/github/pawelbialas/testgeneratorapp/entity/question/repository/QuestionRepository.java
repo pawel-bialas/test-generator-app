@@ -18,30 +18,22 @@ import java.util.UUID;
 public interface QuestionRepository extends JpaRepository<Question, UUID> {
 
     @Override
-    @Transactional
     List<Question> findAll();
 
     @Override
-    @Transactional
     <S extends Question> S save(S s);
 
     @Override
-    @Transactional
     Optional<Question> findById(UUID uuid);
 
-    @Transactional
     Question findByContentsEquals(String contents);
 
-    @Transactional
     List<Question> findAllByMainTechAndSpecificTech(String mainTech, java.lang.String specificTech);
 
-    @Transactional
     List<Question> findAllByMainTech(String mainTech);
 
-    @Transactional
     List<Question> findAllByMainTechAndSkillLevel(String mainTech, SkillLevel skillLevel);
 
-    @Transactional
     List<Question> findAllByMainTechAndSkillLevelAndSpecificTech(String mainTech, SkillLevel skillLevel, String specificTech);
 
 

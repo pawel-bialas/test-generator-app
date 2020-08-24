@@ -12,7 +12,7 @@ import java.util.UUID;
 
 
 @MappedSuperclass
-public class BaseEntity implements Persistable<UUID> {
+public class BaseEntity  {
 
 
     public BaseEntity () {
@@ -36,6 +36,11 @@ public class BaseEntity implements Persistable<UUID> {
 
     @Version
     private Long version;
+//
+//    @Transient
+//    public boolean isNew() {
+//        return null == this.getId();
+//    }
 
     @CreationTimestamp
     @Column(updatable = false, nullable = false)
@@ -54,20 +59,6 @@ public class BaseEntity implements Persistable<UUID> {
 
     public UUID getId() {
         return id;
-    }
-
-    @Transient
-    private boolean isNew = true;
-
-    @Override
-    public boolean isNew() {
-        return isNew;
-    }
-
-    @PrePersist
-    @PostLoad
-    void markNotNew() {
-        this.isNew = false;
     }
 
 

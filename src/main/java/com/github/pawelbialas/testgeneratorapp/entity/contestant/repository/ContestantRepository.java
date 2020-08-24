@@ -15,18 +15,14 @@ public interface ContestantRepository extends JpaRepository<Contestant, UUID> {
 
 
     @Override
-    @Transactional
     List<Contestant> findAll();
 
     @Override
-    @Transactional
     <S extends Contestant> S save(S s);
 
     @Override
-    @Transactional
     Optional<Contestant> findById(UUID uuid);
 
-    @Transactional
     Optional<Contestant> findByContestantNumber(String contestantNumber);
 
 }
